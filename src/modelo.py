@@ -117,8 +117,14 @@ class modelo:
             if(ref not in p.keys()):
                 p[ref]=0
         
-    def eliminarReferenciaPersonaje(self,id,ref):
-        print("Metodo sin implementar")
+    def eliminarReferenciaPersonaje(self,idp,ref):
+        if(idp in self.personajes.keys()):
+            p = self.personajes[idp].getPersonaje()
+            if(ref in p.keys()):
+                if (len(p)>1):
+                    del p[ref]
+                else:
+                    del self.personajes[idp]
     
 #m = modelo()
 #m.crearDiccionario()
