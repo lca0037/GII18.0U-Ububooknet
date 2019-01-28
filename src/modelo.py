@@ -97,7 +97,8 @@ class modelo:
         self.numpers+=1
         
     def eliminarPersonaje(self, idPersonaje):
-        print('Metodo sin implementar')
+        if(idPersonaje in self.personajes):
+            del self.personajes[idPersonaje]
         
     def juntarPersonajes(self, idPersonaje1, idPersonaje2):
         print('Metodo sin implementar')
