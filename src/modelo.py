@@ -7,6 +7,8 @@ Clase con la que la vista interactua
 
 import ply.lex as lex
 import personaje as p
+import matplotlib.pyplot as plt
+import numpy as np
 
 class modelo:
     
@@ -19,6 +21,7 @@ class modelo:
         self.texto += 'texto de relleno. Pedro Pérez esto como no sigue siendo texto'
         self.texto += ' de pruebas Ana.'
         self.personajes= dict()
+        self.numpers=0
      
     def crearDiccionario(self):
         tokens = ("PERSONAJE", "ESPACIOS", "PUNTO", "CARACTER", "OTRO")
@@ -64,6 +67,7 @@ class modelo:
                 aux[tok.value]+=1
             else:
                 aux[tok.value]=1
+                self.numpers+=1
         
         i=0
         for k in aux.keys():
@@ -74,7 +78,19 @@ class modelo:
         return self.personajes
     
     def histogramaPersonajes(self):
-        print('Método sin implementar')
+        x = list()
+        y = list()
+        for k in self.personajes.keys():
+            p = self.personajes[k].getPersonaje()
+            for sk in p.keys():
+                x.append(sk)
+                y.append(p[sk])
+        tam = np.arange(self.numpers)
+        plt.title('Frecuencia personajes')
+        plt.xlabel('Nombre')
+        plt.ylabel('Apariciones')
+        plt.bar(tam,height=y)
+        plt.xticks(tam,x)
     
     def anadirPersonaje(self, personaje):
         print('Método sin implementar')
@@ -85,3 +101,6 @@ class modelo:
     def juntarPersonajes(self, idPersonaje1, idPersonaje2):
         print('Metodo sin implementar')
     
+#m = modelo()
+#m.crearDiccionario()
+#m.histogramaPersonajes()
