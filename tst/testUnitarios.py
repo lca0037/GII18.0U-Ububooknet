@@ -10,6 +10,7 @@ import sys
 sys.path.append('../src/')
 import unittest
 import modelo as mod
+import itertools as it
 
 
 
@@ -40,10 +41,13 @@ class testUnitarios(unittest.TestCase):
     def comprobarPersonajes(self, res):
         obt = m.getPersonajes()
         i = 0
-        for k in res.keys():
-            per = obt[k].getPersonaje()
-            for sk in res[k].keys():
-                self.assertEqual(per[sk],res[k][sk])
+        self.assertEqual(len(res),len(obt))
+        for k,j in zip(res.keys(),obt.keys()):
+            per = obt[j].getPersonaje()
+            self.assertEqual(k,j)
+            self.assertEqual(len(per),len(res[k]))
+            for sk, sj in zip(res[k].keys(),per.keys()):
+                self.assertEqual(per[sj],res[k][sk])
             i+=1
             
 if __name__ == '__main__':
