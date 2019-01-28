@@ -10,30 +10,32 @@ import sys
 sys.path.append('../src/')
 import unittest
 import modelo as mod
-import itertools as it
-
-
 
 #print(sys.path)
 m = mod.modelo();
 m.crearDiccionario()
+
 class testUnitarios(unittest.TestCase):
     
-    def testLecturaEpub(self):
+    #Se pone el número del test indicando el orden en el que se ejecutan debido a ser la solución
+    #más sencilla que se ha encontrado al problema que consiste en que los test
+    #se ejecutan en orden alfabético y no en el orden en el que están definidos
+    
+    def test_01_LecturaEpub(self):
         res = {0:{'Pedro Pérez': 2}, 1:{'Josema':1}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}}
         self.comprobarPersonajes(res)
     
-    def testAnadirPersonaje(self):
+    def test_02_AnadirPersonaje(self):
         m.anadirPersonaje('Andrea')
         res = {0:{'Pedro Pérez': 2}, 1:{'Josema':1}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
         
-    def testEliminarPersonaje(self):
+    def test_03_EliminarPersonaje(self):
         m.eliminarPersonaje(1)
         res = {0:{'Pedro Pérez': 2}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
             
-    def testJuntarPersonajes(self):
+    def test_04_JuntarPersonajes(self):
         m.juntarPersonajes(3,2)
         res = {0:{'Pedro Pérez': 2}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)

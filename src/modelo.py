@@ -21,7 +21,8 @@ class modelo:
         self.texto += 'texto de relleno. Pedro Pérez esto como no sigue siendo texto'
         self.texto += ' de pruebas Ana.'
         self.personajes= dict()
-        self.numpers=0
+        self.numpers = 0
+        self.sigid = 0
      
     def crearDiccionario(self):
         tokens = ("PERSONAJE", "ESPACIOS", "PUNTO", "CARACTER", "OTRO")
@@ -69,10 +70,9 @@ class modelo:
                 aux[tok.value]=1
                 self.numpers+=1
         
-        i=0
         for k in aux.keys():
-            self.personajes[i]= p.personaje(k,aux[k])
-            i+=1
+            self.personajes[self.sigid]= p.personaje(k,aux[k])
+            self.sigid+=1
             
     def getPersonajes(self):
         return self.personajes
@@ -92,8 +92,9 @@ class modelo:
         plt.bar(tam,height=y)
         plt.xticks(tam,x)
     
-    def anadirPersonaje(self, personaje):
-        print('Método sin implementar')
+    def anadirPersonaje(self, pers):
+        self.personajes[self.numpers] = p.personaje(pers,0)
+        self.numpers+=1
         
     def eliminarPersonaje(self, idPersonaje):
         print('Metodo sin implementar')
@@ -103,4 +104,8 @@ class modelo:
     
 #m = modelo()
 #m.crearDiccionario()
+#m.histogramaPersonajes()
+#m.anadirPersonaje('Andrea')
+#m.histogramaPersonajes()
+#m.anadirPersonaje('Paola')
 #m.histogramaPersonajes()

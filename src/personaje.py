@@ -15,5 +15,3 @@ class personaje:
     def getPersonaje(self):
         return self.nombres
     
-#    def keys(self):
-#        return self.nombres.keys()
