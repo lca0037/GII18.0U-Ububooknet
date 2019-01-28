@@ -101,7 +101,15 @@ class modelo:
             del self.personajes[idPersonaje]
         
     def juntarPersonajes(self, idPersonaje1, idPersonaje2):
-        print('Metodo sin implementar')
+        if(idPersonaje1 in self.personajes and idPersonaje2 in self.personajes):
+            pers1 = self.personajes[idPersonaje1].getPersonaje()
+            pers2 = self.personajes[idPersonaje2].getPersonaje()
+            for k in pers2.keys():
+                if k in pers1.keys():
+                    pers1[k]+=pers2[k]
+                else:
+                    pers1[k]=pers2[k]
+            self.eliminarPersonaje(idPersonaje2)
     
 #m = modelo()
 #m.crearDiccionario()
