@@ -111,8 +111,11 @@ class modelo:
                     pers1[k]=pers2[k]
             self.eliminarPersonaje(idPersonaje2)
             
-    def anadirReferenciaPersonaje(self,id,ref):
-        print("Metodo sin implementar")
+    def anadirReferenciaPersonaje(self,idp,ref):
+        if(idp in self.personajes.keys()):
+            p = self.personajes[idp].getPersonaje()
+            if(ref not in p.keys()):
+                p[ref]=0
         
     def eliminarReferenciaPersonaje(self,id,ref):
         print("Metodo sin implementar")
