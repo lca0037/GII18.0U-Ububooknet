@@ -40,6 +40,24 @@ class testUnitarios(unittest.TestCase):
         res = {0:{'Pedro Pérez': 2}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
         
+    def test_05_anadirReferenciaAPersonaje(self):
+        m.anadirReferenciaPersonaje(0,'peperez')
+        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 4:{'Ana':1}, 5:{'Andrea':0}}
+        self.comprobarPersonajes(res)
+        
+    def test_06_eliminarReferenciaAPersonaje(self):
+        m.eliminarReferenciaPersonaje(4,'Ana')
+        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}}
+        self.comprobarPersonajes(res)
+        
+    def test_07_AnadirJuntarPersonajes(self):
+        m.anadirPersonaje('Andrea')
+        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}, 6:{'Andrea':0}}
+        self.comprobarPersonajes(res)
+        m.juntarPersonajes(5,6)
+        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}}
+        self.comprobarPersonajes(res)
+        
     def comprobarPersonajes(self, res):
         obt = m.getPersonajes()
         i = 0

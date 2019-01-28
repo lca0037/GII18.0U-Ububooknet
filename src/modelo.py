@@ -110,6 +110,12 @@ class modelo:
                 else:
                     pers1[k]=pers2[k]
             self.eliminarPersonaje(idPersonaje2)
+            
+    def anadirReferenciaPersonaje(self,id,ref):
+        print("Metodo sin implementar")
+        
+    def eliminarReferenciaPersonaje(self,id,ref):
+        print("Metodo sin implementar")
     
 #m = modelo()
 #m.crearDiccionario()
