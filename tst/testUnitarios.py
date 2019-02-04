@@ -10,6 +10,7 @@ import sys
 sys.path.append('../src/')
 import unittest
 import modelo as mod
+import lecturaEpub as lec
 
 #print(sys.path)
 m = mod.modelo();
@@ -69,6 +70,23 @@ class testUnitarios(unittest.TestCase):
             for sk, sj in zip(res[k].keys(),per.keys()):
                 self.assertEqual(per[sj],res[k][sk])
             i+=1
+    
+    def test_08_leerEpub(self):
+        txt = list()
+        txt.append('')
+        texto = 'Esto es un documento de pruebas para comprobar que se obtienen'
+        texto += ' bien las palabras en mayúsculas. Felipe, esto es texto de '
+        texto += 'relleno Pedro Pérez, Josema esto es más texto de relleno para'
+        texto += ' poder hacer pruebas Pedro esto sigue siendo relleno Pedro '
+        texto += 'Rodríguez, Pedro, texto de relleno. María se fue a poner más '
+        texto += 'texto de relleno. Pedro Pérez esto como no sigue siendo texto'
+        texto += ' de pruebas Ana.'
+        txt.append(texto)
+        l = lec.lecturaEpub('epubPruebas.epub')
+        l.obtenerOrdenLectura()
+        it = l.siguienteArchivo()
+        for i in txt:
+            self.assertEqual(i,next(it))
             
 if __name__ == '__main__':
     unittest.main()

@@ -126,9 +126,9 @@ class modelo:
                 else:
                     del self.personajes[idp]
     
-m = modelo()
-m.crearDiccionario()
-m.histogramaPersonajes()
+#m = modelo()
+#m.crearDiccionario()
+#m.histogramaPersonajes()
 #m.anadirPersonaje('Andrea')
 #m.histogramaPersonajes()
 #m.anadirPersonaje('Paola')
