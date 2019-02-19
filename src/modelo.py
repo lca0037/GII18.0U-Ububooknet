@@ -6,7 +6,7 @@ Clase con la que la vista interactua
 """
 
 import ply.lex as lex
-import personaje as p
+from src import personaje as p
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -125,11 +125,3 @@ class modelo:
                     del p[ref]
                 else:
                     del self.personajes[idp]
-    
-#m = modelo()
-#m.crearDiccionario()
-#m.histogramaPersonajes()
-#m.anadirPersonaje('Andrea')
-#m.histogramaPersonajes()
-#m.anadirPersonaje('Paola')
-#m.histogramaPersonajes()

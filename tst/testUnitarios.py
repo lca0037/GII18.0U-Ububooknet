@@ -6,14 +6,14 @@ Test unitarios sobre el código implementado
 """
 
 
-import sys
-sys.path.append('../src/')
+#import sys
+#sys.path.append('../src/')
 import unittest
-import modelo as mod
-import lecturaEpub as lec
+from src import modelo
+from src import lecturaEpub as lec
 
 #print(sys.path)
-m = mod.modelo();
+m = modelo.modelo();
 m.crearDiccionario()
 
 class testUnitarios(unittest.TestCase):
@@ -82,11 +82,11 @@ class testUnitarios(unittest.TestCase):
         texto += 'texto de relleno. Pedro Pérez esto como no sigue siendo texto'
         texto += ' de pruebas Ana.'
         txt.append(texto)
-        l = lec.lecturaEpub('epubPruebas.epub')
+        l = lec.lecturaEpub('tst/epubPruebas.epub')
         l.obtenerOrdenLectura()
         it = l.siguienteArchivo()
         for i in txt:
             self.assertEqual(i,next(it))
-            
+                        
 if __name__ == '__main__':
     unittest.main()

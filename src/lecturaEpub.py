@@ -43,7 +43,6 @@ class lecturaEpub:
     
     def siguienteArchivo(self):
         for a in self.orden:
-            print(a)
             txt = ''
             seccion = self.epub.read(a)
             sect = BeautifulSoup(seccion, "xml")
@@ -52,12 +51,3 @@ class lecturaEpub:
             
             yield txt
 
-
-#fich = '../tst/epubPruebas.epub'
-#
-#if(zipfile.is_zipfile(fich)):
-#    l = lecturaEpub(fich)
-#    l.obtenerOrdenLectura()
-#    it = l.siguienteArchivo()
-#    print(next(it))
-#    print(next(it))
