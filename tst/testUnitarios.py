@@ -87,6 +87,22 @@ class testUnitarios(unittest.TestCase):
         it = l.siguienteArchivo()
         for i in txt:
             self.assertEqual(i,next(it))
-                        
+    
+    def test_09_getDictParsear(self):
+        m.anadirPersonaje('Pedro')
+        res = ['Pedro Pérez', 'peperez', 'Pedro Rodríguez', 'Pedro', 'Andrea']
+        obt = m.getDictParsear()
+        self.assertEqual(len(res),len(obt))
+        for i in range(len(res)):
+            self.assertEqual(res[i],obt[i])
+            
+    def test_10_posPalabrasDict(self):
+        m.crearDiccionario()
+        m.anadirPersonaje('María')
+        m.anadirPersonaje('relleno')
+        res = {'Pedro Pérez': [23, 54], 'Josema': [24], 'Pedro': [35, 41], 'Pedro Rodríguez': [40], 'Ana': [63], 'María': [45], 'relleno': [22, 30, 39, 44, 53]}
+        #Se deja la programacion de las comprobaciones para momentos posteriores del sprint
+
+    
 if __name__ == '__main__':
     unittest.main()
