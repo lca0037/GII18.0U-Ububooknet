@@ -74,6 +74,14 @@ class modelo:
             self.personajes[self.sigid]= p.personaje(k,aux[k])
             self.sigid+=1
             
+    def getDictParsear(self):
+        l = list()
+        for i in self.personajes.keys():
+            for n in self.personajes[i].getPersonaje():
+                if(n not in l):
+                    l.append(n)
+        return l
+    
     def getPersonajes(self):
         return self.personajes
     
