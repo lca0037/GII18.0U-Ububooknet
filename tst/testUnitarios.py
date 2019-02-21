@@ -102,7 +102,17 @@ class testUnitarios(unittest.TestCase):
         m.anadirPersonaje('relleno')
         res = {'Pedro Pérez': [23, 54], 'Josema': [24], 'Pedro': [35, 41], 'Pedro Rodríguez': [40], 'Ana': [63], 'María': [45], 'relleno': [22, 30, 39, 44, 53]}
         #Se deja la programacion de las comprobaciones para momentos posteriores del sprint
-
+        
+    def test_11_esSubcadena(self):
+        l = ["Alabardero", "Ala", "Alto", "Baje", "Asta", "Corzo", "lata"]
+        res1 = ['Alabardero', 'Ala', 'Alto']
+        res2 = ['lata']
+        res3 = []
+        self.assertEquals(res1,m.esSubcadena("Al",l))
+        self.assertEquals(res2,m.esSubcadena("la",l))
+        self.assertEquals(res3,m.esSubcadena("li",l))
+        
+        
     
 if __name__ == '__main__':
     unittest.main()
