@@ -82,6 +82,20 @@ class modelo:
                     l.append(n)
         return l
     
+    def esSubcadena(self,st,lista):
+        l = list()
+        aux = True
+        for pal in lista:
+            for i in range(len(st)):
+                if(st[i] != pal[i]):
+                    aux = False
+                    break
+            if(aux):
+                l.append(pal)
+            else:
+                aux = True
+        return l
+    
     def getPersonajes(self):
         return self.personajes
     
