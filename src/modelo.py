@@ -7,6 +7,7 @@ Clase con la que la vista interactua
 
 import ply.lex as lex
 from src import personaje as p
+from src import creadict as cd
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -24,56 +25,13 @@ class modelo:
         self.numpers = 0
         self.sigid = 0
      
-    def crearDiccionario(self):
-        tokens = ("PERSONAJE", "ESPACIOS", "PUNTO", "CARACTER", "OTRO")
-        states = (('punto','exclusive'),)
-        aux = dict()
+    def crearDict(self):
+        creard = cd.creadict()
+        p,n = creard.crearDict(self.texto)
+        self.personajes = p
+        self.numpers = n
+        self.sigid = n
         
-        def t_PERSONAJE(t): 
-            r"[A-Z\300-\335][a-z\340-\377]+(\s[A-Z\300-\335]([a-z\340-\377]+|\.))*"
-            return t
-        
-        def t_ESPACIOS(t):
-            r"[\s]"
-        
-        def t_PUNTO(t):
-            r"\.[\s]"
-            t.lexer.begin('punto')
-            
-        def t_CARACTER(t):
-            r"."
-        
-        def t_punto_PERSONAJE(t):
-            r"[A-Z\300-\335][a-z\340-\377]+(\s[A-Z\300-\335]([a-z\340-\377]+|\.))+"
-            t.lexer.begin('INITIAL')
-            return t
-        
-        def t_punto_OTRO(t):
-            r"[^\s\.]+"
-            t.lexer.begin('INITIAL')
-        
-        def t_punto_error(t):
-            print ("Illegal character '%s'" % t.value[0])
-            t.lexer.skip(1)
-            
-        def t_error(t):
-            print ("Illegal character '%s'" % t.value[0])
-            t.lexer.skip(1)
-    
-        lex.lex()
-        txt = ". " + self.texto
-        lex.input(txt)
-        for tok in iter(lex.token, None):
-            if(tok.value in aux.keys()):
-                aux[tok.value]+=1
-            else:
-                aux[tok.value]=1
-                self.numpers+=1
-        
-        for k in aux.keys():
-            self.personajes[self.sigid]= p.personaje(k,aux[k])
-            self.sigid+=1
-            
     def getDictParsear(self):
         l = list()
         for i in self.personajes.keys():

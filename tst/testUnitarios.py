@@ -14,7 +14,7 @@ from src import lecturaEpub as lec
 
 #print(sys.path)
 m = modelo.modelo();
-m.crearDiccionario()
+m.crearDict()
 
 class testUnitarios(unittest.TestCase):
     
@@ -97,7 +97,7 @@ class testUnitarios(unittest.TestCase):
             self.assertEqual(res[i],obt[i])
             
     def test_10_posPalabrasDict(self):
-        m.crearDiccionario()
+        m.crearDict()
         m.anadirPersonaje('María')
         m.anadirPersonaje('relleno')
         res = {'Pedro Pérez': [23, 54], 'Josema': [24], 'Pedro': [35, 41], 'Pedro Rodríguez': [40], 'Ana': [63], 'María': [45], 'relleno': [22, 30, 39, 44, 53]}
