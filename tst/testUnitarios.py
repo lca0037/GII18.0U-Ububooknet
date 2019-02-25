@@ -10,11 +10,13 @@ Test unitarios sobre el código implementado
 #sys.path.append('../src/')
 import unittest
 from src import modelo
+from src import pospersonajes as pp
 from src import lecturaEpub as lec
 
 #print(sys.path)
 m = modelo.modelo();
 m.crearDict()
+poslex = pp.pospersonajes()
 
 class testUnitarios(unittest.TestCase):
     
@@ -25,32 +27,32 @@ class testUnitarios(unittest.TestCase):
     def test_01_LecturaEpub(self):
         res = {0:{'Pedro Pérez': 2}, 1:{'Josema':1}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}}
         self.comprobarPersonajes(res)
-    
+
     def test_02_AnadirPersonaje(self):
         m.anadirPersonaje('Andrea')
         res = {0:{'Pedro Pérez': 2}, 1:{'Josema':1}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
-        
+
     def test_03_EliminarPersonaje(self):
         m.eliminarPersonaje(1)
         res = {0:{'Pedro Pérez': 2}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
-            
+
     def test_04_JuntarPersonajes(self):
         m.juntarPersonajes(3,2)
         res = {0:{'Pedro Pérez': 2}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
-        
+
     def test_05_anadirReferenciaAPersonaje(self):
         m.anadirReferenciaPersonaje(0,'peperez')
         res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 4:{'Ana':1}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
-        
+
     def test_06_eliminarReferenciaAPersonaje(self):
         m.eliminarReferenciaPersonaje(4,'Ana')
         res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
-        
+
     def test_07_AnadirJuntarPersonajes(self):
         m.anadirPersonaje('Andrea')
         res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}, 6:{'Andrea':0}}
@@ -58,7 +60,7 @@ class testUnitarios(unittest.TestCase):
         m.juntarPersonajes(5,6)
         res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}}
         self.comprobarPersonajes(res)
-        
+
     def comprobarPersonajes(self, res):
         obt = m.getPersonajes()
         i = 0
@@ -70,7 +72,7 @@ class testUnitarios(unittest.TestCase):
             for sk, sj in zip(res[k].keys(),per.keys()):
                 self.assertEqual(per[sj],res[k][sk])
             i+=1
-    
+
     def test_08_leerEpub(self):
         txt = list()
         txt.append('')
@@ -87,7 +89,7 @@ class testUnitarios(unittest.TestCase):
         it = l.siguienteArchivo()
         for i in txt:
             self.assertEqual(i,next(it))
-    
+
     def test_09_getDictParsear(self):
         m.anadirPersonaje('Pedro')
         res = ['Pedro Pérez', 'peperez', 'Pedro Rodríguez', 'Pedro', 'Andrea']
@@ -95,24 +97,39 @@ class testUnitarios(unittest.TestCase):
         self.assertEqual(len(res),len(obt))
         for i in range(len(res)):
             self.assertEqual(res[i],obt[i])
-            
+
     def test_10_posPalabrasDict(self):
         m.crearDict()
         m.anadirPersonaje('María')
         m.anadirPersonaje('relleno')
+        m.obtenerPosPers()
         res = {'Pedro Pérez': [23, 54], 'Josema': [24], 'Pedro': [35, 41], 'Pedro Rodríguez': [40], 'Ana': [63], 'María': [45], 'relleno': [22, 30, 39, 44, 53]}
-        #Se deja la programacion de las comprobaciones para momentos posteriores del sprint
-        
+        x = m.getPersonajes()
+        for i in x.keys():
+            pers = x[i].getPersonaje()
+            for n in pers.keys():
+                self.assertEqual(pers[n],res[n])
+
     def test_11_esSubcadena(self):
         l = ["Alabardero", "Ala", "Alto", "Baje", "Asta", "Corzo", "lata"]
         res1 = ['Alabardero', 'Ala', 'Alto']
         res2 = ['lata']
         res3 = []
-        self.assertEquals(res1,m.esSubcadena("Al",l))
-        self.assertEquals(res2,m.esSubcadena("la",l))
-        self.assertEquals(res3,m.esSubcadena("li",l))
+        self.assertEqual(res1,poslex.esSubcadena("Al",l))
+        self.assertEqual(res2,poslex.esSubcadena("la",l))
+        self.assertEqual(res3,poslex.esSubcadena("li",l))
         
-        
-    
+    def test_12_juntarListas(self):
+        m.juntarPersonajes(0,2)
+        m.juntarPosiciones()
+        res = {0: [23, 35, 41, 54], 1: [24], 3: [40], 4: [63], 5: [45], 6: [22, 30, 39, 44, 53]}
+        x = m.getPersonajes()
+        for i in x.keys():
+            self.assertEqual(res[i],x[i].getPosiciones())
+            
+    def test_13_matrizAdyacencia(self):
+        res = [[0,1,2,0,1,6],[1,0,0,0,0,1],[2,0,0,0,1,2],[0,0,0,0,0,0],[1,0,1,0,0,1],[6,1,2,0,1,0]]
+        self.assertEqual(res,m.getMatrizAdyacencia)
+            
 if __name__ == '__main__':
     unittest.main()
