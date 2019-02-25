@@ -8,6 +8,7 @@ Clase con la que la vista interactua
 import ply.lex as lex
 from src import personaje as p
 from src import creadict as cd
+from src import pospersonajes as pp
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -31,27 +32,21 @@ class modelo:
         self.personajes = p
         self.numpers = n
         self.sigid = n
-        
+    
+    def obtenerPosPers(self):
+        posper = pp.pospersonajes()
+        res = posper.obtenerPos(self.texto, self.getDictParsear())
+        for i in self.personajes.keys():
+            pers = self.personajes[i].getPersonaje()
+            for n in pers.keys():
+                pers[n] = res[n]
+                
     def getDictParsear(self):
         l = list()
         for i in self.personajes.keys():
             for n in self.personajes[i].getPersonaje():
                 if(n not in l):
                     l.append(n)
-        return l
-    
-    def esSubcadena(self,st,lista):
-        l = list()
-        aux = True
-        for pal in lista:
-            for i in range(len(st)):
-                if(st[i] != pal[i]):
-                    aux = False
-                    break
-            if(aux):
-                l.append(pal)
-            else:
-                aux = True
         return l
     
     def getPersonajes(self):
