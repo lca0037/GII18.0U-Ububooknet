@@ -125,7 +125,7 @@ class testUnitarios(unittest.TestCase):
         res = {0: [23, 35, 41, 54], 1: [24], 3: [40], 4: [63], 5: [45], 6: [22, 30, 39, 44, 53]}
         x = m.getPersonajes()
         for i in x.keys():
-            self.assertEqual(res[i],x[i].getPosiciones())
+            self.assertEqual(res[i],x[i].getPosicionPers())
             
     def test_13_matrizAdyacencia(self):
         res = [[0,1,2,0,1,6],[1,0,0,0,0,1],[2,0,0,0,1,2],[0,0,0,0,0,0],[1,0,1,0,0,1],[6,1,2,0,1,0]]

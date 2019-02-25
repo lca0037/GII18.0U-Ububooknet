@@ -100,3 +100,14 @@ class modelo:
                     del p[ref]
                 else:
                     del self.personajes[idp]
+    
+    def juntarPosiciones(self):
+        for i in self.personajes.keys():
+            pers = self.personajes[i].getPersonaje()
+            pos = self.personajes[i].getPosicionPers()
+            for n in pers.keys():
+                    i = 0
+                    for j in pers[n]:
+                        while(i<len(pos) and pos[i]<j):
+                            i+=1
+                        pos.insert(i,j)
