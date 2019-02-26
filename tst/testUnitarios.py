@@ -12,6 +12,7 @@ import unittest
 from src import modelo
 from src import pospersonajes as pp
 from src import lecturaEpub as lec
+import numpy as np
 
 #print(sys.path)
 m = modelo.modelo();
@@ -129,7 +130,8 @@ class testUnitarios(unittest.TestCase):
             
     def test_13_matrizAdyacencia(self):
         res = [[0,1,2,0,1,6],[1,0,0,0,0,1],[2,0,0,0,1,2],[0,0,0,0,0,0],[1,0,1,0,0,1],[6,1,2,0,1,0]]
-        self.assertEqual(res,m.getMatrizAdyacencia)
+        obt = m.getMatrizAdyacencia(5).tolist()
+        self.assertEqual(res,obt)
             
 if __name__ == '__main__':
     unittest.main()

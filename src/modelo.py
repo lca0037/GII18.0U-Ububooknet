@@ -11,6 +11,7 @@ from src import creadict as cd
 from src import pospersonajes as pp
 import matplotlib.pyplot as plt
 import numpy as np
+import networkx as nx
 
 class modelo:
     
@@ -111,3 +112,21 @@ class modelo:
                         while(i<len(pos) and pos[i]<j):
                             i+=1
                         pos.insert(i,j)
+        
+    def getMatrizAdyacencia(self,rango):
+        persk = list(self.personajes.keys())
+        enlaces = list()
+        tam = len(persk)
+        G = nx.Graph()
+        for i in range(tam):
+            for j in range(i+1,tam):
+                peso = 0
+                for posi in self.personajes[persk[i]].getPosicionPers():
+                    for posj in self.personajes[persk[j]].getPosicionPers():
+                        if(posj>=(posi-rango)):
+                            if(posj<=(posi+rango)):
+                                peso+=1
+                            else:
+                                break
+                G.add_edge(persk[i],persk[j],weight=peso)
+        return nx.adjacency_matrix(G).todense()
