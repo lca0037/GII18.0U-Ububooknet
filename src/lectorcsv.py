@@ -24,7 +24,17 @@ class lectorcsv:
         print(pers)
     
     def exportDict(self):
-        print('Metodo sin implementar')
+        pers = {'Toni': {'Antonio': 0, 'Toño': 0}, 'Mar':{'Marimar': 0, 'María': 0, 'Mar':0}, 'Juan': {'Juan': 0}, 'Andrea': {'Andrea': 0}, 'Sandra': {'Sandra': 0, 'Sand': 0}}
+        with open(self.fichero, mode='w', newline='') as csvfile:
+            spamwriter = csv.writer(csvfile, delimiter=',')
+            for persk in pers.keys():
+                spamwriter.writerow([persk])
+                spamwriter.writerow(pers[persk].keys())
 
-lcsv = lectorcsv('PruebasImpExp.csv')
-lcsv.importDict()
+
+#lcsv = lectorcsv('PruebasImpExp.csv')
+#lcsv.importDict()
+#
+#lcsv2 = lectorcsv('dictexportado.csv')
+#lcsv2.exportDict()
+#lcsv2.importDict()
