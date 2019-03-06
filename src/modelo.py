@@ -12,6 +12,8 @@ from src import pospersonajes as pp
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
+import urllib
+from bs4 import BeautifulSoup
 
 class modelo:
     
@@ -115,7 +117,6 @@ class modelo:
         
     def getMatrizAdyacencia(self,rango):
         persk = list(self.personajes.keys())
-        enlaces = list()
         tam = len(persk)
         G = nx.Graph()
         for i in range(tam):
@@ -130,3 +131,11 @@ class modelo:
                                 break
                 G.add_edge(persk[i],persk[j],weight=peso)
         return nx.adjacency_matrix(G).todense()
+    
+    def scrapeWiki(self,url):
+        web = urllib.request.urlopen(url)
+        html = BeautifulSoup(web.read(), "html.parser")
+        for pers in html.find_all("a", {"class": "category-page__member-link"}):
+            pn = pers.get('title')
+            self.personajes[pn] = p.personaje(pn,0)
+            
