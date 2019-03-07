@@ -5,10 +5,10 @@ Clase con la que la vista interactua
 @author: luism
 """
 
-import ply.lex as lex
 from src import personaje as p
 from src import creadict as cd
 from src import pospersonajes as pp
+from src import lectorcsv
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
@@ -17,7 +17,11 @@ from bs4 import BeautifulSoup
 
 class modelo:
     
+    __instance = None
+    
     def __init__(self):
+        if modelo.__instance is not None:
+            raise Exception("An instance already exists!")
         self.texto = 'Esto es un documento de pruebas para comprobar que se obtienen'
         self.texto += ' bien las palabras en mayúsculas. Felipe, esto es texto de '
         self.texto += 'relleno Pedro Pérez, Josema esto es más texto de relleno para'
@@ -28,13 +32,20 @@ class modelo:
         self.personajes= dict()
         self.numpers = 0
         self.sigid = 0
+        self.__csv = lectorcsv.lectorcsv(self)
+        if(modelo.__instance == None):
+            modelo.__instance = self
      
+    @staticmethod
+    def getInstance():
+        if modelo.__instance == None:
+            modelo()
+        return modelo.__instance
+    
     def crearDict(self):
         creard = cd.creadict()
-        p,n = creard.crearDict(self.texto)
-        self.personajes = p
-        self.numpers = n
-        self.sigid = n
+        creard.crearDict(self.texto)
+        self.sigid = self.numpers 
     
     def obtenerPosPers(self):
         posper = pp.pospersonajes()
@@ -59,19 +70,23 @@ class modelo:
         x = list()
         y = list()
         for k in self.personajes.keys():
-            p = self.personajes[k].getPersonaje()
-            for sk in p.keys():
-                x.append(sk)
-                y.append(p[sk])
+            x.append(k)
+            y.append(self.personajes[k].getNumApariciones())
         tam = np.arange(self.numpers)
         plt.title('Frecuencia personajes')
         plt.xlabel('Nombre')
         plt.ylabel('Apariciones')
         plt.bar(tam,height=y)
         plt.xticks(tam,x)
+        
+    def vaciarDiccionario(self):
+        self.personajes = dict()
+        self.numpers = 0
+        self.sigid = 0
     
     def anadirPersonaje(self, pers):
-        self.personajes[self.numpers] = p.personaje(pers,0)
+        self.personajes[self.numpers] = p.personaje()
+        self.personajes[self.numpers].getPersonaje()[pers] = list()
         self.numpers+=1
         
     def eliminarPersonaje(self, idPersonaje):
@@ -83,9 +98,7 @@ class modelo:
             pers1 = self.personajes[idPersonaje1].getPersonaje()
             pers2 = self.personajes[idPersonaje2].getPersonaje()
             for k in pers2.keys():
-                if k in pers1.keys():
-                    pers1[k]+=pers2[k]
-                else:
+                if k not in pers1.keys():
                     pers1[k]=pers2[k]
             self.eliminarPersonaje(idPersonaje2)
             
@@ -93,7 +106,7 @@ class modelo:
         if(idp in self.personajes.keys()):
             p = self.personajes[idp].getPersonaje()
             if(ref not in p.keys()):
-                p[ref]=0
+                p[ref]= list()
         
     def eliminarReferenciaPersonaje(self,idp,ref):
         if(idp in self.personajes.keys()):
@@ -103,7 +116,7 @@ class modelo:
                     del p[ref]
                 else:
                     del self.personajes[idp]
-    
+        
     def juntarPosiciones(self):
         for i in self.personajes.keys():
             pers = self.personajes[i].getPersonaje()
@@ -137,5 +150,11 @@ class modelo:
         html = BeautifulSoup(web.read(), "html.parser")
         for pers in html.find_all("a", {"class": "category-page__member-link"}):
             pn = pers.get('title')
-            self.personajes[pn] = p.personaje(pn,0)
+            self.anadirPersonaje(pn)
+        
+    def importDict(self, fichero):
+        self.__csv.importDict(fichero)
+    
+    def exportDict(self, fichero):
+        self.__csv.exportDict(fichero)
             

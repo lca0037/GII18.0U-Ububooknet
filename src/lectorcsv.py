@@ -1,35 +1,35 @@
 # -*- coding: utf-8 -*-
 import csv
+from src import personaje as p
 
 class lectorcsv:
     
-    def __init__(self,fichero):
-        self.fichero = fichero
+    def __init__(self,m):
+        self.__modelo = m
         
-    
-    def importDict(self):
+    def importDict(self, fichero):
         i = 0
-        pers = dict()
-        with open(self.fichero, newline='') as csvfile:
+        pers = self.__modelo.getPersonajes()
+        with open(fichero, newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',',skipinitialspace=True)
             for row in spamreader:
                 if (i%2 ==0):
                     i+=1
                     actual = row[0]
-                    pers[actual] = dict()
+                    pers[actual] = p.personaje()
                 else:
                     i+=1
                     for n in row:
-                        pers[actual][n] = 0
+                        self.__modelo.anadirReferenciaPersonaje(actual,n)
         print(pers)
     
-    def exportDict(self):
-        pers = {'Toni': {'Antonio': 0, 'Toño': 0}, 'Mar':{'Marimar': 0, 'María': 0, 'Mar':0}, 'Juan': {'Juan': 0}, 'Andrea': {'Andrea': 0}, 'Sandra': {'Sandra': 0, 'Sand': 0}}
-        with open(self.fichero, mode='w', newline='') as csvfile:
+    def exportDict(self, fichero):
+        pers = self.__modelo.getPersonajes()
+        with open(fichero, mode='w', newline='') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',')
             for persk in pers.keys():
                 spamwriter.writerow([persk])
-                spamwriter.writerow(pers[persk].keys())
+                spamwriter.writerow(pers[persk].getPersonaje().keys())
 
 
 #lcsv = lectorcsv('PruebasImpExp.csv')

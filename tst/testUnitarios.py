@@ -12,10 +12,9 @@ import unittest
 from src import modelo
 from src import pospersonajes as pp
 from src import lecturaEpub as lec
-import numpy as np
 
 #print(sys.path)
-m = modelo.modelo();
+m = modelo.modelo.getInstance()
 m.crearDict()
 poslex = pp.pospersonajes()
 
@@ -26,53 +25,53 @@ class testUnitarios(unittest.TestCase):
     #se ejecutan en orden alfabético y no en el orden en el que están definidos
     
     def test_01_LecturaEpub(self):
-        res = {0:{'Pedro Pérez': 2}, 1:{'Josema':1}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}}
+        res = {0:['Pedro Pérez'], 1:['Josema'], 2:['Pedro'], 3:['Pedro Rodríguez'], 4:['Ana']}
         self.comprobarPersonajes(res)
 
     def test_02_AnadirPersonaje(self):
         m.anadirPersonaje('Andrea')
-        res = {0:{'Pedro Pérez': 2}, 1:{'Josema':1}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}, 5:{'Andrea':0}}
+        res = {0:['Pedro Pérez'], 1:['Josema'], 2:['Pedro'], 3:['Pedro Rodríguez'], 4:['Ana'], 5:['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_03_EliminarPersonaje(self):
         m.eliminarPersonaje(1)
-        res = {0:{'Pedro Pérez': 2}, 2:{'Pedro':2}, 3:{'Pedro Rodríguez':1}, 4:{'Ana':1}, 5:{'Andrea':0}}
+        res = {0:['Pedro Pérez'], 2:['Pedro'], 3:['Pedro Rodríguez'], 4:['Ana'], 5:['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_04_JuntarPersonajes(self):
         m.juntarPersonajes(3,2)
-        res = {0:{'Pedro Pérez': 2}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 4:{'Ana':1}, 5:{'Andrea':0}}
+        res = {0:['Pedro Pérez'], 3:['Pedro Rodríguez', 'Pedro'], 4:['Ana'], 5:['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_05_anadirReferenciaAPersonaje(self):
         m.anadirReferenciaPersonaje(0,'peperez')
-        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 4:{'Ana':1}, 5:{'Andrea':0}}
+        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 4:['Ana'], 5:['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_06_eliminarReferenciaAPersonaje(self):
         m.eliminarReferenciaPersonaje(4,'Ana')
-        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}}
+        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 5:['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_07_AnadirJuntarPersonajes(self):
         m.anadirPersonaje('Andrea')
-        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}, 6:{'Andrea':0}}
+        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 5:['Andrea'], 6:['Andrea']}
         self.comprobarPersonajes(res)
         m.juntarPersonajes(5,6)
-        res = {0:{'Pedro Pérez': 2,'peperez': 0}, 3:{'Pedro Rodríguez':1, 'Pedro':2}, 5:{'Andrea':0}}
+        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 5:['Andrea']}
         self.comprobarPersonajes(res)
 
     def comprobarPersonajes(self, res):
         obt = m.getPersonajes()
-        i = 0
         self.assertEqual(len(res),len(obt))
         for k,j in zip(res.keys(),obt.keys()):
             per = obt[j].getPersonaje()
             self.assertEqual(k,j)
             self.assertEqual(len(per),len(res[k]))
-            for sk, sj in zip(res[k].keys(),per.keys()):
-                self.assertEqual(per[sj],res[k][sk])
-            i+=1
+            i = 0
+            for sk, sj in zip(res[k][0],per.keys()):
+                self.assertEqual(sk,res[k][0][i])
+                i+=1
 
     def test_08_leerEpub(self):
         txt = list()
@@ -100,6 +99,7 @@ class testUnitarios(unittest.TestCase):
             self.assertEqual(res[i],obt[i])
 
     def test_10_posPalabrasDict(self):
+        m.vaciarDiccionario()
         m.crearDict()
         m.anadirPersonaje('María')
         m.anadirPersonaje('relleno')

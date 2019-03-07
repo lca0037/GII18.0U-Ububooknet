@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import ply.lex as lex
 from src import personaje as p
+from src import modelo as m
 
 class creadict:
     
@@ -44,18 +45,11 @@ class creadict:
         t.lexer.skip(1)
 
     def crearDict(self, texto):
+        mod = m.modelo.getInstance()
         txt = ". " + texto
         lex.input(txt)
-        personajes = dict()
-        numpers = 0
         for tok in iter(lex.token, None):
-            if(tok.value in self.aux.keys()):
-                self.aux[tok.value]+=1
-            else:
-                self.aux[tok.value]=1
-        
-        for k in self.aux.keys():
-            personajes[numpers]= p.personaje(k,self.aux[k])
-            numpers+=1
-        
-        return personajes, numpers
+            if(tok.value not in self.aux.keys()):
+                self.aux[tok.value] = None
+                mod.anadirPersonaje(tok.value)
+    
