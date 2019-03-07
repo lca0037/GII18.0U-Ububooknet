@@ -20,9 +20,11 @@ poslex = pp.pospersonajes()
 
 class testUnitarios(unittest.TestCase):
     
-    #Se pone el número del test indicando el orden en el que se ejecutan debido a ser la solución
-    #más sencilla que se ha encontrado al problema que consiste en que los test
-    #se ejecutan en orden alfabético y no en el orden en el que están definidos
+    '''
+    Se pone el número del test indicando el orden en el que se ejecutan debido a ser la solución
+    más sencilla que se ha encontrado al problema que consiste en que los test
+    se ejecutan en orden alfabético y no en el orden en el que están definidos
+    '''
     
     def test_01_LecturaEpub(self):
         res = {0:['Pedro Pérez'], 1:['Josema'], 2:['Pedro'], 3:['Pedro Rodríguez'], 4:['Ana']}

@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 import ply.lex as lex
 
+"""
+Clase para obtener las posiciones de los personajes en el texto
+
+@author: Luis Miguel Cabrejas
+"""
+
 class pospersonajes:
     
+    '''
+    Constructor de la clase
+    '''
     def __init__(self):
         self.lexer = lex.lex(module=self)
         self.nombres = list()
@@ -13,9 +22,15 @@ class pospersonajes:
         self.ultcoinc = ""
         self.resul = dict()
     
+    #Tokens del lexer
     tokens = ("PALABRA", "ESPACIO")
+    #Estados del lexer
     states = (('coincidencia','exclusive'),)
     
+    '''
+    Función que usa el lexer para comprobar si hay una palabra y realiza operaciones
+    en función de las coincidencias de las palabras
+    '''
     def t_PALABRA(self, t):
         r"[^\s.,()\[\]<>\'\":;¿?¡!=\-_]+"
         self.nomscoinc = self.esSubcadena(t.value, self.nombres)
@@ -43,6 +58,10 @@ class pospersonajes:
     def t_ESPACIO(self, t):
         r"[\s.,()\[\]<>\'\":;¿?¡!=\-_]+"
         
+    '''
+    Función que cuando ha habido una coincidencia previa pero no definitiva 
+    comprueba las siguientes palabras
+    '''
     def t_coincidencia_PALABRA(self, t):
         r"([^\s.,()\[\]<>\'\":;¿?¡!=\-_]+|[\s.,()\[\]<>\'\":;¿?¡!=\-_])"
         self.cadaux += t.value
@@ -78,7 +97,8 @@ class pospersonajes:
             clon.input(txt)
             for tok in iter(clon.token, None):
                 print()
-        
+       
+    
     def t_error(self, t):
         print ("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
@@ -87,6 +107,9 @@ class pospersonajes:
         print ("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
         
+    '''
+    Función que comienza el recorrido por el texto para obtener las posiciones
+    '''
     def obtenerPos(self, texto, nombres):
         self.nombres = nombres
         for n in nombres:
@@ -95,7 +118,13 @@ class pospersonajes:
         for tok in iter(lex.token, None):
             print()
         return self.resul
-                
+               
+    '''
+    Función que comprueba recorre una cadena de texto y comprueba con cadenas de texto
+    de una lista dada como parametro coincide, teniendo en cuenta que la coincidencia
+    debe darse de toda la primera cadena y teniendo los caracteres en la misma 
+    posición que las cadenas obtenidas de la lista
+    '''
     def esSubcadena(self,st,lista):
         l = list()
         aux = True
