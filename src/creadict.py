@@ -37,10 +37,12 @@ class creadict:
         r"[\s]"
     
     '''
-    Función del lexer que comprueba si hay un punto para cambiar de estado
+    Función del lexer que comprueba si hay un signo que indica que la siguiente
+    palabra pueda estar en mayúsculas sin llegar a ser un nombre propio y 
+    cambia de estado para comprobarlo
     '''
     def t_PUNTO(self,t):
-        r"\.[\s]"
+        r"(\.+[\s])|[,\(\)\[\]<>\'\":;¿\?¡!=\-_]"
         t.lexer.begin('punto')
         
     '''
@@ -59,11 +61,14 @@ class creadict:
         return t
     
     '''
-    Función del lexer para salir del estado punto
+    Función del lexer para salir del estado punto si no hay un personaje
     '''
     def t_punto_OTRO(self,t):
         r"[^\s\.]+"
         t.lexer.begin('INITIAL')
+        
+    def t_punto_ESPACIOS(self,t):
+        r"[\s]"
     
     def t_punto_error(self,t):
         print ("Illegal character '%s'" % t.value[0])

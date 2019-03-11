@@ -32,7 +32,7 @@ class pospersonajes:
     en función de las coincidencias de las palabras
     '''
     def t_PALABRA(self, t):
-        r"[^\s.,()\[\]<>\'\":;¿?¡!=\-_]+"
+        r"[^\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_]+"
         self.nomscoinc = self.esSubcadena(t.value, self.nombres)
         ncoinc = len(self.nomscoinc)
         if(ncoinc > 0):
@@ -56,14 +56,14 @@ class pospersonajes:
             self.contador += 1
         
     def t_ESPACIO(self, t):
-        r"[\s.,()\[\]<>\'\":;¿?¡!=\-_]+"
+        r"[\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_]+"
         
     '''
     Función que cuando ha habido una coincidencia previa pero no definitiva 
     comprueba las siguientes palabras
     '''
     def t_coincidencia_PALABRA(self, t):
-        r"([^\s.,()\[\]<>\'\":;¿?¡!=\-_]+|[\s.,()\[\]<>\'\":;¿?¡!=\-_])"
+        r"([^\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_]+|[\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_])"
         self.cadaux += t.value
 #        print('Coinc previas:',self.nomscoinc)
         self.nomscoinc = self.esSubcadena(self.cadaux, self.nomscoinc)
