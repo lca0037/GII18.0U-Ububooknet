@@ -3,6 +3,7 @@ from src import personaje as p
 from src import creadict as cd
 from src import pospersonajes as pp
 from src import lectorcsv
+from src import lecturaEpub
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
@@ -23,13 +24,7 @@ class modelo:
     def __init__(self):
         if modelo.__instance is not None:
             raise Exception("An instance already exists!")
-        self.texto = 'Esto es un documento de pruebas para comprobar que se obtienen'
-        self.texto += ' bien las palabras en mayúsculas. Felipe, esto es texto de '
-        self.texto += 'relleno Pedro Pérez, Josema esto es más texto de relleno para'
-        self.texto += ' poder hacer pruebas Pedro esto sigue siendo relleno Pedro '
-        self.texto += 'Rodríguez, Pedro, texto de relleno. María se fue a poner más '
-        self.texto += 'texto de relleno. Pedro Pérez esto como no sigue siendo texto'
-        self.texto += ' de pruebas Ana.'
+        self.__texto = ''
         self.personajes= dict()
         self.numpers = 0
         self.sigid = 0
@@ -51,7 +46,7 @@ class modelo:
     '''
     def crearDict(self):
         creard = cd.creadict()
-        creard.crearDict(self.texto)
+        creard.crearDict(self.getTexto())
         self.sigid = self.numpers 
     
     '''
@@ -59,7 +54,7 @@ class modelo:
     '''
     def obtenerPosPers(self):
         posper = pp.pospersonajes()
-        res = posper.obtenerPos(self.texto, self.getDictParsear())
+        res = posper.obtenerPos(self.getTexto(), self.getDictParsear())
         for i in self.personajes.keys():
             pers = self.personajes[i].getPersonaje()
             for n in pers.keys():
@@ -209,4 +204,16 @@ class modelo:
     '''
     def exportDict(self, fichero):
         self.__csv.exportDict(fichero)
-            
+         
+    '''
+    Método para obtener el texto del epub del que se quiere obtener la red de 
+    personajes
+    '''
+    def obtTextoEpub(self,fichero):
+        l = lecturaEpub.lecturaEpub(fichero)
+        self.__texto = ''
+        for f in l.siguienteArchivo():
+            self.__texto += f
+
+    def getTexto(self):
+        return self.__texto

@@ -15,6 +15,8 @@ from src import lecturaEpub as lec
 
 #print(sys.path)
 m = modelo.modelo.getInstance()
+m.obtTextoEpub(r"C:\Users\luism\Desktop\Ubu\TFG\Repositorio\GII18.0U-Ububooknet\tst\epubPruebas.epub")
+m.vaciarDiccionario()
 m.crearDict()
 poslex = pp.pospersonajes()
 
@@ -87,7 +89,6 @@ class testUnitarios(unittest.TestCase):
         texto += ' de pruebas Ana.'
         txt.append(texto)
         l = lec.lecturaEpub('tst/epubPruebas.epub')
-        l.obtenerOrdenLectura()
         it = l.siguienteArchivo()
         for i in txt:
             self.assertEqual(i,next(it))

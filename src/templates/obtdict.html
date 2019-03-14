@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Ububooknet</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<header id="header">
+		<div class="logo">
+			<h1>Ububooknet</h1>
+		</div>
+		<div class="region"> 
+			<h2>Importar Diccionario</h2>
+		</div>
+		<div class="menu">
+			<ul>
+				<li><a href="#">Inicio</a></li>
+			</ul>
+		</div>
+	</header>
+	<form action="" method="post" enctype=multipart/form-data>
+		<div id="txt1">Introduzca la dirección url donde se encuentren los personajes a importar</div>
+		<input type="text" name="txt txt-url" size="40" placeholder="Url perteneciente a www.fandom.com" value="{{request.form.url}}">
+		<!--input type="text" name="txt txt-fichepub" size="40" placeholder="Ruta completa al fichero epub" value="{{request.form.fichepub}}{{epub}}"-->
+		<input type="submit" name="btn btn-scrape" value="Obtener">
+	</form>
+	<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
+		<input type="submit" name="btn btn-volver" value="Volver">
+	</form>
+	<p>{{error}}</p>
+	<footer></footer>
+</body>
+</html>

@@ -42,7 +42,7 @@ class creadict:
     cambia de estado para comprobarlo
     '''
     def t_PUNTO(self,t):
-        r"(\.+[\s])|[,\(\)\[\]<>\'\":;¿\?¡!=\-_]"
+        r"(\.+[\s])|[\(\)\[\]<>\'\":;¿\?¡!=\-_]"
         t.lexer.begin('punto')
         
     '''

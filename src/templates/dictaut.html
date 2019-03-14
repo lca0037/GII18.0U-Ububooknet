@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Ububooknet</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<header id="header">
+		<div class="logo">
+			<h1>Ububooknet</h1>
+		</div>
+		<div class="region"> 
+			<h2>Diccionarios Automáticos</h2>
+		</div>
+		<div class="menu">
+			<ul>
+				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+			</ul>
+		</div>
+	</header>
+	<form action="" class="form form-menu" method="post">
+		<input type="submit" name="btn btn-creadict" value="Crear Diccionario">
+		<input type="submit" name="btn btn-impdict" value="Importar Diccionario">
+		<input type="submit" name="btn btn-obtdict" value="Obtener Diccionario">
+		<input type="checkbox" name="cbx cbx-vacdit">
+		<label for="cbx cbx-vacdit">Vaciar el diccionario actual</label>
+	</form>
+	<p>{{msg}}</p>
+	<form action="{{ url_for('menu') }}" class="form form-volver" method="post">
+		<input type="submit" name="btn btn-volver" value="Volver">
+	</form>
+
+	<footer></footer>
+</body>
+</html>
