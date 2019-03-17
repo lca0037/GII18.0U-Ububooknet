@@ -68,7 +68,7 @@ class creadict:
         t.lexer.begin('INITIAL')
         
     def t_punto_ESPACIOS(self,t):
-        r"[\s]"
+        r"[\s\.]"
     
     def t_punto_error(self,t):
         print ("Illegal character '%s'" % t.value[0])

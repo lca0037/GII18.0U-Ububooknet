@@ -10,7 +10,7 @@
 			<h1>Ububooknet</h1>
 		</div>
 		<div class="region"> 
-			<h2>Importar Diccionario</h2>
+			<h2>Red</h2>
 		</div>
 		<div class="menu">
 			<ul>
@@ -18,15 +18,15 @@
 			</ul>
 		</div>
 	</header>
-	<form action="" method="post" enctype=multipart/form-data>
-		<div id="txt1">Introduzca la ruta al fichero csv</div>
-		<input type="file" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
-		<input type="submit" name="btn btn-cargarcsv" value="Cargar">
+	<form action="" method="post" class="form form-vis">
+		<input type="submit" name="btn btn-vis" value="Visualizar red">
 	</form>
-	<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
+	<form action="{{ url_for('params') }}" class="form form-volver" method="post">
 		<input type="submit" name="btn btn-volver" value="Volver">
 	</form>
-	<p>{{error}}</p>
+	<form action="{{ url_for('informe') }}" class="form form-informe" method="post">
+		<input type="submit" name="btn btn-informe" value="Ver Informe">
+	</form>
 	<footer></footer>
 </body>
 </html>

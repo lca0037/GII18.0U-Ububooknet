@@ -20,7 +20,6 @@
 		<input type="text" name="txt txt-idpers" size="40" placeholder="Nombre Personaje" value="{{request.form.idpers}}">
 		<div id="txt1">Introduzca la nueva referencia al personaje</div>
 		<input type="text" name="txt txt-refpers" size="40" placeholder="Referencia Personaje" value="{{request.form.refpers}}">
-		<!-- input type="file" class="btn btn-selfile" name="myFile" value="{{request.form.myFile}}" -->
 		<input type="submit" name="btn btn-newref" value="Añadir">
 	</form>
 	<p>{{error}}</p>
@@ -31,7 +30,7 @@
 		{% for i in pers.keys() %}
 		<div id="IdPersonaje">
 			ID Personaje: {{ i }}	
-			{% for n in pers[i].keys() %}
+			{% for n in pers[i].getPersonaje().keys() %}
 			<div id="IdP">Id Personaje: {{ i }} </div>
 			<div id="NomP">Nombre personaje: {{ n }} </div>
 			{% endfor %}

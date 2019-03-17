@@ -25,14 +25,17 @@
 		<input type="submit" name="btn btn-newrefpers" value="Añadir Referencia A Personaje">
 		<input type="submit" name="btn btn-delrefpers" value="Eliminar Referencia A Personaje">
 	</form>
-	<form action="{{ url_for('menu') }}" class="form form-volver" method="post">
+	<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
 		<input type="submit" name="btn btn-volver" value="Volver">
+	</form>
+	<form action="{{ url_for('params') }}" class="form form-sig" method="post">
+		<input type="submit" name="btn btn-sig" value="Siguiente">
 	</form>
 	<div id="Personajes">
 		{% for i in pers.keys() %}
 		<div id="IdPersonaje">
 			ID Personaje: {{ i }}	
-			{% for n in pers[i].keys() %}
+			{% for n in pers[i].getPersonaje().keys() %}
 			<div id="IdP">Id Personaje: {{ i }} </div>
 			<div id="NomP">Nombre personaje: {{ n }} </div>
 			{% endfor %}

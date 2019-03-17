@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Ububooknet</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<header id="header">
+		<div class="logo">
+			<h1>Ububooknet</h1>
+		</div>
+		<div class="region"> 
+			<h2>Parámetros adicionales</h2>
+		</div>
+		<div class="menu">
+			<ul>
+				<li><a href="#">Inicio</a></li>
+			</ul>
+		</div>
+	</header>
+	<form action="" method="post" enctype=multipart/form-data>
+		<div id="txt1">Introduzca el número mínimo de apariciones en el libro</div>
+		<input type="text" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones" value="{{request.form.apar}}">
+		<p>{{error1}}</p>
+		<div id="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
+		<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas" value="{{request.form.dist}}">
+		<p>{{error2}}</p>
+		<input type="submit" name="btn btn-red" value="Obtener red">
+	</form>
+	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
+		<input type="submit" name="btn btn-volver" value="Volver">
+	</form>
+	<footer></footer>
+</body>
+</html>

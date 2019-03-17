@@ -18,7 +18,6 @@
 	<form action="" method="post" enctype=multipart/form-data>
 		<div id="txt1">Introduzca la id del personaje a eliminar</div>
 		<input type="text" name="txt txt-idpers" size="40" placeholder="Id Personaje" value="{{request.form.idpers}}">
-		<!-- input type="file" class="btn btn-selfile" name="myFile" value="{{request.form.myFile}}" -->
 		<input type="submit" name="btn btn-delpers" value="Eliminar">
 	</form>
 	<p>{{error}}</p>
@@ -29,7 +28,7 @@
 		{% for i in pers.keys() %}
 		<div id="IdPersonaje">
 			ID Personaje: {{ i }}	
-			{% for n in pers[i].keys() %}
+			{% for n in pers[i].getPersonaje().keys() %}
 			<div id="IdP">Id Personaje: {{ i }} </div>
 			<div id="NomP">Nombre personaje: {{ n }} </div>
 			{% endfor %}

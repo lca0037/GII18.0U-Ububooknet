@@ -26,10 +26,12 @@
 		<label for="cbx cbx-vacdit">Vaciar el diccionario actual</label>
 	</form>
 	<p>{{msg}}</p>
-	<form action="{{ url_for('menu') }}" class="form form-volver" method="post">
+	<form action="{{ url_for('index') }}" class="form form-volver" method="post">
 		<input type="submit" name="btn btn-volver" value="Volver">
 	</form>
-
+	<form action="{{ url_for('moddict') }}" class="form form-sig" method="post">
+		<input type="submit" name="btn btn-sig" value="Siguiente">
+	</form>
 	<footer></footer>
 </body>
 </html>
