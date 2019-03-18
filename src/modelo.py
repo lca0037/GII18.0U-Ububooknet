@@ -213,7 +213,7 @@ class modelo:
         l = lecturaEpub.lecturaEpub(fichero)
         self.__texto = ''
         for f in l.siguienteArchivo():
-            self.__texto += f
+            self.__texto += ". " + f
 
     def getTexto(self):
         return self.__texto
