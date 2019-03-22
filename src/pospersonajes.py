@@ -88,7 +88,10 @@ class pospersonajes:
             self.aux.append(t.value)
 #            print('Sin coincs en estado coincidencias, última coinc:',self.ultcoinc,'palabra actual:',self.contador,'cadena actual:',self.cadaux,'lista aux:',self.aux)
             t.lexer.begin('INITIAL')
-            self.resul[self.ultcoinc].append(self.contador)
+            if(self.ultcoinc != ""):
+                self.resul[self.ultcoinc].append(self.contador)
+            else:
+                del self.aux[0]
             self.contador += 1
             txt = ""
             for i in self.aux:

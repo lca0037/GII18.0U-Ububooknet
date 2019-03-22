@@ -23,6 +23,7 @@ def index():
         if(zipfile.is_zipfile(fullpath)):
             if("btn btn-cargarepub" in request.form):
                 m.obtTextoEpub(fullpath)
+                m.vaciarDiccionario()
                 return redirect(url_for('dictaut'))
         else: 
             error = "La ruta indicada no contiene un fichero epub"
