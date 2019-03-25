@@ -105,8 +105,8 @@ class modelo:
     Método para añadir un personaje al diccionario de personajes
     '''
     def anadirPersonaje(self, pers):
-        self.personajes[self.numpers] = p.personaje()
-        self.personajes[self.numpers].getPersonaje()[pers] = list()
+        self.personajes[str(self.numpers)] = p.personaje()
+        self.personajes[str(self.numpers)].getPersonaje()[pers] = list()
         self.numpers+=1
         
     '''

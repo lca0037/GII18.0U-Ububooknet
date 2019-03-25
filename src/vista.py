@@ -157,6 +157,7 @@ def joinpers():
         id2p = request.form['txt txt-id2pers']
         if(len(id1p)>0 and len(id2p)>0):
             m.juntarPersonajes(id1p,id2p)
+            print(id1p,id2p)
         else:
             error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
     return render_template('joinpers.html', error = error, pers = m.getPersonajes())

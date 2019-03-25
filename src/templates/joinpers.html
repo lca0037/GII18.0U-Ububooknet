@@ -17,10 +17,10 @@
 	</header>
 	<form action="" method="post" enctype=multipart/form-data>
 		<div id="txt1">Introduzca la id del primer personaje</div>
-		<input type="text" name="txt txt-idpers" size="40" placeholder="Id 1er Personaje" value="{{request.form.id1pers}}">
+		<input type="text" name="txt txt-id1pers" size="40" placeholder="Id 1er Personaje">
 		<div id="txt1">Introduzca la id del segundo personaje personaje</div>
-		<input type="text" name="txt txt-refpers" size="40" placeholder="Id 2do Personaje" value="{{request.form.id2pers}}">
-		<input type="submit" name="btn btn-newref" value="Añadir">
+		<input type="text" name="txt txt-id2pers" size="40" placeholder="Id 2do Personaje">
+		<input type="submit" name="btn btn-joinpers" value="Juntar">
 	</form>
 	<p>{{error}}</p>
 	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">

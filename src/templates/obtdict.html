@@ -20,7 +20,7 @@
 	</header>
 	<form action="" method="post" enctype=multipart/form-data>
 		<div id="txt1">Introduzca la dirección url donde se encuentren los personajes a importar</div>
-		<input type="text" name="txt txt-url" size="40" placeholder="Url perteneciente a www.fandom.com" value="{{request.form.url}}">
+		<input type="text" name="txt txt-url" size="40" placeholder="Url perteneciente a www.fandom.com">
 		<input type="submit" name="btn btn-scrape" value="Obtener">
 	</form>
 	<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">

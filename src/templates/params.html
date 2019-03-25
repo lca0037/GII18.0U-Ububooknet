@@ -20,10 +20,10 @@
 	</header>
 	<form action="" method="post" enctype=multipart/form-data>
 		<div id="txt1">Introduzca el número mínimo de apariciones en el libro</div>
-		<input type="text" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones" value="{{request.form.apar}}">
+		<input type="text" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones">
 		<p>{{error1}}</p>
 		<div id="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
-		<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas" value="{{request.form.dist}}">
+		<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas">
 		<p>{{error2}}</p>
 		<input type="submit" name="btn btn-red" value="Obtener red">
 	</form>
