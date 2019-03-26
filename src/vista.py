@@ -30,26 +30,6 @@ def index():
             return render_template('index.html', error = error)
     return render_template('index.html')
 
-#@app.route('/Menu/', methods=["GET", "POST"])
-#def menu():
-##    error = ''
-#    if(m.getTexto() == ''):
-#        return redirect(url_for('index'))
-#    if request.method == "POST":
-#        if("btn btn-dictauto" in request.form):
-#            return redirect(url_for('dictaut'))
-#        elif("btn btn-verdict" in request.form):
-#            return redirect(url_for('verdict'))
-#        elif("btn btn-moddict" in request.form):
-#            return redirect(url_for('moddict'))
-#        elif("btn btn-vacdict" in request.form):
-#            m.vaciarDiccionario()
-#        elif("btn btn-expdict" in request.form):
-#            print('Funcionalidad en desarrollo')
-#    return render_template('menu.html')
-##    return 'Hola mundo'
-
-
 @app.route('/Dicts-Automaticos/', methods=["GET", "POST"])
 def dictaut():
     msg = ''
@@ -142,7 +122,10 @@ def delpers():
     if request.method == "POST":
         perso = request.form['txt txt-idpers']
         if(len(perso)>0):
-            m.eliminarPersonaje(perso)
+            if(m.eliminarPersonaje(perso)):
+                error = 'Se ha eliminado correctamente el personaje'
+            else:
+                error = 'No existe ningún personaje con esa id'
         else:
             error = 'No se permiten textos vacíos como id de personaje'
     return render_template('delpers.html', error = error, pers = m.getPersonajes())
@@ -156,8 +139,10 @@ def joinpers():
         id1p = request.form['txt txt-id1pers']
         id2p = request.form['txt txt-id2pers']
         if(len(id1p)>0 and len(id2p)>0):
-            m.juntarPersonajes(id1p,id2p)
-            print(id1p,id2p)
+            if(m.juntarPersonajes(id1p,id2p)):
+                error = 'Los personajes se han juntado con éxito'
+            else:
+                error = 'Una o ambas ids son erroneas'
         else:
             error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
     return render_template('joinpers.html', error = error, pers = m.getPersonajes())
@@ -171,7 +156,10 @@ def newrefpers():
         idp = request.form['txt txt-idpers']
         ref = request.form['txt txt-refpers']
         if(len(idp)>0 and len(ref)>0):
-            m.anadirReferenciaPersonaje(idp,ref)
+            if(m.anadirReferenciaPersonaje(idp,ref)):
+                error = 'Referencia añadida con éxito'
+            else:
+                error = 'La id no existe o esa referencia ya pertenece a ese personaje'
         else:
             error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
     return render_template('newrefpers.html', error = error, pers = m.getPersonajes())
@@ -185,7 +173,10 @@ def delrefpers():
         idp = request.form['txt txt-idpers']
         ref = request.form['txt txt-refpers']
         if(len(idp)>0 and len(ref)>0):
-            m.eliminarReferenciaPersonaje(idp,ref)
+            if(m.eliminarReferenciaPersonaje(idp,ref)):
+                error = 'Se ha eliminado correctamente la referencia'
+            else:
+                error = 'La id o la referencia no existe'
         else:
             error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
     return render_template('delrefpers.html', error = error, pers = m.getPersonajes())

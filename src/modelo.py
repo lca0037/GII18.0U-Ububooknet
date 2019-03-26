@@ -115,6 +115,8 @@ class modelo:
     def eliminarPersonaje(self, idPersonaje):
         if(idPersonaje in self.personajes):
             del self.personajes[idPersonaje]
+            return True
+        return False
        
     '''
     Método para juntar personajes
@@ -127,6 +129,8 @@ class modelo:
                 if k not in pers1.keys():
                     pers1[k]=pers2[k]
             self.eliminarPersonaje(idPersonaje2)
+            return True
+        return False
     
     '''
     Método para añadir otro nombre para referirse a un personaje
@@ -136,6 +140,8 @@ class modelo:
             p = self.personajes[idp].getPersonaje()
             if(ref not in p.keys()):
                 p[ref]= list()
+                return True
+        return False
     
     '''
     Método que elimina una referencia a un personaje
@@ -148,6 +154,8 @@ class modelo:
                     del p[ref]
                 else:
                     del self.personajes[idp]
+                return True
+        return False
     
     '''
     Método que junta las posiciones de todos los nombres de un personaje
