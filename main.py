@@ -5,11 +5,9 @@ from tst import testUnitarios
 from src import modelo, personaje, vista
 import unittest
 import time
-
 #runner = unittest.TextTestRunner()
 #result = runner.run(unittest.makeSuite(testUnitarios.testUnitarios))
-vista.app.run(debug=True)
-#
+vista.app.run()
 #m = modelo.modelo.getInstance()
 #m.vaciarDiccionario()
 #start = time.time()
@@ -20,10 +18,11 @@ vista.app.run(debug=True)
 ##print(time.time()-start)
 ##for i in m.getPersonajes().keys():
 ##    print(m.getPersonajes()[i].getPersonaje())
+##print(time.time()-start)
+##m.obtenerPosPers()
+##print(time.time()-start)
+##m.juntarPosiciones()
+##print(time.time()-start)
+#print(m.generarGrafo(30,10))
 #print(time.time()-start)
-#m.obtenerPosPers()
-#print(time.time()-start)
-#m.juntarPosiciones()
-#print(time.time()-start)
-#print(m.getMatrizAdyacencia(20).tolist())
-#print(time.time()-start)
+#print(m.visualizar())

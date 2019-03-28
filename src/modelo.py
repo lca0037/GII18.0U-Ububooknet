@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
 import urllib
+import json
 from bs4 import BeautifulSoup
 
 """
@@ -160,7 +161,7 @@ class modelo:
     '''
     Método que junta las posiciones de todos los nombres de un personaje
     '''
-    def juntarPosiciones(self):
+    def __juntarPosiciones(self):
         for i in self.personajes.keys():
             pers = self.personajes[i].getPersonaje()
             pos = self.personajes[i].getPosicionPers()
@@ -174,23 +175,38 @@ class modelo:
     '''
     Método para obtener una matriz de adyacencia de las relaciones entre los personajes
     '''
-    def getMatrizAdyacencia(self,rango):
+    def getMatrizAdyacencia(self):
+        return nx.adjacency_matrix(self.__G).todense()
+    
+    '''
+    Método para generar un grafo a partir de las relaciones de los personajes
+    '''
+    def generarGrafo(self,rango,minapar):
+        self.obtenerPosPers()
+        self.__juntarPosiciones()
         persk = list(self.personajes.keys())
         tam = len(persk)
-        G = nx.Graph()
+        self.__G = nx.Graph()
         for i in range(tam):
-            for j in range(i+1,tam):
-                peso = 0
-                for posi in self.personajes[persk[i]].getPosicionPers():
-                    for posj in self.personajes[persk[j]].getPosicionPers():
-                        if(posj>=(posi-rango)):
-                            if(posj<=(posi+rango)):
-                                peso+=1
-                            else:
-                                break
-                G.add_edge(persk[i],persk[j],weight=peso)
-        return nx.adjacency_matrix(G).todense()
+            if(self.personajes[persk[i]].getNumApariciones()>=minapar):
+                for j in range(i+1,tam):
+                    if(self.personajes[persk[j]].getNumApariciones()>=minapar):
+                        peso = 0
+                        for posi in self.personajes[persk[i]].getPosicionPers():
+                            for posj in self.personajes[persk[j]].getPosicionPers():
+                                if(posj>=(posi-rango)):
+                                    if(posj<=(posi+rango)):
+                                        peso+=1
+                                    else:
+                                        break
+                        self.__G.add_edge(persk[i],persk[j],weight=peso)
     
+    '''
+    Método para visualizar la red
+    '''
+    def visualizar(self):
+        return json.dumps(nx.json_graph.node_link_data(self.__G))
+        
     '''
     Método para obtener un diccionario de personajes haciendo web scraping
     '''

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-from flask import render_template, Flask, request, url_for, redirect
+from flask import render_template, Flask, request, url_for, redirect, json
 from src import modelo as mod
 import zipfile
 
@@ -193,6 +193,7 @@ def params():
             apar = request.form['txt txt-apar']
             dist = request.form['txt txt-dist']
             if(len(apar)>0 and len(dist)>0 and num.match(apar).group()==apar and num.match(dist).group()==dist):
+                m.generarGrafo(int(dist),int(apar))           
                 return redirect(url_for('red'))
             else:
                 if(len(apar)==0):
@@ -209,10 +210,8 @@ def params():
 def red():
     if(m.getTexto() == ''):
         return redirect(url_for('index'))
-    if request.method == "POST":
-        if("btn btn-vis" in request.form):
-            print('Visualizar')
-    return render_template('red.html')
+    jsonred = m.visualizar()
+    return render_template('red.html', jsonred = jsonred)
 
 @app.route('/Informe/', methods=["GET", "POST"])
 def informe():

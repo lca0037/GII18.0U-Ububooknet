@@ -31,5 +31,5 @@ class personaje:
     Devuelve el número de apariciones del personaje
     '''
     def getNumApariciones(self):
-        return len(self._pospers)
+        return len(self.__pospers)
     
