@@ -98,6 +98,10 @@ def moddict():
             return redirect(url_for('newrefpers'))
         elif("btn btn-delrefpers" in request.form):
             return redirect(url_for('delrefpers'))
+        elif("btn btn-parseo" in request.form):
+            print('hola')
+            m.prepararRed()
+            return redirect(url_for('params'))
     return render_template('moddict.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    

@@ -28,8 +28,8 @@
 	<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
 		<input type="submit" name="btn btn-volver" value="Volver">
 	</form>
-	<form action="{{ url_for('params') }}" class="form form-sig" method="post">
-		<input type="submit" name="btn btn-sig" value="Siguiente">
+	<form action="" class="form form-parseo" method="post">
+		<input type="submit" name="btn btn-parseo" title="Este proceso puede llevar unos minutos" value="Siguiente">
 	</form>
 	<div id="Personajes">
 		{% for i in pers.keys() %}

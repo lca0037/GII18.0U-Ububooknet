@@ -171,7 +171,10 @@ class modelo:
                         while(i<len(pos) and pos[i]<j):
                             i+=1
                         pos.insert(i,j)
-        
+       
+    def prepararRed(self):
+        self.obtenerPosPers()
+        self.__juntarPosiciones()
     '''
     Método para obtener una matriz de adyacencia de las relaciones entre los personajes
     '''
@@ -182,8 +185,6 @@ class modelo:
     Método para generar un grafo a partir de las relaciones de los personajes
     '''
     def generarGrafo(self,rango,minapar):
-        self.obtenerPosPers()
-        self.__juntarPosiciones()
         persk = list(self.personajes.keys())
         tam = len(persk)
         self.__G = nx.Graph()
