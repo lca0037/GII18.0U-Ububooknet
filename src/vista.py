@@ -56,13 +56,14 @@ def impdict():
         if("btn btn-selcsv" not in request.files):
             error = "No se ha seleccionado ningún fichero"
             return render_template('impdict.html', error = error)
-#        fich = request.files["btn btn-selcsv"]
-#        fullpath = os.path.join(app.config['UPLOAD_FOLDER'], fich.filename)
+        fich = request.files["btn btn-selcsv"]
+        fullpath = os.path.join(app.config['UPLOAD_FOLDER'], fich.filename)
+        fich.save(fullpath)
         if("btn btn-cargarcsv" in request.form):
             #Se deja para futuros sprint comprobar que el fichero introducido es csv
             # debido a que mimetype no reconoce si el archivo es csv
             if(True):
-                # m.importDict(fullpath)
+                m.importDict(fullpath)
                 error = "Fichero csv cargado"
             else: 
                 error = "La ruta indicada no contiene un fichero csv"
