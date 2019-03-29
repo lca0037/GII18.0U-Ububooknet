@@ -52,13 +52,12 @@ class creadict:
         r"."
     
     '''
-    Token del estado punto para comprobar si la siguiente palabra hay que añadirla
-    al diccionario
+    Token del estado punto para encontrar la siguiente palabra en mayúsculas y
+    salir del estado sin guardarla
     '''
     def t_punto_PERSONAJE(self,t):
-        r"[A-Z\300-\335][a-z\340-\377]+(\s[A-Z\300-\335]([a-z\340-\377]+|\.))+"
+        r"[A-Z\300-\335][a-z\340-\377]+"
         t.lexer.begin('INITIAL')
-        return t
     
     '''
     Función del lexer para salir del estado punto si no hay un personaje
