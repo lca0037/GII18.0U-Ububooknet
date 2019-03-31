@@ -105,11 +105,13 @@ class modelo:
     '''
     Método para añadir un personaje al diccionario de personajes
     '''
-    def anadirPersonaje(self, pers):
-        self.personajes[str(self.numpers)] = p.personaje()
-        self.personajes[str(self.numpers)].getPersonaje()[pers] = list()
-        self.numpers+=1
-        
+    def anadirPersonaje(self, idpers, pers):
+        if(idpers not in self.personajes):
+            self.personajes[idpers] = p.personaje()
+            self.personajes[idpers].getPersonaje()[pers] = list()
+            self.numpers+=1
+            return 'Personaje añadido correctamente'
+        return 'La id de personaje ya existe'
     '''
     Método para eliminar personajes
     '''
@@ -227,7 +229,7 @@ class modelo:
         html = BeautifulSoup(web.read(), "html.parser")
         for pers in html.find_all("a", {"class": "category-page__member-link"}):
             pn = pers.get('title')
-            self.anadirPersonaje(pn)
+            self.anadirPersonaje(pn,pn)
         
     '''
     Método para importar un diccionario de personajes desde un fichero csv

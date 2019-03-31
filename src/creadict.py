@@ -88,5 +88,5 @@ class creadict:
         for tok in iter(lex.token, None):
             if(tok.value not in self.aux.keys()):
                 self.aux[tok.value] = None
-                mod.anadirPersonaje(tok.value)
+                mod.anadirPersonaje(tok.value, tok.value)
     

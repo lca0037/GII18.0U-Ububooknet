@@ -112,10 +112,10 @@ def newpers():
     if(m.getTexto() == ''):
         return redirect(url_for('index'))
     if request.method == "POST":
+        idperso = request.form['txt txt-idpers']
         perso = request.form['txt txt-nombrepers']
-        if(len(perso)>0):
-            error = 'Se ha añadido correctamente el personaje: ' + str(perso)
-            m.anadirPersonaje(perso)
+        if(len(perso)>0 and len(idperso)>0):
+            error = m.anadirPersonaje(idperso,perso)
         else:
             error = 'No se permiten textos vacíos como nombre de personaje'
     return render_template('newpers.html', error = error, pers = m.getPersonajes())
