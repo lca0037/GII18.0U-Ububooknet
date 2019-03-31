@@ -10,7 +10,7 @@
 			<h1>Ububooknet</h1>
 		</div>
 		<div class="region"> 
-			<h2>Eliminar Referencia De Personaje</h2>
+			<h2>Modificar Id Personaje</h2>
 		</div>
 		<div class="menu">
 			<ul>
@@ -19,11 +19,11 @@
 		</div>
 	</header>
 	<form action="" method="post" enctype=multipart/form-data>
-		<div id="txt1">Introduzca la id del personaje</div>
-		<input type="text" name="txt txt-idpers" size="40" placeholder="Id Personaje">
-		<div id="txt1">Introduzca la referencia al personaje</div>
-		<input type="text" name="txt txt-refpers" size="40" placeholder="Referencia Personaje">
-		<input type="submit" name="btn btn-delref" value="Eliminar">
+		<div id="txt1">Introduzca la id actual del personaje</div>
+		<input type="text" name="txt txt-idact" size="40" placeholder="Id Actual">
+		<div id="txt1">Introduzca la nueva id</div>
+		<input type="text" name="txt txt-newid" size="40" placeholder="Nueva Id">
+		<input type="submit" name="btn btn-cambiarid" value="Cambiar">
 	</form>
 	<p>{{error}}</p>
 	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">

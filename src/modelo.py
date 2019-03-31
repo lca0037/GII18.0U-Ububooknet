@@ -159,6 +159,17 @@ class modelo:
         return False
     
     '''
+    Método para modificar los id de los personajes
+    '''
+    def modificarIdPersonaje(self,idact,newid):
+        if(idact in self.personajes.keys()):
+            if(newid not in self.personajes.keys()):
+                self.personajes[newid] = self.personajes.pop(idact)
+                return 'Id modificada con éxito'
+            return 'La nueva Id ya existe'
+        return 'La Id actual no existe'
+    
+    '''
     Método que junta las posiciones de todos los nombres de un personaje
     '''
     def __juntarPosiciones(self):

@@ -99,8 +99,9 @@ def moddict():
             return redirect(url_for('newrefpers'))
         elif("btn btn-delrefpers" in request.form):
             return redirect(url_for('delrefpers'))
+        elif("btn btn-modid" in request.form):
+            return redirect(url_for('modidpers'))
         elif("btn btn-parseo" in request.form):
-            print('hola')
             m.prepararRed()
             return redirect(url_for('params'))
     return render_template('moddict.html', pers = m.getPersonajes())
@@ -186,6 +187,20 @@ def delrefpers():
             error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
     return render_template('delrefpers.html', error = error, pers = m.getPersonajes())
 
+@app.route('/Modificar-Diccionario/Cambiar-Identificador/', methods=["GET", "POST"])
+def modidpers():
+    error = ''
+    if(m.getTexto() == ''):
+        return redirect(url_for('index'))
+    if request.method == "POST":
+        idact = request.form['txt txt-idact']
+        newid = request.form['txt txt-newid']
+        if(len(idact)>0 and len(newid)>0):
+            error = m.modificarIdPersonaje(idact,newid)
+        else:
+            error = 'No se permiten textos vacíos como id de personaje'
+    return render_template('modidpers.html', error = error, pers = m.getPersonajes())
+    
 @app.route('/Parametros/', methods=["GET", "POST"])
 def params():
     if(m.getTexto() == ''):
