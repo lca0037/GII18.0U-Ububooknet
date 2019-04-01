@@ -16,8 +16,9 @@ vista.app.run()
 #m.crearDict()
 #print(len(m.getPersonajes().keys()))
 ##print(time.time()-start)
-##for i in m.getPersonajes().keys():
-##    print(m.getPersonajes()[i].getPersonaje())
+#for i in m.getPersonajes().keys():
+#    print(m.getPersonajes()[i].getPersonaje())
+#print(m.getTexto())
 ##print(time.time()-start)
 ##m.obtenerPosPers()
 ##print(time.time()-start)

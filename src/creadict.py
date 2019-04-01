@@ -27,7 +27,7 @@ class creadict:
     Función del lexer que comprueba si hay una palabra en mayúsculas
     '''
     def t_PERSONAJE(self,t): 
-        r"[A-Z\300-\335][a-z\340-\377]+((\s|\-)[A-Z\300-\335]([a-z\340-\377]+|\.))*"
+        r"[A-Z\300-\335][a-z\340-\377]+((\s|\-)?[A-Z\300-\335]([a-z\340-\377]+|\.))*"
         return t
     
     '''
@@ -42,7 +42,7 @@ class creadict:
     cambia de estado para comprobarlo
     '''
     def t_PUNTO(self,t):
-        r"(\.+)|[\(\)\[\]<>\'\":;¿\?¡!=\-_\253\273]"
+        r"(\.+)|[\(\)\[\]<>\'\":;¿\?¡!=\-_\253\273—]"
         t.lexer.begin('punto')
         
     '''
@@ -52,22 +52,14 @@ class creadict:
         r"."
     
     '''
-    Token del estado punto para encontrar la siguiente palabra en mayúsculas y
-    salir del estado sin guardarla
-    '''
-    def t_punto_PERSONAJE(self,t):
-        r"[A-Z\300-\335][a-z\340-\377]+"
-        t.lexer.begin('INITIAL')
-    
-    '''
     Función del lexer para salir del estado punto si no hay un personaje
     '''
     def t_punto_OTRO(self,t):
-        r"[^\s\.\(\)\[\]<>\'\":;¿\?¡!=\-_\253\273]+"
+        r"[^\s\.\(\)\[\]<>\'\":;¿\?¡!=\-_\253\273—]+"
         t.lexer.begin('INITIAL')
         
     def t_punto_ESPACIOS(self,t):
-        r"[\s\.\(\)\[\]<>\'\":;¿\?¡!=\-_\253\273]"
+        r"[\s\.\(\)\[\]<>\'\":;¿\?¡!=\-_\253\273—]"
     
     def t_punto_error(self,t):
         print ("Illegal character '%s'" % t.value[0])

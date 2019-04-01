@@ -58,6 +58,6 @@ class lecturaEpub:
             seccion = self.epub.read(a)
             sect = BeautifulSoup(seccion, "xml")
             for s in sect.find_all('p'):
-                txt += s.get_text()
+                txt = txt + s.get_text()+ ". "
             yield txt
 
