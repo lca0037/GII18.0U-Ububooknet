@@ -115,12 +115,20 @@ class modelo:
     '''
     Método para eliminar personajes
     '''
-    def eliminarPersonaje(self, idPersonaje):
+    def __eliminarPersonaje(self, idPersonaje):
         if(idPersonaje in self.personajes):
             del self.personajes[idPersonaje]
             return True
         return False
        
+    '''
+    Método para eliminar una lista de personajes
+    '''
+    def eliminarPersonajes(self, personajes):
+        for idp in personajes:
+            self.__eliminarPersonaje(idp)
+        return True
+    
     '''
     Método para juntar personajes
     '''

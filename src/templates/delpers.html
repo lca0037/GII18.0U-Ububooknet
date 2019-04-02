@@ -18,19 +18,19 @@
 			</ul>
 		</div>
 	</header>
-	<form action="" method="post" enctype=multipart/form-data>
-		<div id="txt1">Introduzca la id del personaje a eliminar</div>
-		<input type="text" name="txt txt-idpers" size="40" placeholder="Id Personaje">
+	<form action="javascript:borra()" method="post" enctype=multipart/form-data>
+		<div id="txt1">Marque los personajes a eliminar</div>
 		<input type="submit" name="btn btn-delpers" value="Eliminar">
 	</form>
-	<p>{{error}}</p>
 	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
 		<input type="submit" name="btn btn-volver" value="Volver">
 	</form>
 	<div id="Personajes">
 		{% for i in pers.keys() %}
 		<div id="IdPersonaje">
-			ID Personaje: {{ i }}	
+			<div>-----------------------------------</div>
+			<input type="checkbox" name="cbx cbx-delpers" value="{{ i }}">
+			<label for="cbx cbx-delpers">Marque para eliminar</label>
 			{% for n in pers[i].getPersonaje().keys() %}
 			<div id="IdP">Id Personaje: {{ i }} </div>
 			<div id="NomP">Nombre personaje: {{ n }} </div>
@@ -40,4 +40,28 @@
 	</div>
 	<footer></footer>
 </body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+	function borra(){
+		var checks = [];
+		var inputElements = document.getElementsByName("cbx cbx-delpers");
+		for(var i=0; inputElements[i]; ++i){
+      		if(inputElements[i].checked){
+           		checks.push(inputElements[i].value);
+      		}
+		}
+		console.log('Hola',checks)
+		$.ajax({
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          url: "/Modificar-Diccionario/Eliminar-Personaje/",
+          traditional: "true",
+          data: JSON.stringify({checks}),
+          dataType: "json"
+          });
+		alert('Los personajes seleccionados han sido eliminados con éxito')
+		location.reload();
+	}
+</script>
 </html>

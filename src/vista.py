@@ -122,19 +122,12 @@ def newpers():
 
 @app.route('/Modificar-Diccionario/Eliminar-Personaje/', methods=["GET", "POST"])    
 def delpers():
-    error = ''
     if(m.getTexto() == ''):
         return redirect(url_for('index'))
     if request.method == "POST":
-        perso = request.form['txt txt-idpers']
-        if(len(perso)>0):
-            if(m.eliminarPersonaje(perso)):
-                error = 'Se ha eliminado correctamente el personaje'
-            else:
-                error = 'No existe ningún personaje con esa id'
-        else:
-            error = 'No se permiten textos vacíos como id de personaje'
-    return render_template('delpers.html', error = error, pers = m.getPersonajes())
+        names = request.get_json()
+        m.eliminarPersonajes(names['checks'])
+    return render_template('delpers.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Juntar-Personajes/', methods=["GET", "POST"])    
 def joinpers():
