@@ -32,7 +32,6 @@ class lectorcsv:
                     i+=1
                     for n in row:
                         self.__modelo.anadirReferenciaPersonaje(actual,n)
-        print(pers)
     
     '''
     Exporta el diccionario de personajes actual a un fichero csv con una estructura

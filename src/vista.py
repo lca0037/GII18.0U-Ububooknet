@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-from flask import render_template, Flask, request, url_for, redirect, json
+from flask import render_template, Flask, request, url_for, redirect, json, send_file
 from src import modelo as mod
 import zipfile
 
@@ -101,10 +101,16 @@ def moddict():
             return redirect(url_for('delrefpers'))
         elif("btn btn-modid" in request.form):
             return redirect(url_for('modidpers'))
+        elif("btn btn-expdict" in request.form):
+            filename = app.config['UPLOAD_FOLDER']+"\\DiccionarioPersonajes.csv"
+            m.exportDict(filename)
+            return send_file(filename, mimetype='text/csv', attachment_filename="DiccionarioPersonajes.csv", as_attachment=True)
         elif("btn btn-parseo" in request.form):
             m.prepararRed()
             return redirect(url_for('params'))
     return render_template('moddict.html', pers = m.getPersonajes())
+
+
 
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    
 def newpers():
