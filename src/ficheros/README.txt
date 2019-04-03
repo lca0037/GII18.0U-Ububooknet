@@ -1,1 +1,1 @@
-Directorio para subir los archivos epub. No borrar.
+Directorio para subir los archivos epub y csv. No borrar.
