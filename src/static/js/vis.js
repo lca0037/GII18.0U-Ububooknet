@@ -108,7 +108,6 @@ function vis(new_controls) {
   };
   let referenceColor = controls['Node fill'];
     
-
   Reflect.ownKeys(new_controls).forEach(function (key) {
     controls[key] = new_controls[key];
   });
@@ -570,7 +569,6 @@ function vis(new_controls) {
   function restartIfValidJSON(masterGraph) {
 
     // Check for 'nodes' and 'links' lists
-    console.log("Test 1", masterGraph);
     if (!masterGraph.nodes || masterGraph.nodes.length == 0) {
       swal({ text: "Dataset does not have a key 'nodes'", icon: "error" })
       return false
@@ -685,7 +683,9 @@ function vis(new_controls) {
   }
 
   vis.restartIfValidJSON = restartIfValidJSON;
-
+  vis.visual = visual;
+  vis.newconfig = newconfig;
+  
   function restartIfValidCSV(rawInput) {
     // Assume header is "source,target(,weight)"
     var nodes = new Set();
@@ -1015,10 +1015,8 @@ function vis(new_controls) {
     }
   }, true)
 
-
   // Get a JSON object containing all the drawn properties for replication
-  function get_network_properties()
-  {
+  function get_network_properties() {
       // save all those things we wish to draw to a dict;
       let network_properties = {};
       network_properties.xlim = [ 0, width ];
@@ -1045,7 +1043,42 @@ function vis(new_controls) {
           network_properties.nodes.push({ id: d.id, pos: [zoomScaler(d.x), height-zoomScaler(d.y)], 
                                           radius: thisNodeSize, color : computeNodeColor(d) });
       });
-
       return network_properties;
+  }
+
+  function visual(){
+    return controls;
+  }
+
+  function newconfig(new_controls){
+    Reflect.ownKeys(new_controls).forEach(function (key) {
+
+      let v = new_controls[key];
+      console.log('Hola',new_controls)
+        if (key == 'Charge strength'){
+          console.log(key);
+          inputtedCharge(v);
+        }  else {
+          console.log('Esta key: ',key,' no era Charge strength')
+        }
+        if (key == 'Center gravity') inputtedGravity(v);
+        if (key == 'Link distance') inputtedDistance(v);
+        if (key == 'Link strength exponent') inputtedLinkStrengthExponent(v);
+        if (key == 'Collision') inputtedCollision(v);
+
+        if (key == 'Node fill') inputtedNodeFill(v);
+        if (key == 'Node stroke') inputtedNodeStroke(v);
+        if (key == 'Link stroke') inputtedLinkStroke(v);
+        if (key == 'Label stroke') inputtedTextStroke(v);
+        if (key == 'Show labels') inputtedShowLabels(v);
+        if (key == 'Link width') inputtedLinkWidth(v);
+        if (key == 'Link alpha') inputtedLinkAlpha(v);
+        if (key == 'Node size') inputtedNodeSize(v);
+        if (key == 'Node stroke size') inputtedNodeStrokeSize(v);
+        if (key == 'Node size exponent') inputtedNodeSizeExponent(v);
+        if (key == 'Link width exponent') inputtedLinkWidthExponent(v);
+        if (key == 'Zoom') inputtedZoom(v);
+    });
+
   }
 }

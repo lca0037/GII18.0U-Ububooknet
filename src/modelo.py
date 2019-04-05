@@ -30,6 +30,7 @@ class modelo:
         self.numpers = 0
         self.sigid = 0
         self.__csv = lectorcsv.lectorcsv(self)
+        self.__configVis = {'Path to file (csv or json)': 'https://gist.githubusercontent.com/ulfaslak/6be66de1ac3288d5c1d9452570cbba5a/raw/0b9595c09b9f70a77ee05ca16d5a8b42a9130c9e/miserables.json', 'Apply heat (wiggle)': False, 'Charge strength': -50, 'Center gravity': 0.1, 'Link distance': 10, 'Link width': 5, 'Link alpha': 0.5, 'Node size': 10, 'Node stroke size': 0.5, 'Node size exponent': 0.5, 'Link width exponent': 0.5, 'Collision': False, 'Node fill': '#16a085', 'Node stroke': '#000000', 'Link stroke': '#7c7c7c', 'Label stroke': '#000000', 'Show labels': False, 'Show singleton nodes': False, 'Node size by strength': False, 'Zoom': 1.5, 'Min. link weight %': 0, 'Max. link weight %': 100}
         if(modelo.__instance == None):
             modelo.__instance = self
      
@@ -263,3 +264,15 @@ class modelo:
 
     def getTexto(self):
         return self.__texto
+    
+    '''
+    Método que devuelve la configuración de la visualización
+    '''
+    def getConfigVis(self):
+        return self.__configVis
+    
+    '''
+    Método que guarda la configuración de la visualización
+    '''
+    def setConfigVis(self,newconfig):
+        self.__configVis = newconfig

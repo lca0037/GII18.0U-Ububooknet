@@ -110,8 +110,6 @@ def moddict():
             return redirect(url_for('params'))
     return render_template('moddict.html', pers = m.getPersonajes())
 
-
-
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    
 def newpers():
     error = ''
@@ -230,7 +228,12 @@ def red():
     if(m.getTexto() == ''):
         return redirect(url_for('index'))
     jsonred = m.visualizar()
-    return render_template('red.html', jsonred = jsonred)
+    if request.method == "POST":
+        config = request.get_json()
+        if(config != None):
+            m.setConfigVis(config['config'])
+        
+    return render_template('red.html', jsonred = jsonred, config = m.getConfigVis())
 
 @app.route('/Informe/', methods=["GET", "POST"])
 def informe():
