@@ -1054,13 +1054,7 @@ function vis(new_controls) {
     Reflect.ownKeys(new_controls).forEach(function (key) {
 
       let v = new_controls[key];
-      console.log('Hola',new_controls)
-        if (key == 'Charge strength'){
-          console.log(key);
-          inputtedCharge(v);
-        }  else {
-          console.log('Esta key: ',key,' no era Charge strength')
-        }
+        if (key == 'Charge strength') inputtedCharge(v);
         if (key == 'Center gravity') inputtedGravity(v);
         if (key == 'Link distance') inputtedDistance(v);
         if (key == 'Link strength exponent') inputtedLinkStrengthExponent(v);
