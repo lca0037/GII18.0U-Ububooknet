@@ -30,6 +30,18 @@
 	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
 		<input type="submit" name="btn btn-volver" value="Volver">
 	</form>
+	<div id="Personajes">
+		{% for i in pers.keys() %}
+		<div id="IdPersonaje">
+			<div>-----------------------------------</div>
+			{% for n in pers[i].getPersonaje().keys() %}
+			<div id="IdP">Id Personaje: {{ i }} </div>
+			<div id="NumApar">Número de apariciones: {{ pers[i].getNumApariciones() }}</div>
+			<div id="NomP">Nombre personaje: {{ n }} </div>
+			{% endfor %}
+		</div>
+		{% endfor %}
+	</div>
 	<footer></footer>
 </body>
 </html>

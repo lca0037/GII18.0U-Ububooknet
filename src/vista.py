@@ -221,7 +221,7 @@ def params():
                     error2 = 'Introduzca la distancia máxima para que se considere que hay relación entre dos personajes'
                 elif(num.match(dist) == None or num.match(dist).group()!=dist):
                     error2 = 'Introduzca unicamente dígitos del 0 al 9'
-    return render_template('params.html', error1 = error1, error2 = error2)
+    return render_template('params.html', error1 = error1, error2 = error2, pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)})
 
 @app.route('/Red/', methods=["GET", "POST"])
 def red():
