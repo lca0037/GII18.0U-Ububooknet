@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
 	<header id="header">
 		<div class="logo">
@@ -15,28 +16,30 @@
 		<div class="menu">
 			<ul>
 				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
 	</header>
-	<form action="javascript:borra()" method="post" enctype=multipart/form-data>
-		<div id="txt1">Marque los personajes a eliminar</div>
-		<input type="submit" name="btn btn-delpers" value="Eliminar">
-	</form>
-	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
-		<input type="submit" name="btn btn-volver" value="Volver">
-	</form>
-	<div id="Personajes">
-		{% for i in pers.keys() %}
-		<div id="IdPersonaje">
-			<div>-----------------------------------</div>
-			<input type="checkbox" name="cbx cbx-delpers" value="{{ i }}">
-			<label for="cbx cbx-delpers">Marque para eliminar</label>
-			{% for n in pers[i].getPersonaje().keys() %}
-			<div id="IdP">Id Personaje: {{ i }} </div>
-			<div id="NomP">Nombre personaje: {{ n }} </div>
+	<div id="content">
+		<form action="javascript:borra()" method="post" enctype=multipart/form-data>
+			<div id="txt1">Marque los personajes a eliminar</div>
+			<input type="submit" name="btn btn-delpers" value="Eliminar">
+		</form>
+		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
+			<input type="submit" name="btn btn-volver" value="Volver">
+		</form>
+		<div id="Personajes">
+			{% for i in pers.keys() %}
+			<div class="Personaje">
+				<div class="IdPersonaje">ID Personaje: {{ i }}
+					<input type="checkbox" name="cbx cbx-delpers" title="Marque para eliminar al personaje" value="{{ i }}">
+				</div>
+				{% for n in pers[i].getPersonaje().keys() %}
+				<div id="NomP">Nombre personaje: {{ n }} </div>
+				{% endfor %}
+			</div>
 			{% endfor %}
 		</div>
-		{% endfor %}
 	</div>
 	<footer></footer>
 </body>

@@ -50,12 +50,14 @@
 			</div>
 		</div>
 	</div>
-	<form action="{{ url_for('params') }}" class="form form-volver" method="post">
-		<input type="submit" name="btn btn-volver" value="Volver" onclick="guardaconfig()">
-	</form>
-	<form action="{{ url_for('informe') }}" class="form form-informe" method="post">
-		<input type="submit" name="btn btn-informe" value="Ver Informe" onclick="guardaconfig()">
-	</form>
+	<div id="content">
+		<form action="{{ url_for('params') }}" class="form form-volver" method="post">
+			<input type="submit" name="btn btn-volver" value="Volver" onclick="guardaconfig()">
+		</form>
+		<form action="{{ url_for('informe') }}" class="form form-informe" method="post">
+			<input type="submit" name="btn btn-informe" value="Ver Informe" onclick="guardaconfig()">
+		</form>
+	</div>
 
 </body>
 <!-- Javascript -->

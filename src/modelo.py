@@ -140,7 +140,7 @@ class modelo:
             for k in pers2.keys():
                 if k not in pers1.keys():
                     pers1[k]=pers2[k]
-            self.eliminarPersonaje(idPersonaje2)
+            self.__eliminarPersonaje(idPersonaje2)
             return True
         return False
     

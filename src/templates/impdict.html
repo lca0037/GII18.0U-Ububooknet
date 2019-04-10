@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
 	<header id="header">
 		<div class="logo">
@@ -15,18 +16,21 @@
 		<div class="menu">
 			<ul>
 				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
 	</header>
-	<form action="" method="post" enctype=multipart/form-data>
-		<div id="txt1">Introduzca la ruta al fichero csv</div>
-		<input type="file" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
-		<input type="submit" name="btn btn-cargarcsv" value="Cargar">
-	</form>
-	<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
-		<input type="submit" name="btn btn-volver" value="Volver">
-	</form>
-	<p>{{error}}</p>
+	<div id="content">
+		<form action="" method="post" enctype=multipart/form-data>
+			<div id="txt1">Introduzca la ruta al fichero csv</div>
+			<input type="file" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
+			<input type="submit" name="btn btn-cargarcsv" value="Cargar">
+		</form>
+		<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
+			<input type="submit" name="btn btn-volver" value="Volver">
+		</form>
+		<p>{{error}}</p>
+	</div>
 	<footer></footer>
 </body>
 </html>

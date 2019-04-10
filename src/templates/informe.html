@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
 	<header id="header">
 		<div class="logo">
@@ -15,15 +16,18 @@
 		<div class="menu">
 			<ul>
 				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
 	</header>
-	<form action="" method="post" class="form form-vis">
-		<input type="submit" name="btn btn-vis" value="Visualizar informe">
-	</form>
-	<form action="{{ url_for('red') }}" class="form form-volver" method="post">
-		<input type="submit" name="btn btn-volver" value="Volver">
-	</form>
-	<footer></footer>
+	<div id="content">
+		<form action="" method="post" class="form form-vis">
+			<input type="submit" name="btn btn-vis" value="Visualizar informe">
+		</form>
+		<form action="{{ url_for('red') }}" class="form form-volver" method="post">
+			<input type="submit" name="btn btn-volver" value="Volver">
+		</form>
+		<footer></footer>
+	</div>
 </body>
 </html>

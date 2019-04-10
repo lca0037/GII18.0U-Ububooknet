@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <style type="text/css">
 div#loading {
     width: 200px;
@@ -24,41 +25,45 @@ div#loading {
 		<div class="menu">
 			<ul>
 				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
 	</header>
 	<div id="loading"></div>
 	<div id="content">
-		<form action="" method="post">
-			<input type="submit" name="btn btn-newpers" value="Añadir Personaje">
-			<input type="submit" name="btn btn-delpers" value="Eliminar Personaje">
-			<input type="submit" name="btn btn-joinpers" value="Juntar Personajes">
-			<input type="submit" name="btn btn-newrefpers" value="Añadir Referencia A Personaje">
-			<input type="submit" name="btn btn-delrefpers" value="Eliminar Referencia A Personaje">
-			<input type="submit" name="btn btn-modid" value="Modificar Id Personaje">
-			<input type="submit" name="btn btn-expdict" value="Exportar Diccionario">
-		</form>
-		<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
-			<input type="submit" name="btn btn-volver" value="Volver">
-		</form>
-		<form action="" class="form form-parseo" method="post">
-			<input type="submit" name="btn btn-parseo" title="Este proceso puede llevar unos minutos" onclick="loading()" value="Siguiente">
-		</form>
+		<div id="indice">
+			<form action="" id="form-menu" method="post">
+				<input type="submit" id="npers" name="btn btn-newpers" value="Añadir Personaje">
+				<input type="submit" id="dpers" name="btn btn-delpers" value="Eliminar Personaje">
+				<input type="submit" id="jpers" name="btn btn-joinpers" value="Juntar Personajes">
+				<input type="submit" id="nref" name="btn btn-newrefpers" value="Añadir Referencia">
+				<input type="submit" id="dref" name="btn btn-delrefpers" value="Eliminar Referencia">
+				<input type="submit" id="mid" name="btn btn-modid" value="Modificar Id Personaje">
+				<input type="submit" id="exp" name="btn btn-expdict" value="Exportar Diccionario">
+			</form>
+			<form action="" id="form-mov" method="post">
+				<input type="button" class="volv" name="btn btn-volver" value="Volver" onclick="window.location.href='{{ url_for('dictaut') }}'">
+				<input type="submit" class="sig" name="btn btn-parseo" title="Este proceso puede llevar unos minutos" onclick="loading()" value="Siguiente">
+			</form>
+		</div>
 		<div id="Personajes">
+			<div class="Personaje Cabecera">
+				<div class="IdPersonaje">ID Personaje</div>
+				<div class="NomP">Referencias personaje</div>
+			</div>
 			{% for i in pers.keys() %}
-			<div id="IdPersonaje">
-				ID Personaje: {{ i }}	
+			<div class="Personaje">
+				<div class="IdPersonaje">{{ i }}</div>
+				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
-				<div id="IdP">Id Personaje: {{ i }} </div>
-				<div id="NomP">Nombre personaje: {{ n }} </div>
+					<p class="ref">{{ n }}</p>
 				{% endfor %}
+				</div>
 			</div>
 			{% endfor %}
 		</div>
 	</div>
-	<footer>
-		
-	</footer>
+	<footer></footer>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">

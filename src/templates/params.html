@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
 	<header id="header">
 		<div class="logo">
@@ -18,29 +19,32 @@
 			</ul>
 		</div>
 	</header>
-	<form action="" method="post" enctype=multipart/form-data>
-		<div id="txt1">Introduzca el número mínimo de apariciones en el libro</div>
-		<input type="text" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones">
-		<p>{{error1}}</p>
-		<div id="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
-		<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas">
-		<p>{{error2}}</p>
-		<input type="submit" name="btn btn-red" value="Obtener red">
-	</form>
-	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
-		<input type="submit" name="btn btn-volver" value="Volver">
-	</form>
-	<div id="Personajes">
-		{% for i in pers.keys() %}
-		<div id="IdPersonaje">
-			<div>-----------------------------------</div>
-			{% for n in pers[i].getPersonaje().keys() %}
-			<div id="IdP">Id Personaje: {{ i }} </div>
-			<div id="NumApar">Número de apariciones: {{ pers[i].getNumApariciones() }}</div>
-			<div id="NomP">Nombre personaje: {{ n }} </div>
+	<div id="content">
+		<form action="" method="post" enctype=multipart/form-data>
+			<div id="txt1">Introduzca el número mínimo de apariciones en el libro</div>
+			<input type="text" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones">
+			<p>{{error1}}</p>
+			<div id="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
+			<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas">
+			<p>{{error2}}</p>
+			<input type="submit" name="btn btn-red" value="Obtener red">
+		</form>
+		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
+			<input type="submit" name="btn btn-volver" value="Volver">
+		</form>
+		<div id="Personajes">
+			{% for i in pers.keys() %}
+			<div class="Personaje">
+				<div class="IdPersonaje">
+					<p>ID Personaje: {{ i }}</p>
+					<p>Número de apariciones: {{ pers[i].getNumApariciones() }}</p>
+				</div>
+				{% for n in pers[i].getPersonaje().keys() %}
+				<div class="NomP">Nombre personaje: {{ n }} </div>
+				{% endfor %}
+			</div>
 			{% endfor %}
 		</div>
-		{% endfor %}
 	</div>
 	<footer></footer>
 </body>

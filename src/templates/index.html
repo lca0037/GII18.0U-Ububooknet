@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
 	<header id="header">
 		<div class="logo">
@@ -15,16 +16,19 @@
 		<div class="menu">
 			<ul>
 				<li><a href="#">Inicio</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
 	</header>
-	<form action="" method="post" enctype=multipart/form-data>
-		<div id="txt1">Introduzca la ruta al fichero ePub</div>
-		<input type="file" name="btn btn-selepub" value="Seleccionar archivo" accept=".epub, .zip">
-		<!--input type="text" name="txt txt-fichepub" size="40" placeholder="Ruta completa al fichero epub" value="{{request.form.fichepub}}{{epub}}"-->
-		<input type="submit" name="btn btn-cargarepub" value="Cargar">
-	</form>
-	<p>{{error}}</p>
+	<div id="content">
+		<form action="" method="post" enctype=multipart/form-data>
+			<div id="txt1">Introduzca la ruta al fichero ePub</div>
+			<input type="file" name="btn btn-selepub" value="Seleccionar archivo" accept=".epub, .zip">
+			<!--input type="text" name="txt txt-fichepub" size="40" placeholder="Ruta completa al fichero epub" value="{{request.form.fichepub}}{{epub}}"-->
+			<input type="submit" name="btn btn-cargarepub" value="Cargar">
+		</form>
+		<p>{{error}}</p>
+	</div>
 	<footer></footer>
 </body>
 </html>

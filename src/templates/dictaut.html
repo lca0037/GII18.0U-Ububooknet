@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
 	<header id="header">
 		<div class="logo">
@@ -15,23 +16,26 @@
 		<div class="menu">
 			<ul>
 				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
 	</header>
-	<form action="" class="form form-menu" method="post">
-		<input type="submit" name="btn btn-creadict" value="Crear Diccionario">
-		<input type="submit" name="btn btn-impdict" value="Importar Diccionario">
-		<input type="submit" name="btn btn-obtdict" value="Obtener Diccionario">
-		<input type="checkbox" name="cbx cbx-vacdit">
-		<label for="cbx cbx-vacdit">Vaciar el diccionario actual</label>
-	</form>
-	<p>{{msg}}</p>
-	<form action="{{ url_for('index') }}" class="form form-volver" method="post">
-		<input type="submit" name="btn btn-volver" value="Volver">
-	</form>
-	<form action="{{ url_for('moddict') }}" class="form form-sig" method="post">
-		<input type="submit" name="btn btn-sig" value="Siguiente">
-	</form>
+	<div id="content">
+		<form action="" class="form form-menu" method="post">
+			<input type="submit" name="btn btn-creadict" value="Crear Diccionario">
+			<input type="submit" name="btn btn-impdict" value="Importar Diccionario">
+			<input type="submit" name="btn btn-obtdict" value="Obtener Diccionario">
+			<input type="checkbox" name="cbx cbx-vacdit">
+			<label for="cbx cbx-vacdit">Vaciar el diccionario actual</label>
+		</form>
+		<p>{{msg}}</p>
+		<form action="{{ url_for('index') }}" class="form form-volver" method="post">
+			<input type="submit" name="btn btn-volver" value="Volver">
+		</form>
+		<form action="{{ url_for('moddict') }}" class="form form-sig" method="post">
+			<input type="submit" name="btn btn-sig" value="Siguiente">
+		</form>
+	</div>
 	<footer></footer>
 </body>
 </html>

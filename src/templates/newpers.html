@@ -4,6 +4,7 @@
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
 	<header id="header">
 		<div class="logo">
@@ -15,30 +16,32 @@
 		<div class="menu">
 			<ul>
 				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
 	</header>
-	<form action="" method="post">
-		<div id="txt1">Introduzca la id del nuevo personaje</div>
-		<input type="text" name="txt txt-idpers" size="40" placeholder="Nombre Personaje">
-		<div id="txt1">Introduzca el nombre del nuevo personaje</div>
-		<input type="text" name="txt txt-nombrepers" size="40" placeholder="Nombre Personaje">
-		<input type="submit" name="btn btn-newpers" value="Añadir">
-	</form>
-	<p>{{error}}</p>
-	<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
-		<input type="submit" name="btn btn-volver" value="Volver">
-	</form>
-	<div id="Personajes">
-		{% for i in pers.keys() %}
-		<div id="IdPersonaje">
-			ID Personaje: {{ i }}	
-			{% for n in pers[i].getPersonaje().keys() %}
-			<div id="IdP">Id Personaje: {{ i }} </div>
-			<div id="NomP">Nombre personaje: {{ n }} </div>
+	<div id="content">
+		<form action="" method="post">
+			<div id="txt1">Introduzca la id del nuevo personaje</div>
+			<input type="text" name="txt txt-idpers" size="40" placeholder="Nombre Personaje">
+			<div id="txt1">Introduzca el nombre del nuevo personaje</div>
+			<input type="text" name="txt txt-nombrepers" size="40" placeholder="Nombre Personaje">
+			<input type="submit" name="btn btn-newpers" value="Añadir">
+		</form>
+		<p>{{error}}</p>
+		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
+			<input type="submit" name="btn btn-volver" value="Volver">
+		</form>
+		<div id="Personajes">
+			{% for i in pers.keys() %}
+			<div class="Personaje">
+				<div class="IdPersonaje">ID Personaje: {{ i }}</div>
+				{% for n in pers[i].getPersonaje().keys() %}
+				<div class="NomP">Nombre personaje: {{ n }} </div>
+				{% endfor %}
+			</div>
 			{% endfor %}
 		</div>
-		{% endfor %}
 	</div>
 	<footer></footer>
 </body>
