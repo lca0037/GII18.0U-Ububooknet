@@ -29,14 +29,19 @@
 		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
 			<input type="submit" name="btn btn-volver" value="Volver">
 		</form>
+
 		<div id="Personajes">
+			<div class="Personaje Cabecera">
+				<div class="IdPersonaje">ID Personaje</div>
+				<div class="NomP">Referencias personaje</div>
+			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
-				<div class="IdPersonaje">ID Personaje: {{ i }}
-					<input type="checkbox" name="cbx cbx-delpers" title="Marque para eliminar al personaje" value="{{ i }}">
+				<div class="IdPersonaje">{{ i }}
+					<input type="checkbox" class="cbx-joinpers" title="Marque para eliminar al personaje" value="{{ i }}">
 				</div>
 				{% for n in pers[i].getPersonaje().keys() %}
-				<div class="NomP">Nombre personaje: {{ n }} </div>
+				<div class="NomP">{{ n }} </div>
 				{% endfor %}
 			</div>
 			{% endfor %}
@@ -49,7 +54,7 @@
 <script type="text/javascript">
 	function junta(){
 		var checks = [];
-		var inputElements = document.getElementsByName("cbx cbx-delpers");
+		var inputElements = document.getElementsByClassName("cbx-joinpers");
 		for(var i=0; inputElements[i]; ++i){
       		if(inputElements[i].checked){
            		checks.push(inputElements[i].value);
@@ -66,5 +71,26 @@
 		alert('Los personajes seleccionados han sido juntados con éxito')
 		location.reload();
 	}
+
+	$( function() {
+	    $( ".Personaje" ).draggable();
+	    $( ".Personaje" ).droppable({
+	    	drop: function( event, ui ) {
+	    		var checks = [];
+	    		checks.push($( this ).find("div.IdPersonaje input")[0].value);
+	    		checks.push(ui.draggable.find("div.IdPersonaje input")[0].value);
+	    		console.log(checks)
+	    		$.ajax({
+		          type: "POST",
+		          contentType: "application/json;charset=utf-8",
+		          url: "/Modificar-Diccionario/Juntar-Personajes/",
+		          traditional: "true",
+		          data: JSON.stringify({checks}),
+		          dataType: "json"
+		          });
+				location.reload();
+	    	}
+	    });
+  	});
 </script>
 </html>
