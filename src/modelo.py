@@ -133,7 +133,7 @@ class modelo:
     '''
     Método para juntar personajes
     '''
-    def juntarPersonajes(self, idPersonaje1, idPersonaje2):
+    def __juntarPersonajes(self, idPersonaje1, idPersonaje2):
         if(idPersonaje1 in self.personajes and idPersonaje2 in self.personajes):
             pers1 = self.personajes[idPersonaje1].getPersonaje()
             pers2 = self.personajes[idPersonaje2].getPersonaje()
@@ -143,6 +143,10 @@ class modelo:
             self.__eliminarPersonaje(idPersonaje2)
             return True
         return False
+    
+    def juntarListPersonajes(self,lista):
+        for i in range(1,len(lista)):
+            self.__juntarPersonajes(lista[0],lista[i])
     
     '''
     Método para añadir otro nombre para referirse a un personaje

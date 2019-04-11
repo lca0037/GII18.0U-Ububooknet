@@ -21,11 +21,8 @@
 		</div>
 	</header>
 	<div id="content">
-		<form action="" method="post" enctype=multipart/form-data>
-			<div id="txt1">Introduzca la id del primer personaje</div>
-			<input type="text" name="txt txt-id1pers" size="40" placeholder="Id 1er Personaje">
-			<div id="txt1">Introduzca la id del segundo personaje personaje</div>
-			<input type="text" name="txt txt-id2pers" size="40" placeholder="Id 2do Personaje">
+		<form action="javascript:junta()" method="post" enctype=multipart/form-data>
+			<div id="txt1">Marque los personajes a juntar</div>
 			<input type="submit" name="btn btn-joinpers" value="Juntar">
 		</form>
 		<p>{{error}}</p>
@@ -35,7 +32,9 @@
 		<div id="Personajes">
 			{% for i in pers.keys() %}
 			<div class="Personaje">
-				<div class="IdPersonaje">ID Personaje: {{ i }}</div>
+				<div class="IdPersonaje">ID Personaje: {{ i }}
+					<input type="checkbox" name="cbx cbx-delpers" title="Marque para eliminar al personaje" value="{{ i }}">
+				</div>
 				{% for n in pers[i].getPersonaje().keys() %}
 				<div class="NomP">Nombre personaje: {{ n }} </div>
 				{% endfor %}
@@ -45,4 +44,27 @@
 	</div>
 	<footer></footer>
 </body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+	function junta(){
+		var checks = [];
+		var inputElements = document.getElementsByName("cbx cbx-delpers");
+		for(var i=0; inputElements[i]; ++i){
+      		if(inputElements[i].checked){
+           		checks.push(inputElements[i].value);
+      		}
+		}
+		$.ajax({
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          url: "/Modificar-Diccionario/Juntar-Personajes/",
+          traditional: "true",
+          data: JSON.stringify({checks}),
+          dataType: "json"
+          });
+		alert('Los personajes seleccionados han sido juntados con éxito')
+		location.reload();
+	}
+</script>
 </html>

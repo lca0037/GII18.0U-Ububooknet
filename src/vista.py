@@ -139,15 +139,8 @@ def joinpers():
     if(m.getTexto() == ''):
         return redirect(url_for('index'))
     if request.method == "POST":
-        id1p = request.form['txt txt-id1pers']
-        id2p = request.form['txt txt-id2pers']
-        if(len(id1p)>0 and len(id2p)>0):
-            if(m.juntarPersonajes(id1p,id2p)):
-                error = 'Los personajes se han juntado con éxito'
-            else:
-                error = 'Una o ambas ids son erroneas'
-        else:
-            error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
+        names = request.get_json()
+        m.juntarListPersonajes(names['checks'])
     return render_template('joinpers.html', error = error, pers = m.getPersonajes())
    
 @app.route('/Modificar-Diccionario/Nueva-Referencia/', methods=["GET", "POST"])    
