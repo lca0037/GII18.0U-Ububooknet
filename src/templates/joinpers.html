@@ -73,7 +73,11 @@
 	}
 
 	$( function() {
-	    $( ".Personaje" ).draggable();
+	    $( ".Personaje" ).draggable({
+	    	containment: "#content",
+	    });
+	    $(".Personaje").css({zIndex: 0});
+	    $(".Personaje.Cabecera").css({zIndex: 1});
 	    $( ".Personaje" ).droppable({
 	    	drop: function( event, ui ) {
 	    		var checks = [];
