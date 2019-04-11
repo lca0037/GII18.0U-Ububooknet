@@ -130,18 +130,17 @@ def delpers():
         return redirect(url_for('index'))
     if request.method == "POST":
         names = request.get_json()
-        m.eliminarPersonajes(names['checks'])
+        m.eliminarListPersonajes(names['checks'])
     return render_template('delpers.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Juntar-Personajes/', methods=["GET", "POST"])    
 def joinpers():
-    error = ''
     if(m.getTexto() == ''):
         return redirect(url_for('index'))
     if request.method == "POST":
         names = request.get_json()
         m.juntarListPersonajes(names['checks'])
-    return render_template('joinpers.html', error = error, pers = m.getPersonajes())
+    return render_template('joinpers.html', pers = m.getPersonajes())
    
 @app.route('/Modificar-Diccionario/Nueva-Referencia/', methods=["GET", "POST"])    
 def newrefpers():
@@ -166,15 +165,8 @@ def delrefpers():
     if(m.getTexto() == ''):
         return redirect(url_for('index'))
     if request.method == "POST":
-        idp = request.form['txt txt-idpers']
-        ref = request.form['txt txt-refpers']
-        if(len(idp)>0 and len(ref)>0):
-            if(m.eliminarReferenciaPersonaje(idp,ref)):
-                error = 'Se ha eliminado correctamente la referencia'
-            else:
-                error = 'La id o la referencia no existe'
-        else:
-            error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
+        names = request.get_json()
+        m.eliminarListRefs(names['checks'])
     return render_template('delrefpers.html', error = error, pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Cambiar-Identificador/', methods=["GET", "POST"])

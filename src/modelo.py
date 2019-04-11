@@ -119,16 +119,13 @@ class modelo:
     def __eliminarPersonaje(self, idPersonaje):
         if(idPersonaje in self.personajes):
             del self.personajes[idPersonaje]
-            return True
-        return False
        
     '''
     Método para eliminar una lista de personajes
     '''
-    def eliminarPersonajes(self, personajes):
+    def eliminarListPersonajes(self, personajes):
         for idp in personajes:
             self.__eliminarPersonaje(idp)
-        return True
     
     '''
     Método para juntar personajes
@@ -141,9 +138,10 @@ class modelo:
                 if k not in pers1.keys():
                     pers1[k]=pers2[k]
             self.__eliminarPersonaje(idPersonaje2)
-            return True
-        return False
     
+    '''
+    Método para juntar una lista de personajes en uno solo
+    '''
     def juntarListPersonajes(self,lista):
         for i in range(1,len(lista)):
             self.__juntarPersonajes(lista[0],lista[i])
@@ -162,7 +160,7 @@ class modelo:
     '''
     Método que elimina una referencia a un personaje
     '''
-    def eliminarReferenciaPersonaje(self,idp,ref):
+    def __eliminarReferenciaPersonaje(self,idp,ref):
         if(idp in self.personajes.keys()):
             p = self.personajes[idp].getPersonaje()
             if(ref in p.keys()):
@@ -170,9 +168,14 @@ class modelo:
                     del p[ref]
                 else:
                     del self.personajes[idp]
-                return True
-        return False
     
+    '''
+    Método para eliminar una lista de referencias de sus respectivos personajes
+    '''
+    def eliminarListRefs(self,lista):
+        for l in lista:
+            self.__eliminarReferenciaPersonaje(l[0],l[1])
+            
     '''
     Método para modificar los id de los personajes
     '''

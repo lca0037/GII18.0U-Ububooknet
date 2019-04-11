@@ -21,14 +21,10 @@
 		</div>
 	</header>
 	<div id="content">
-		<form action="" method="post" enctype=multipart/form-data>
-			<div id="txt1">Introduzca la id del personaje</div>
-			<input type="text" name="txt txt-idpers" size="40" placeholder="Id Personaje">
-			<div id="txt1">Introduzca la referencia al personaje</div>
-			<input type="text" name="txt txt-refpers" size="40" placeholder="Referencia Personaje">
-			<input type="submit" name="btn btn-delref" value="Eliminar">
+		<form action="javascript:borra()" method="post" enctype=multipart/form-data>
+			<div id="txt1">Marque los personajes a eliminar</div>
+			<input type="submit" name="btn btn-delpers" value="Eliminar">
 		</form>
-		<p>{{error}}</p>
 		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
 			<input type="submit" name="btn btn-volver" value="Volver">
 		</form>
@@ -37,7 +33,10 @@
 			<div class="Personaje">
 				<div class="IdPersonaje">ID Personaje: {{ i }}</div>
 				{% for n in pers[i].getPersonaje().keys() %}
-				<div class="NomP">Nombre personaje: {{ n }} </div>
+				<div class="NomP">Nombre personaje: {{ n }} 
+					<input type="checkbox" name="cbx cbx-delpers" title="Marque para eliminar la referencia" value="{{ n }}" idpers="{{ i }}">
+				</div>
+
 				{% endfor %}
 			</div>
 			{% endfor %}
@@ -45,4 +44,32 @@
 	</div>
 	<footer></footer>
 </body>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+	function borra(){
+		var checks = [];
+		var datos = [];
+		var inputElements = document.getElementsByName("cbx cbx-delpers");
+		for(var i=0; inputElements[i]; ++i){
+      		if(inputElements[i].checked){
+      			datos.push(inputElements[i].getAttribute("idpers"))
+           		datos.push(inputElements[i].value);
+           		checks.push(datos);
+           		datos = [];
+      		}
+		}
+		console.log(checks);
+		$.ajax({
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          url: "/Modificar-Diccionario/Eliminar-Referencia/",
+          traditional: "true",
+          data: JSON.stringify({checks}),
+          dataType: "json"
+          });
+		alert('Las referencias seleccionadas han sido eliminados con éxito')
+		location.reload();
+	}
+</script>
 </html>
