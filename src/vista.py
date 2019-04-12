@@ -22,7 +22,8 @@ def index():
         fich.save(fullpath)
         if(zipfile.is_zipfile(fullpath)):
             if("btn btn-cargarepub" in request.form):
-                m.obtTextoEpub(fullpath)
+                m.setFichero(fullpath)
+                m.obtTextoEpub()
                 m.vaciarDiccionario()
                 return redirect(url_for('dictaut'))
         else: 
@@ -33,7 +34,7 @@ def index():
 @app.route('/Dicts-Automaticos/', methods=["GET", "POST"])
 def dictaut():
     msg = ''
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         if("cbx cbx-vacdit"  in request.form):
@@ -49,7 +50,7 @@ def dictaut():
 
 @app.route('/Dicts-Automaticos/Importar-Dict/', methods=["GET","POST"])
 def impdict():
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     error = ''
     if request.method == "POST":
@@ -72,7 +73,7 @@ def impdict():
 @app.route('/Dicts-Automaticos/Obtener-Dict/', methods=["GET","POST"])
 def obtdict():
     error = ''
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         url = request.form['txt txt-url']
@@ -86,7 +87,7 @@ def obtdict():
 
 @app.route('/Modificar-Diccionario/', methods=["GET", "POST"])   
 def moddict():
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         if("btn btn-newpers" in request.form):
@@ -113,7 +114,7 @@ def moddict():
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    
 def newpers():
     error = ''
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         idperso = request.form['txt txt-idpers']
@@ -126,7 +127,7 @@ def newpers():
 
 @app.route('/Modificar-Diccionario/Eliminar-Personaje/', methods=["GET", "POST"])    
 def delpers():
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         names = request.get_json()
@@ -135,7 +136,7 @@ def delpers():
 
 @app.route('/Modificar-Diccionario/Juntar-Personajes/', methods=["GET", "POST"])    
 def joinpers():
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         names = request.get_json()
@@ -145,7 +146,7 @@ def joinpers():
 @app.route('/Modificar-Diccionario/Nueva-Referencia/', methods=["GET", "POST"])    
 def newrefpers():
     error = ''
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         idp = request.form['txt txt-idpers']
@@ -162,7 +163,7 @@ def newrefpers():
 @app.route('/Modificar-Diccionario/Eliminar-Referencia/', methods=["GET", "POST"])    
 def delrefpers():
     error = ''
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         names = request.get_json()
@@ -172,7 +173,7 @@ def delrefpers():
 @app.route('/Modificar-Diccionario/Cambiar-Identificador/', methods=["GET", "POST"])
 def modidpers():
     error = ''
-    if(m.getTexto() == ''):
+    if(not m.hayFichero() ):
         return redirect(url_for('index'))
     if request.method == "POST":
         idact = request.form['txt txt-idact']
@@ -185,7 +186,7 @@ def modidpers():
     
 @app.route('/Parametros/', methods=["GET", "POST"])
 def params():
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     error1 = ''
     error2 = ''
@@ -194,8 +195,11 @@ def params():
         if("btn btn-red" in request.form):
             apar = request.form['txt txt-apar']
             dist = request.form['txt txt-dist']
+            caps = False
+            if("cbx cbx-capitulos"  in request.form):
+                caps = True
             if(len(apar)>0 and len(dist)>0 and num.match(apar).group()==apar and num.match(dist).group()==dist):
-                m.generarGrafo(int(dist),int(apar))           
+                m.generarGrafo(int(dist),int(apar),caps)           
                 return redirect(url_for('red'))
             else:
                 if(len(apar)==0):
@@ -210,7 +214,7 @@ def params():
 
 @app.route('/Red/', methods=["GET", "POST"])
 def red():
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     jsonred = m.visualizar()
     if request.method == "POST":
@@ -222,7 +226,7 @@ def red():
 
 @app.route('/Informe/', methods=["GET", "POST"])
 def informe():
-    if(m.getTexto() == ''):
+    if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         if("btn btn-vis" in request.form):

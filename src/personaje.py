@@ -12,7 +12,9 @@ class personaje:
     '''
     def __init__(self):
         self.__nombres= dict()
-        self.__pospers = list()
+        self.__pospers = dict()
+        self.lennombres = dict()
+        self.__numapar = 0
         
     '''
     Devuelve la lista de nombres para ese personaje
@@ -27,9 +29,15 @@ class personaje:
     def getPosicionPers(self):
         return self.__pospers
     
+    def setPosicionPers(self,pospers):
+        self.__pospers = pospers
+    
     '''
     Devuelve el número de apariciones del personaje
     '''
     def getNumApariciones(self):
-        return len(self.__pospers)
+        return self.__numapar
+    
+    def sumNumApariciones(self,apar):
+        self.__numapar += apar
     

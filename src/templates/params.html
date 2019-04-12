@@ -27,6 +27,8 @@
 			<div id="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
 			<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas">
 			<p>{{error2}}</p>
+			<input type="checkbox" name="cbx cbx-capitulos">
+			<label for="cbx cbx-capitulos">Tener en cuenta los capítulos</label>
 			<input type="submit" name="btn btn-red" value="Obtener red">
 		</form>
 		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">

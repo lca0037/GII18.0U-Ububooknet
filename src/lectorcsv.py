@@ -27,7 +27,7 @@ class lectorcsv:
                 if (i%2 ==0):
                     i+=1
                     actual = row[0]
-                    pers[actual] = p.personaje()
+                    self.__modelo.anadirPersonaje(actual,actual)
                 else:
                     i+=1
                     for n in row:

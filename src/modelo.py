@@ -29,6 +29,7 @@ class modelo:
         self.personajes= dict()
         self.numpers = 0
         self.sigid = 0
+        self.__fichero = None
         self.__csv = lectorcsv.lectorcsv(self)
         self.__configVis = {'Path to file (csv or json)': 'https://gist.githubusercontent.com/ulfaslak/6be66de1ac3288d5c1d9452570cbba5a/raw/0b9595c09b9f70a77ee05ca16d5a8b42a9130c9e/miserables.json', 'Apply heat (wiggle)': False, 'Charge strength': -50, 'Center gravity': 0.1, 'Link distance': 10, 'Link width': 5, 'Link alpha': 0.5, 'Node size': 10, 'Node stroke size': 0.5, 'Node size exponent': 0.5, 'Link width exponent': 0.5, 'Collision': False, 'Node fill': '#16a085', 'Node stroke': '#000000', 'Link stroke': '#7c7c7c', 'Label stroke': '#000000', 'Show labels': False, 'Show singleton nodes': False, 'Node size by strength': False, 'Zoom': 1.5, 'Min. link weight %': 0, 'Max. link weight %': 100}
         if(modelo.__instance == None):
@@ -55,12 +56,29 @@ class modelo:
     Método que llama a un método para obtener las posiciones de los personajes
     '''
     def obtenerPosPers(self):
+        l = lecturaEpub.lecturaEpub(self.__fichero)
         posper = pp.pospersonajes()
-        res = posper.obtenerPos(self.getTexto(), self.getDictParsear())
+        cap = ''
+        pers = self.getDictParsear()
+        self.__fincaps = list() 
+        posiciones = list()
+        for f in l.siguienteArchivo():
+            cap = ". " + f
+            pos,fin = posper.obtenerPos(cap, pers)
+            posiciones.append(pos)
+            self.__fincaps.append(fin)
         for i in self.personajes.keys():
             pers = self.personajes[i].getPersonaje()
             for n in pers.keys():
-                pers[n] = res[n]
+                c = 1
+                apar = 0
+                for posc in posiciones:
+                    if(n in posc.keys()):
+                        pers[n][c] = posc[n]
+                        apar+=len(posc[n])
+                    c+=1
+                self.personajes[i].lennombres[n]=apar
+                self.personajes[i].sumNumApariciones(apar)
       
     '''
     Función que genera una lista de nombres para obtener su posición en el texto
@@ -109,7 +127,7 @@ class modelo:
     def anadirPersonaje(self, idpers, pers):
         if(idpers not in self.personajes):
             self.personajes[idpers] = p.personaje()
-            self.personajes[idpers].getPersonaje()[pers] = list()
+            self.personajes[idpers].getPersonaje()[pers] = dict()
             self.numpers+=1
             return 'Personaje añadido correctamente'
         return 'La id de personaje ya existe'
@@ -190,20 +208,24 @@ class modelo:
     '''
     Método que junta las posiciones de todos los nombres de un personaje
     '''
-    def __juntarPosiciones(self):
+    def juntarPosiciones(self):
         for i in self.personajes.keys():
             pers = self.personajes[i].getPersonaje()
-            pos = self.personajes[i].getPosicionPers()
+            pos = {}
             for n in pers.keys():
-                    i = 0
-                    for j in pers[n]:
-                        while(i<len(pos) and pos[i]<j):
-                            i+=1
-                        pos.insert(i,j)
+                    for caps in pers[n].keys():
+                        cont = 0
+                        if(caps not in pos.keys()):
+                            pos[caps]=list()
+                        for j in pers[n][caps]:
+                            while(cont<len(pos[caps]) and pos[caps][cont]<j):
+                                cont+=1
+                            pos[caps].insert(cont,j)
+            self.personajes[i].setPosicionPers(pos)
        
     def prepararRed(self):
         self.obtenerPosPers()
-        self.__juntarPosiciones()
+        self.juntarPosiciones()
     '''
     Método para obtener una matriz de adyacencia de las relaciones entre los personajes
     '''
@@ -213,26 +235,74 @@ class modelo:
     '''
     Método para generar un grafo a partir de las relaciones de los personajes
     '''
-    def generarGrafo(self,rango,minapar):
+    def generarGrafo(self,rango,minapar,caps):
         persk = list(self.personajes.keys())
         tam = len(persk)
         self.__G = nx.Graph()
         for i in range(tam):
+            #Se comprueba que se cumple con el requisito mínimo de apariciones
             if(self.personajes[persk[i]].getNumApariciones()>=minapar):
+                #La red es no dirigida sin autoenlaces así que no hace falta medir el peso 2 veces ni consigo mismo
                 for j in range(i+1,tam):
+                    #Se comprueba que cumple el requisito mínimo de apariciones
                     if(self.personajes[persk[j]].getNumApariciones()>=minapar):
-                        peso = 0
-                        for posi in self.personajes[persk[i]].getPosicionPers():
-                            for posj in self.personajes[persk[j]].getPosicionPers():
-                                if(posj>=(posi-rango)):
-                                    if(posj<=(posi+rango)):
-                                        peso+=1
-                                    else:
-                                        break
+                        peso=0
+                        #Se recorren los capítulos
+                        for cap in self.personajes[persk[i]].getPosicionPers().keys():
+                            #Se obtienene las posiciones del personaje en el capítulo correspondiente
+                            for posi in self.personajes[persk[i]].getPosicionPers()[cap]:
+                                prev = False
+                                post = False
+                                #Si no se tienen en cuenta los capítulos
+                                if(not caps):
+                                    aux = posi-rango
+                                    capaux = cap
+                                    #Si aux negativo se ha pasado al capítulo anterior capaux minimo de 2 para no salirnos de la lista
+                                    while(aux<0 and capaux>1):
+                                        prev = True
+                                        capaux-=1
+                                        aux = self.__fincaps[capaux-1] + aux
+                                        #Si aux menor que 0 nos hemos saltado más de un capítulo
+                                        if(aux<0):
+                                            #Como nos hemos saltado el capítulo entero consideramos todas las posiciones que tiene el 
+                                            #segundo personaje en ese capítulo como relación
+                                            peso+=len(self.personajes[persk[j]].getPosicionPers()[capaux])
+                                        else:
+                                            #Comprobamos todas las palabras del capítulo previo que no nos hemos saltado por completo y añadimos
+                                            #las que se encuentren en el rango
+                                            for posj in self.personajes[persk[j]].getPosicionPers()[capaux]:
+                                                if(posj>=aux):
+                                                    peso+=1
+                                    #Se repite el proceso anterior pero para capítulos posteriores
+                                    aux = posi + rango - self.__fincaps[cap-1]
+                                    capaux = cap
+                                    while(aux>0 and capaux<len(self.__fincaps)):
+                                        capaux+=1
+                                        post=True
+                                        if(aux>self.__fincaps[capaux-1]):
+                                            aux = aux - self.__fincaps[capaux-1]
+                                            peso+=len(self.personajes[persk[j]].getPosicionPers()[capaux])
+                                        else:
+                                            for posj in self.personajes[persk[j]].getPosicionPers()[capaux]:
+                                                if(posj<=aux):
+                                                    peso+=1
+                                                else:
+                                                    break
+                                #Si se ha pasado al capítulo previo y al posterior se añaden directamente todas las posiciones del actual
+                                if(not caps and prev and post):
+                                    peso+=len(self.personajes[persk[j]].getPosicionPers()[cap])
+                                else:
+                                    #Se comprueba en el capítulo actual las palabras que entran en el rango
+                                    for posj in self.personajes[persk[j]].getPosicionPers()[cap]:
+                                        if(posj>=(posi-rango)):
+                                            if(posj<=(posi+rango)):
+                                                peso+=1
+                                            else:
+                                                break
                         self.__G.add_edge(persk[i],persk[j],weight=peso)
     
     '''
-    Método para visualizar la red
+    Método para mandar a d3 la información para visualizar la red
     '''
     def visualizar(self):
         return json.dumps(nx.json_graph.node_link_data(self.__G))
@@ -263,14 +333,31 @@ class modelo:
     Método para obtener el texto del epub del que se quiere obtener la red de 
     personajes
     '''
-    def obtTextoEpub(self,fichero):
-        l = lecturaEpub.lecturaEpub(fichero)
+    def obtTextoEpub(self):
+        l = lecturaEpub.lecturaEpub(self.__fichero)
         self.__texto = ''
         for f in l.siguienteArchivo():
             self.__texto += ". " + f
 
+    '''
+    Obtiene el texto del epub
+    '''
     def getTexto(self):
         return self.__texto
+        
+    '''
+    Establece el epub a leer
+    '''
+    def setFichero(self, fich):
+        self.__fichero = fich
+        
+    '''
+    Devuelve si hay un fichero o no
+    '''
+    def hayFichero(self):
+        if(self.__fichero != None):
+            return True
+        return False
     
     '''
     Método que devuelve la configuración de la visualización

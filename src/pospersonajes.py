@@ -15,12 +15,6 @@ class pospersonajes:
     def __init__(self):
         self.lexer = lex.lex(module=self)
         self.nombres = list()
-        self.nomscoinc = list()
-        self.contador = 1
-        self.aux = list()
-        self.cadaux = ""
-        self.ultcoinc = ""
-        self.resul = dict()
     
     #Tokens del lexer
     tokens = ("PALABRA", "ESPACIO")
@@ -115,12 +109,18 @@ class pospersonajes:
     '''
     def obtenerPos(self, texto, nombres):
         self.nombres = nombres
+        self.nomscoinc = list()
+        self.contador = 1
+        self.aux = list()
+        self.cadaux = ""
+        self.ultcoinc = ""
+        self.resul = dict()
         for n in nombres:
             self.resul[n] = list()
         lex.input(texto)
         for tok in iter(lex.token, None):
             print()
-        return self.resul
+        return self.resul, self.contador
                
     '''
     Función que comprueba recorre una cadena de texto y comprueba con cadenas de texto
