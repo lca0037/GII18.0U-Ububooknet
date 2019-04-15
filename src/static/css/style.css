@@ -171,14 +171,61 @@ div#content .Personaje.Cabecera {
 }
 
 div#content .Personaje .IdPersonaje {
-	width: 50%;
+	width: 38%;
 }
 
 div#content .Personaje .NomP {
-	width: 50%;
+	width: 40%;
 }
+
+div#content .Personaje .NumApar {
+	width: 20%;
+}
+
 p .ref {
 	text-align: center;
+}
+
+.arrow-up {
+  	width: 0; 
+  	height: 0; 
+  	border-left: 8px solid transparent;
+  	border-right: 8px solid transparent;
+  
+  	border-bottom: 8px solid black;
+  	cursor: pointer;
+}
+
+.arrow-down {
+  	width: 0; 
+  	height: 0;
+  	border-left: 8px solid transparent;
+  	border-right: 8px solid transparent;
+  
+  	border-top: 8px solid black;
+  	cursor: pointer;
+}
+
+.IdPersonaje .arrow-up{
+	position: absolute;
+	right: calc(60% + 20px);
+	top: 5px;
+}
+
+.IdPersonaje .arrow-down {
+	position: absolute;
+	right: calc(60% + 20px);
+}
+
+.NumApar .arrow-up{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
+.NumApar .arrow-down {
+	position: absolute;
+	right: 10px;
 }
 
 :root {

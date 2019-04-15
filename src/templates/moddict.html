@@ -49,8 +49,17 @@ div#loading {
 		</div>
 		<div id="Personajes">
 			<div class="Personaje Cabecera">
-				<div class="IdPersonaje">ID Personaje</div>
+				<div class="IdPersonaje">
+					ID Personaje
+					<div class="arrow-up" onclick="sortidrev()"></div>
+					<div class="arrow-down" onclick="sortid()"></div>
+				</div>
 				<div class="NomP">Referencias personaje</div>
+				<div class="NumApar">
+					Número Apariciones
+					<div class="arrow-up" onclick="sortaparev()"></div>
+					<div class="arrow-down" onclick="sortapa()"></div>
+				</div>
 			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
@@ -60,6 +69,7 @@ div#loading {
 					<p class="ref">{{ n }}</p>
 				{% endfor %}
 				</div>
+				<div class="NumApar">{{ pers[i].getNumApariciones() }}</div>
 			</div>
 			{% endfor %}
 		</div>
@@ -71,6 +81,36 @@ div#loading {
         function loading(){
             $("#loading").show();
             $("#content").hide();       
+        }
+
+        function sortidrev(){
+        	ordenar('idrev')
+        }
+
+        function sortid(){
+        	ordenar('id')
+        }
+
+        function sortapa(){
+        	ordenar('apa')
+        }
+
+        function sortaparev(){
+        	ordenar('aparev')
+        }
+
+        function ordenar(tipo){
+        	$.ajax({
+	          type: "POST",
+	          contentType: "application/json;charset=utf-8",
+	          url: "/Modificar-Diccionario/",
+	          traditional: "true",
+	          data: JSON.stringify(tipo),
+	          dataType: "json",
+	          success: function(response){
+              	$("#content #Personajes").replaceWith(response);
+              }
+	        });
         }
     </script>
 </body>

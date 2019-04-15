@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-from flask import render_template, Flask, request, url_for, redirect, json, send_file
+from flask import render_template, Flask, request, url_for, redirect, json, send_file, make_response
 from src import modelo as mod
+from bs4 import BeautifulSoup
 import zipfile
 
 app = Flask(__name__)
@@ -90,6 +91,24 @@ def moddict():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
+        orden = request.get_json()
+        if(orden != None):
+            if(orden == 'id'):
+                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])})
+                cont = BeautifulSoup(template, "html.parser")
+                return json.dumps(str(cont.find(id="Personajes")))
+            elif(orden == 'idrev'):
+                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)})
+                cont = BeautifulSoup(template, "html.parser")
+                return json.dumps(str(cont.find(id="Personajes")))
+            elif(orden == 'apa'):
+                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())})
+                cont = BeautifulSoup(template, "html.parser")
+                return json.dumps(str(cont.find(id="Personajes")))
+            elif(orden == 'aparev'):
+                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)})
+                cont = BeautifulSoup(template, "html.parser")
+                return json.dumps(str(cont.find(id="Personajes")))
         if("btn btn-newpers" in request.form):
             return redirect(url_for('newpers'))
         elif("btn btn-delpers" in request.form):
