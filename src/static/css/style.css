@@ -127,6 +127,11 @@ div#content #indice #form-menu input{
 	margin-bottom: 1px;
 }
 
+div#content #indice #pars {
+	position: absolute;
+	bottom: 22px;
+}
+
 div#content #indice #form-mov {
 	float: left;
 	width: 100%;

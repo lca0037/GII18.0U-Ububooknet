@@ -68,6 +68,7 @@ class modelo:
             posiciones.append(pos)
             self.__fincaps.append(fin)
         for i in self.personajes.keys():
+            self.personajes[i].lennombres = dict()
             pers = self.personajes[i].getPersonaje()
             for n in pers.keys():
                 c = 1
@@ -152,9 +153,14 @@ class modelo:
         if(idPersonaje1 in self.personajes and idPersonaje2 in self.personajes):
             pers1 = self.personajes[idPersonaje1].getPersonaje()
             pers2 = self.personajes[idPersonaje2].getPersonaje()
+            apar1 = self.personajes[idPersonaje1].lennombres
+            apar2 = self.personajes[idPersonaje2].lennombres
             for k in pers2.keys():
                 if k not in pers1.keys():
                     pers1[k]=pers2[k]
+                    if(k in apar2.keys()):
+                        apar1[k] = apar2[k]
+                        self.personajes[idPersonaje1].sumNumApariciones(apar2[k])
             self.__eliminarPersonaje(idPersonaje2)
     
     '''
@@ -184,6 +190,9 @@ class modelo:
             if(ref in p.keys()):
                 if (len(p)>1):
                     del p[ref]
+                    if(ref in self.personajes[idp].lennombres):
+                        self.personajes[idp].resNumApariciones(self.personajes[idp].lennombres[ref])
+                        del self.personajes[idp].lennombres[ref]
                 else:
                     del self.personajes[idp]
     

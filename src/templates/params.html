@@ -40,7 +40,7 @@
 			<div class="Personaje">
 				<div class="IdPersonaje">
 					<p>ID Personaje: {{ i }}</p>
-					<p>Número de apariciones: {{ pers[i].getNumApariciones() }}</p>
+					<p>Número de apariciones: {{ pers[i].getNumApariciones()[0] }}</p>
 				</div>
 				{% for n in pers[i].getPersonaje().keys() %}
 				<div class="NomP">Nombre personaje: {{ n }} </div>

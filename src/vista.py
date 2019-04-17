@@ -91,24 +91,27 @@ def moddict():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
-        orden = request.get_json()
-        if(orden != None):
-            if(orden == 'id'):
+        ajax = request.get_json()
+        if(ajax != None):
+            if(ajax == 'id'):
                 template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])})
                 cont = BeautifulSoup(template, "html.parser")
                 return json.dumps(str(cont.find(id="Personajes")))
-            elif(orden == 'idrev'):
+            elif(ajax == 'idrev'):
                 template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)})
                 cont = BeautifulSoup(template, "html.parser")
                 return json.dumps(str(cont.find(id="Personajes")))
-            elif(orden == 'apa'):
+            elif(ajax == 'apa'):
                 template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())})
                 cont = BeautifulSoup(template, "html.parser")
                 return json.dumps(str(cont.find(id="Personajes")))
-            elif(orden == 'aparev'):
+            elif(ajax == 'aparev'):
                 template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)})
                 cont = BeautifulSoup(template, "html.parser")
                 return json.dumps(str(cont.find(id="Personajes")))
+            elif(ajax == 'parsear'):
+                m.prepararRed()
+                return json.dumps("True")
         if("btn btn-newpers" in request.form):
             return redirect(url_for('newpers'))
         elif("btn btn-delpers" in request.form):
@@ -125,9 +128,6 @@ def moddict():
             filename = app.config['UPLOAD_FOLDER']+"\\DiccionarioPersonajes.csv"
             m.exportDict(filename)
             return send_file(filename, mimetype='text/csv', attachment_filename="DiccionarioPersonajes.csv", as_attachment=True)
-        elif("btn btn-parseo" in request.form):
-            m.prepararRed()
-            return redirect(url_for('params'))
     return render_template('moddict.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    

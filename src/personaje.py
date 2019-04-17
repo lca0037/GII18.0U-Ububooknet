@@ -36,8 +36,14 @@ class personaje:
     Devuelve el número de apariciones del personaje
     '''
     def getNumApariciones(self):
-        return self.__numapar
+        for k in self.__nombres.keys():
+            if k not in self.lennombres:
+                return self.__numapar,False
+        return self.__numapar,True
     
     def sumNumApariciones(self,apar):
         self.__numapar += apar
+        
+    def resNumApariciones(self,apar):
+        self.__numapar -= apar
     
