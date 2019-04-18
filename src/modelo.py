@@ -106,7 +106,7 @@ class modelo:
         y = list()
         for k in self.personajes.keys():
             x.append(k)
-            y.append(self.personajes[k].getNumApariciones())
+            y.append(self.personajes[k].getNumApariciones()[0])
         tam = np.arange(self.numpers)
         plt.title('Frecuencia personajes')
         plt.xlabel('Nombre')
@@ -250,11 +250,11 @@ class modelo:
         self.__G = nx.Graph()
         for i in range(tam):
             #Se comprueba que se cumple con el requisito mínimo de apariciones
-            if(self.personajes[persk[i]].getNumApariciones()>=minapar):
+            if(self.personajes[persk[i]].getNumApariciones()[0]>=minapar):
                 #La red es no dirigida sin autoenlaces así que no hace falta medir el peso 2 veces ni consigo mismo
                 for j in range(i+1,tam):
                     #Se comprueba que cumple el requisito mínimo de apariciones
-                    if(self.personajes[persk[j]].getNumApariciones()>=minapar):
+                    if(self.personajes[persk[j]].getNumApariciones()[0]>=minapar):
                         peso=0
                         #Se recorren los capítulos
                         for cap in self.personajes[persk[i]].getPosicionPers().keys():
