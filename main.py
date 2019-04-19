@@ -7,7 +7,7 @@ import unittest
 import time
 #runner = unittest.TextTestRunner()
 #result = runner.run(unittest.makeSuite(testUnitarios.testUnitarios))
-vista.app.run()
+vista.app.run(debug=True)
 #m = modelo.modelo.getInstance()
 #m.vaciarDiccionario()
 #start = time.time()

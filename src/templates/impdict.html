@@ -20,16 +20,21 @@
 			</ul>
 		</div>
 	</header>
+	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > IMPORTAR DICCIONARIO</div>
 	<div id="content">
-		<form action="" method="post" enctype=multipart/form-data>
-			<div id="txt1">Introduzca la ruta al fichero csv</div>
-			<input type="file" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
-			<input type="submit" name="btn btn-cargarcsv" value="Cargar">
-		</form>
-		<form action="{{ url_for('dictaut') }}" class="form form-volver" method="post">
-			<input type="submit" name="btn btn-volver" value="Volver">
-		</form>
-		<p>{{error}}</p>
+		<div id="indice">
+			<div id="form-mov">
+				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('dictaut') }}'" value="Volver">
+			</div>
+		</div>
+		<div id="forms">
+			<form action="" method="post" enctype=multipart/form-data>
+				<div id="txt1">Introduzca la ruta al fichero csv</div>
+				<input type="file" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
+				<input type="submit" name="btn btn-cargarcsv" value="Cargar">
+			</form>
+			<p>{{error}}</p>
+		</div>
 	</div>
 	<footer></footer>
 </body>

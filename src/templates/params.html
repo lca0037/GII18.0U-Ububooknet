@@ -18,33 +18,58 @@
 				<li><a href="{{ url_for('index') }}">Inicio</a></li>
 			</ul>
 		</div>
-		<div class="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > <a href="{{ url_for('moddict') }}">MODIFICAR DICCIONARIO</a> > <a href="#">PARÁMETROS ADICIONALES</a> > RED > INFORME</div>
 	</header>
+	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > <a href="{{ url_for('moddict') }}">MODIFICAR DICCIONARIO</a> > <a href="#">PARÁMETROS ADICIONALES</a> > RED > INFORME</div>
 	<div id="content">
-		<form action="" method="post" enctype=multipart/form-data>
-			<div id="txt1">Introduzca el número mínimo de apariciones en el libro</div>
-			<input type="text" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones">
-			<p>{{error1}}</p>
-			<div id="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
-			<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas">
-			<p>{{error2}}</p>
-			<input type="checkbox" name="cbx cbx-capitulos">
-			<label for="cbx cbx-capitulos">Tener en cuenta los capítulos</label>
-			<input type="submit" name="btn btn-red" value="Obtener red">
-		</form>
-		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
-			<input type="submit" name="btn btn-volver" value="Volver">
-		</form>
+		<div id="indice">
+			<form action="" id="form-menu" method="post">
+				<div class="txt1">Introduzca el número mínimo de apariciones en el libro</div>
+				<input type="text" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones">
+				<p>{{error1}}</p>
+				<div class="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
+				<input type="text" name="txt txt-dist" size="40" placeholder="Número de palabras máximas">
+				<p>{{error2}}</p>
+				<input type="submit" name="btn btn-red" value="Obtener red">
+			</form>
+			<div id="cbx">
+				<div class="txt1">
+					<input type="checkbox" name="cbx cbx-capitulos">
+					<label for="cbx cbx-capitulos">Tener en cuenta los capítulos</label>
+				</div>
+			</div>
+			<div id="form-mov">
+				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="Volver">
+			</div>
+		</div>
 		<div id="Personajes">
+			<div class="Personaje Cabecera">
+				<div class="IdPersonaje">
+					ID Personaje
+					<div class="arrow-up" onclick="sortidrev()"></div>
+					<div class="arrow-down" onclick="sortid()"></div>
+				</div>
+				<div class="NomP">Referencias personaje</div>
+				<div class="NumApar">
+					Número Apariciones
+					<div class="arrow-up" onclick="sortaparev()"></div>
+					<div class="arrow-down" onclick="sortapa()"></div>
+				</div>
+			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
-				<div class="IdPersonaje">
-					<p>ID Personaje: {{ i }}</p>
-					<p>Número de apariciones: {{ pers[i].getNumApariciones()[0] }}</p>
-				</div>
+				<div class="IdPersonaje">{{ i }}</div>
+				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
-				<div class="NomP">Nombre personaje: {{ n }} </div>
+					<p class="ref">{{ n }}</p>
 				{% endfor %}
+				</div>
+				{% if pers[i].getNumApariciones()[1] %}
+					<div class="NumApar" parse="true">{{ pers[i].getNumApariciones()[0] }}</div>
+				{% elif pers[i].getNumApariciones()[0] == 0 %}
+					<div class="NumApar" parse="false">N/A</div>
+				{% else%}
+					<div class="NumApar" parse="false">{{ pers[i].getNumApariciones()[0] }}</div>
+				{% endif %}
 			</div>
 			{% endfor %}
 		</div>

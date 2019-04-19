@@ -20,23 +20,49 @@
 			</ul>
 		</div>
 	</header>
+	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > <a href="{{ url_for('moddict') }}">MODIFICAR DICCIONARIO</a> > ELIMINAR PERSONAJE</div>
 	<div id="content">
-		<form action="javascript:borra()" method="post" enctype=multipart/form-data>
-			<div id="txt1">Marque los personajes a eliminar</div>
-			<input type="submit" name="btn btn-delpers" value="Eliminar">
-		</form>
-		<form action="{{ url_for('moddict') }}" class="form form-volver" method="post">
-			<input type="submit" name="btn btn-volver" value="Volver">
-		</form>
+		<div id="indice">
+			<form action="javascript:borra()" id="form-menu" method="post">
+				<div class="txt1">Marque los personajes a eliminar</div>
+				<input type="submit" name="btn btn-delpers" value="Eliminar">
+			</form>
+			<div id="form-mov">
+				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="Volver">
+			</div>
+		</div>
 		<div id="Personajes">
+			<div class="Personaje Cabecera">
+				<div class="IdPersonaje">
+					ID Personaje
+					<div class="arrow-up" onclick="sortidrev()"></div>
+					<div class="arrow-down" onclick="sortid()"></div>
+				</div>
+				<div class="NomP">Referencias personaje</div>
+				<div class="NumApar">
+					Número Apariciones
+					<div class="arrow-up" onclick="sortaparev()"></div>
+					<div class="arrow-down" onclick="sortapa()"></div>
+				</div>
+			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
-				<div class="IdPersonaje">ID Personaje: {{ i }}
+				<div class="IdPersonaje">
 					<input type="checkbox" name="cbx cbx-delpers" title="Marque para eliminar al personaje" value="{{ i }}">
+					{{ i }}
 				</div>
+				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
-				<div id="NomP">Nombre personaje: {{ n }} </div>
+					<p class="ref">{{ n }}</p>
 				{% endfor %}
+				</div>
+				{% if pers[i].getNumApariciones()[1] %}
+					<div class="NumApar" parse="true">{{ pers[i].getNumApariciones()[0] }}</div>
+				{% elif pers[i].getNumApariciones()[0] == 0 %}
+					<div class="NumApar" parse="false">N/A</div>
+				{% else%}
+					<div class="NumApar" parse="false">{{ pers[i].getNumApariciones()[0] }}</div>
+				{% endif %}
 			</div>
 			{% endfor %}
 		</div>
@@ -46,6 +72,36 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+	function sortidrev(){
+        ordenar('idrev');
+    }
+
+    function sortid(){
+    	ordenar('id');
+    }
+
+    function sortapa(){
+    	ordenar('apa');
+    }
+
+    function sortaparev(){
+    	ordenar('aparev');
+    }
+
+    function ordenar(tipo){
+    	$.ajax({
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          url: "/Modificar-Diccionario/Eliminar-Personaje/",
+          traditional: "true",
+          data: JSON.stringify(tipo),
+          dataType: "json",
+          success: function(response){
+          	$("#content #Personajes").replaceWith(response);
+          }
+        });
+    }
+
 	function borra(){
 		var checks = [];
 		var inputElements = document.getElementsByName("cbx cbx-delpers");
@@ -59,7 +115,7 @@
           contentType: "application/json;charset=utf-8",
           url: "/Modificar-Diccionario/Eliminar-Personaje/",
           traditional: "true",
-          data: JSON.stringify({checks}),
+          data: JSON.stringify(checks),
           dataType: "json"
           });
 		alert('Los personajes seleccionados han sido eliminados con éxito')

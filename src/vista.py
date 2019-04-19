@@ -38,7 +38,7 @@ def dictaut():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
-        if("cbx cbx-vacdit"  in request.form):
+        if("btn btn-vacdit"  in request.form):
             m.vaciarDiccionario()
         if("btn btn-creadict" in request.form):
             m.crearDict()
@@ -94,21 +94,13 @@ def moddict():
         ajax = request.get_json()
         if(ajax != None):
             if(ajax == 'id'):
-                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])})
-                cont = BeautifulSoup(template, "html.parser")
-                return json.dumps(str(cont.find(id="Personajes")))
+                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
             elif(ajax == 'idrev'):
-                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)})
-                cont = BeautifulSoup(template, "html.parser")
-                return json.dumps(str(cont.find(id="Personajes")))
+                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
             elif(ajax == 'apa'):
-                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())})
-                cont = BeautifulSoup(template, "html.parser")
-                return json.dumps(str(cont.find(id="Personajes")))
+                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
             elif(ajax == 'aparev'):
-                template = render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)})
-                cont = BeautifulSoup(template, "html.parser")
-                return json.dumps(str(cont.find(id="Personajes")))
+                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))
             elif(ajax == 'parsear'):
                 m.prepararRed()
                 return json.dumps("True")
@@ -149,8 +141,18 @@ def delpers():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
-        names = request.get_json()
-        m.eliminarListPersonajes(names['checks'])
+        ajax = request.get_json()
+        if(ajax != None):
+            if(ajax == 'id'):
+                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
+            elif(ajax == 'idrev'):
+                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
+            elif(ajax == 'apa'):
+                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
+            elif(ajax == 'aparev'):
+                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))
+            else:
+                m.eliminarListPersonajes(ajax)
     return render_template('delpers.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Juntar-Personajes/', methods=["GET", "POST"])    
@@ -158,8 +160,18 @@ def joinpers():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
-        names = request.get_json()
-        m.juntarListPersonajes(names['checks'])
+        ajax = request.get_json()
+        if(ajax != None):
+            if(ajax == 'id'):
+                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
+            elif(ajax == 'idrev'):
+                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
+            elif(ajax == 'apa'):
+                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
+            elif(ajax == 'aparev'):
+                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))
+            else:
+                m.juntarListPersonajes(ajax)
     return render_template('joinpers.html', pers = m.getPersonajes())
    
 @app.route('/Modificar-Diccionario/Nueva-Referencia/', methods=["GET", "POST"])    
@@ -185,8 +197,18 @@ def delrefpers():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
-        names = request.get_json()
-        m.eliminarListRefs(names['checks'])
+        ajax = request.get_json()
+        if(ajax != None):
+            if(ajax == 'id'):
+                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
+            elif(ajax == 'idrev'):
+                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
+            elif(ajax == 'apa'):
+                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
+            elif(ajax == 'aparev'):
+                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))
+            else:
+                m.eliminarListRefs(ajax)
     return render_template('delrefpers.html', error = error, pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Cambiar-Identificador/', methods=["GET", "POST"])
@@ -251,3 +273,7 @@ def informe():
         if("btn btn-vis" in request.form):
             print('Visualizar')
     return render_template('informe.html')
+
+def orden(html):
+    cont = BeautifulSoup(html, "html.parser")
+    return json.dumps(str(cont.find(id="Personajes")))

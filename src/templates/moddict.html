@@ -5,15 +5,6 @@
 	<meta charset="UTF-8">
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-<style type="text/css">
-div#loading {
-    width: 200px;
-    height: 200px;
-    display: none;
-    background: url(/static/img/loading.gif) no-repeat;
-    cursor: wait;
-    }
-</style>
 <body>
 	<header id="header">
 		<div class="logo">
@@ -28,8 +19,8 @@ div#loading {
 				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
-		<div class="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > <a href="#">MODIFICAR DICCIONARIO</a> > PARÁMETROS ADICIONALES > RED > INFORME</div>
 	</header>
+	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > <a href="#">MODIFICAR DICCIONARIO</a> > PARÁMETROS ADICIONALES > RED > INFORME</div>
 	<div id="loading"></div>
 	<div id="content">
 		<div id="indice">
@@ -42,9 +33,11 @@ div#loading {
 				<input type="submit" id="mid" name="btn btn-modid" value="Modificar Id Personaje">
 				<input type="submit" id="exp" name="btn btn-expdict" value="Exportar Diccionario">
 			</form>
-			<div id="pars">
-				<input type="checkbox" id="pars-cbx" name="cbx cbx-pars">
-				<label for="pars">Obtener Posiciones</label>
+			<div id="cbx">
+				<div class="txt1">
+					<input type="checkbox" id="pars-cbx" name="cbx cbx-pars">
+					<label for="pars">Obtener Posiciones</label>
+				</div>
 			</div>
 			<div id="form-mov">
 				<input type="button" class="volv" name="btn btn-volver" value="Volver" onclick="window.location.href='{{ url_for('dictaut') }}'">

@@ -19,23 +19,21 @@
 				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
 			</ul>
 		</div>
-		<div class="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="#">DICCIONARIO de PERSONAJES</a> > MODIFICAR DICCIONARIO > PARÁMETROS ADICIONALES > RED > INFORME</div>
 	</header>
+	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="#">DICCIONARIO de PERSONAJES</a> > MODIFICAR DICCIONARIO > PARÁMETROS ADICIONALES > RED > INFORME</div>
 	<div id="content">
-		<form action="" class="form form-menu" method="post">
-			<input type="submit" name="btn btn-creadict" value="Crear Diccionario">
-			<input type="submit" name="btn btn-impdict" value="Importar Diccionario">
-			<input type="submit" name="btn btn-obtdict" value="Obtener Diccionario">
-			<input type="checkbox" name="cbx cbx-vacdit">
-			<label for="cbx cbx-vacdit">Vaciar el diccionario actual</label>
-		</form>
-		<p>{{msg}}</p>
-		<form action="{{ url_for('index') }}" class="form form-volver" method="post">
-			<input type="submit" name="btn btn-volver" value="Volver">
-		</form>
-		<form action="{{ url_for('moddict') }}" class="form form-sig" method="post">
-			<input type="submit" name="btn btn-sig" value="Siguiente">
-		</form>
+		<div id="indice">
+			<form action="" id="form-menu" method="post">
+				<input type="submit" name="btn btn-creadict" value="Crear Diccionario">
+				<input type="submit" name="btn btn-impdict" value="Importar Diccionario">
+				<input type="submit" name="btn btn-obtdict" value="Obtener Diccionario">
+				<input type="submit" name="btn btn-vacdit" value="Vaciar Diccionario">
+			</form>
+			<div id="form-mov">
+				<input type="submit" class="volv" name="btn btn-volver" onclick="window.location.href='{{ url_for('index') }}'" value="Volver">
+				<input type="submit" class="sig" name="btn btn-sig" onclick="window.location.href='{{ url_for('moddict') }}'" value="Siguiente">
+			</div>
+		</div>
 	</div>
 	<footer></footer>
 </body>

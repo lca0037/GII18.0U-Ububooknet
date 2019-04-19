@@ -47,7 +47,7 @@ table {
 header{
 	position: fixed;
 	width: 100%;
-	height: 80px;
+	height: 70px;
 	background: #3a3633;
 	top: 0;
 	display: flex;
@@ -58,7 +58,6 @@ header .logo{
 	width: 40%;
 	padding: 10px 30px;
 	color: #fff;
-	min-height: 65px;
 }
 header .logo h1{
 	font-size: 20px;
@@ -68,7 +67,6 @@ header .region{
 	width: 20%;
 	padding: 10px 30px;
 	color: #fff;
-	min-height: 65px;
 }
 header .region h2{
 	font-size: 20px;
@@ -76,7 +74,6 @@ header .region h2{
 }
 header .menu{
 	width: 40%;
-	min-height: 65px;
 }
 header .menu ul{
 	margin: 0;
@@ -95,15 +92,35 @@ header .menu li a{
 	text-decoration: none;
 }
 
-header .workflow{
+div#workflow{
 	width: 100%;
+	position: fixed;
+	background: #3a3633;
+	top: 70px;
+	z-index: 1;
 	font-size: 8px;
 	color: #a5a29f;
 	height: 10px;
 }
 
-header .workflow a{
+div#workflow a{
 	color: #c0bbb7;
+}
+
+div#loading {
+	position: absolute;
+	top: calc(50% - 100px);
+	left: calc(50% - 100px);
+    width: 200px;
+    height: 200px;
+    display: none;
+    background: url(/static/img/loading.gif) no-repeat;
+    cursor: wait;
+}
+
+div#content #indice .txt1 {
+	font-size: 15px;
+	color: #f2eeea;
 }
 
 div#content #indice {
@@ -127,15 +144,21 @@ div#content #indice #form-menu input{
 	margin-bottom: 1px;
 }
 
-div#content #indice #pars {
+div#content #indice #form-menu input[type=text]{
+	box-sizing: border-box;
+}
+
+div#content #indice #cbx {
 	position: absolute;
 	bottom: 22px;
 }
 
 div#content #indice #form-mov {
+	position: absolute;
 	float: left;
 	width: 100%;
 	display: flex;
+	bottom: 0px;
 }
 
 div#content #indice #form-mov input{
@@ -152,7 +175,10 @@ div#content #Personajes {
 	margin-top: 40px;
 	margin-left: 20%;
 }
-
+div#content #forms {
+	width: 100%;
+	margin-left: 20%;
+}
 div#content .Personaje {
 	display: flex;
 	align-items: center;
@@ -176,7 +202,7 @@ div#content .Personaje.Cabecera {
 }
 
 div#content .Personaje .IdPersonaje {
-	width: 38%;
+	width: 40%;
 }
 
 div#content .Personaje .NomP {
