@@ -35,20 +35,20 @@
 			<div class="Personaje Cabecera">
 				<div class="IdPersonaje">
 					ID Personaje
-					<div class="arrow-up" onclick="sortidrev()"></div>
-					<div class="arrow-down" onclick="sortid()"></div>
+					<div class="arrow-up" onclick="ordenarcbx('idrev')"></div>
+					<div class="arrow-down" onclick="ordenarcbx('id')"></div>
 				</div>
 				<div class="NomP">Referencias personaje</div>
 				<div class="NumApar">
 					Número Apariciones
-					<div class="arrow-up" onclick="sortaparev()"></div>
-					<div class="arrow-down" onclick="sortapa()"></div>
+					<div class="arrow-up" onclick="ordenarcbx('aparev')"></div>
+					<div class="arrow-down" onclick="ordenarcbx('apa')"></div>
 				</div>
 			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
 				<div class="IdPersonaje">
-					<input type="checkbox" name="cbx cbx-delpers" title="Marque para eliminar al personaje" value="{{ i }}">
+					<input type="checkbox" name="cbx cbx-idpers" title="Marque para eliminar al personaje" value="{{ i }}">
 					{{ i }}
 				</div>
 				<div class="NomP">
@@ -72,39 +72,9 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	function sortidrev(){
-        ordenar('idrev');
-    }
-
-    function sortid(){
-    	ordenar('id');
-    }
-
-    function sortapa(){
-    	ordenar('apa');
-    }
-
-    function sortaparev(){
-    	ordenar('aparev');
-    }
-
-    function ordenar(tipo){
-    	$.ajax({
-          type: "POST",
-          contentType: "application/json;charset=utf-8",
-          url: "/Modificar-Diccionario/Eliminar-Personaje/",
-          traditional: "true",
-          data: JSON.stringify(tipo),
-          dataType: "json",
-          success: function(response){
-          	$("#content #Personajes").replaceWith(response);
-          }
-        });
-    }
-
 	function borra(){
 		var checks = [];
-		var inputElements = document.getElementsByName("cbx cbx-delpers");
+		var inputElements = document.getElementsByName("cbx cbx-idpers");
 		for(var i=0; inputElements[i]; ++i){
       		if(inputElements[i].checked){
            		checks.push(inputElements[i].value);
@@ -120,6 +90,20 @@
           });
 		alert('Los personajes seleccionados han sido eliminados con éxito')
 		location.reload();
+	}
+
+	function ordenarcbx(tipo){
+		$.ajax({
+	      type: "POST",
+	      contentType: "application/json;charset=utf-8",
+	      url: "/Ordenar-Id-Cbx-Del/",
+	      traditional: "true",
+	      data: JSON.stringify(tipo),
+	      dataType: "json",
+	      success: function(response){
+	      	$("#content #Personajes").replaceWith(response);
+	      }
+	    });
 	}
 </script>
 </html>

@@ -36,20 +36,20 @@
 			<div class="Personaje Cabecera">
 				<div class="IdPersonaje">
 					ID Personaje
-					<div class="arrow-up" onclick="sortidrev()"></div>
-					<div class="arrow-down" onclick="sortid()"></div>
+					<div class="arrow-up" onclick="ordenarcbx('idrev')"></div>
+					<div class="arrow-down" onclick="ordenarcbx('id')"></div>
 				</div>
 				<div class="NomP">Referencias personaje</div>
 				<div class="NumApar">
 					Número Apariciones
-					<div class="arrow-up" onclick="sortaparev()"></div>
-					<div class="arrow-down" onclick="sortapa()"></div>
+					<div class="arrow-up" onclick="ordenarcbx('aparev')"></div>
+					<div class="arrow-down" onclick="ordenarcbx('apa')"></div>
 				</div>
 			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
 				<div class="IdPersonaje">
-					<input type="checkbox" class="cbx-joinpers" title="Marque para eliminar al personaje" value="{{ i }}">
+					<input type="checkbox" class="cbx-idpers" title="Marque para juntar" value="{{ i }}">
 					{{ i }}
 				</div>
 				<div class="NomP">
@@ -75,7 +75,7 @@
 <script type="text/javascript">
 	function junta(){
 		var checks = [];
-		var inputElements = document.getElementsByClassName("cbx-joinpers");
+		var inputElements = document.getElementsByClassName("cbx-idpers");
 		for(var i=0; inputElements[i]; ++i){
       		if(inputElements[i].checked){
            		checks.push(inputElements[i].value);
@@ -86,7 +86,7 @@
           contentType: "application/json;charset=utf-8",
           url: "/Modificar-Diccionario/Juntar-Personajes/",
           traditional: "true",
-          data: JSON.stringify({checks}),
+          data: JSON.stringify(checks),
           dataType: "json"
           });
 		alert('Los personajes seleccionados han sido juntados con éxito')
@@ -120,35 +120,19 @@
 
   	window.onload = dragdrop();
 
-  	function sortidrev(){
-        ordenar('idrev');
-    }
-
-    function sortid(){
-    	ordenar('id');
-    }
-
-    function sortapa(){
-    	ordenar('apa');
-    }
-
-    function sortaparev(){
-    	ordenar('aparev');
-    }
-
-    function ordenar(tipo){
-    	$.ajax({
-          type: "POST",
-          contentType: "application/json;charset=utf-8",
-          url: "/Modificar-Diccionario/Juntar-Personajes/",
-          traditional: "true",
-          data: JSON.stringify(tipo),
-          dataType: "json",
-          success: function(response){
-          	$("#content #Personajes").replaceWith(response);
-          	dragdrop();
-          }
-        });
-    }
+  	function ordenarcbx(tipo){
+		$.ajax({
+	      type: "POST",
+	      contentType: "application/json;charset=utf-8",
+	      url: "/Ordenar-Id-Cbx-Join/",
+	      traditional: "true",
+	      data: JSON.stringify(tipo),
+	      dataType: "json",
+	      success: function(response){
+	      	$("#content #Personajes").replaceWith(response);
+	      	dragdrop();
+	      }
+	    });
+	}
 </script>
 </html>

@@ -71,10 +71,7 @@
 <script src="{{ url_for('static', filename='js/vis.js') }}"></script>
 <script src="{{ url_for('static', filename='js/parse_options.js') }}"></script>
 <script src="{{ url_for('static', filename='js/post_json.js') }}"></script>
-<script type="text/javascript">	
-
-	
-
+<script type="text/javascript">
 	function carga(){
 		var conf = {{ config|tojson|safe }};
 		vis(conf);

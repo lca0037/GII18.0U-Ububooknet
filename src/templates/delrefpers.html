@@ -35,19 +35,19 @@
 			<div class="Personaje Cabecera">
 				<div class="IdPersonaje">
 					ID Personaje
-					<div class="arrow-up" onclick="sortidrev()"></div>
-					<div class="arrow-down" onclick="sortid()"></div>
+					<div class="arrow-up" onclick="ordenar('idrev')"></div>
+					<div class="arrow-down" onclick="ordenar('id')"></div>
 				</div>
 				<div class="NomP">Referencias personaje</div>
 				<div class="NumApar">
 					Número Apariciones
-					<div class="arrow-up" onclick="sortaparev()"></div>
-					<div class="arrow-down" onclick="sortapa()"></div>
+					<div class="arrow-up" onclick="ordenar('aparev')"></div>
+					<div class="arrow-down" onclick="ordenar('apa')"></div>
 				</div>
 			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
-				<div class="IdPersonaje">ID Personaje: {{ i }}</div>
+				<div class="IdPersonaje">{{ i }}</div>
 				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
 				<p class="ref">
@@ -72,22 +72,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	function sortidrev(){
-        ordenar('idrev');
-    }
-
-    function sortid(){
-    	ordenar('id');
-    }
-
-    function sortapa(){
-    	ordenar('apa');
-    }
-
-    function sortaparev(){
-    	ordenar('aparev');
-    }
-
     function ordenar(tipo){
     	$.ajax({
           type: "POST",
