@@ -15,18 +15,14 @@ m = mod.modelo.getInstance()
 def index():
     error = ''
     if request.method == "POST":
-        if("btn btn-selepub" not in request.files):
-            error = "No se ha seleccionado ningún fichero"
-            return render_template('index.html', error = error)
         fich = request.files["btn btn-selepub"]
         fullpath = os.path.join(app.config['UPLOAD_FOLDER'], fich.filename)
         fich.save(fullpath)
-        if(zipfile.is_zipfile(fullpath)):
-            if("btn btn-cargarepub" in request.form):
-                m.setFichero(fullpath)
-                m.obtTextoEpub()
-                m.vaciarDiccionario()
-                return redirect(url_for('dictaut'))
+        if(m.esEpub(fullpath)):
+            m.setFichero(fullpath)
+            m.obtTextoEpub()
+            m.vaciarDiccionario()
+            return redirect(url_for('dictaut'))
         else: 
             error = "La ruta indicada no contiene un fichero epub"
             return render_template('index.html', error = error)
@@ -53,23 +49,12 @@ def dictaut():
 def impdict():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
-    error = ''
     if request.method == "POST":
-        if("btn btn-selcsv" not in request.files):
-            error = "No se ha seleccionado ningún fichero"
-            return render_template('impdict.html', error = error)
         fich = request.files["btn btn-selcsv"]
         fullpath = os.path.join(app.config['UPLOAD_FOLDER'], fich.filename)
         fich.save(fullpath)
-        if("btn btn-cargarcsv" in request.form):
-            #Se deja para futuros sprint comprobar que el fichero introducido es csv
-            # debido a que mimetype no reconoce si el archivo es csv
-            if(True):
-                m.importDict(fullpath)
-                error = "Fichero csv cargado"
-            else: 
-                error = "La ruta indicada no contiene un fichero csv"
-    return render_template('impdict.html', error = error)
+        m.importDict(fullpath)
+    return render_template('impdict.html')
 
 @app.route('/Dicts-Automaticos/Obtener-Dict/', methods=["GET","POST"])
 def obtdict():
@@ -78,12 +63,7 @@ def obtdict():
         return redirect(url_for('index'))
     if request.method == "POST":
         url = request.form['txt txt-url']
-        if(len(url)>0):
-            m.scrapeWiki(url)
-            error = 'Se han introducido correctamente los personajes de la url'
-            #Se deja para futuros sprints comprobar que la url contenía información scrapeable
-        else:
-            error = 'No se permiten textos vacíos como url'
+        m.scrapeWiki(url)
     return render_template('obtdict.html', error = error)
 
 @app.route('/Modificar-Diccionario/', methods=["GET", "POST"])   
@@ -121,10 +101,7 @@ def newpers():
     if request.method == "POST":
         idperso = request.form['txt txt-idpers']
         perso = request.form['txt txt-nombrepers']
-        if(len(perso)>0 and len(idperso)>0):
-            error = m.anadirPersonaje(idperso,perso)
-        else:
-            error = 'No se permiten textos vacíos como nombre de personaje'
+        m.anadirPersonaje(idperso,perso)
     return render_template('newpers.html', error = error, pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Eliminar-Personaje/', methods=["GET", "POST"])    
@@ -155,13 +132,7 @@ def newrefpers():
     if request.method == "POST":
         idp = request.form['txt txt-idpers']
         ref = request.form['txt txt-refpers']
-        if(len(idp)>0 and len(ref)>0):
-            if(m.anadirReferenciaPersonaje(idp,ref)):
-                error = 'Referencia añadida con éxito'
-            else:
-                error = 'La id no existe o esa referencia ya pertenece a ese personaje'
-        else:
-            error = 'No se permiten textos vacíos como id de personaje o nueva referencia'
+        m.anadirReferenciaPersonaje(idp,ref)
     return render_template('newrefpers.html', error = error, pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Eliminar-Referencia/', methods=["GET", "POST"])    
@@ -192,39 +163,22 @@ def modidpers():
     if request.method == "POST":
         idact = request.form['txt txt-idact']
         newid = request.form['txt txt-newid']
-        if(len(idact)>0 and len(newid)>0):
-            error = m.modificarIdPersonaje(idact,newid)
-        else:
-            error = 'No se permiten textos vacíos como id de personaje'
+        m.modificarIdPersonaje(idact,newid)
     return render_template('modidpers.html', error = error, pers = m.getPersonajes())
     
 @app.route('/Parametros/', methods=["GET", "POST"])
 def params():
     if(not m.hayFichero()):
         return redirect(url_for('index'))
-    error1 = ''
-    error2 = ''
-    num = re.compile('[0-9]+')
     if request.method == "POST":
-        if("btn btn-red" in request.form):
-            apar = request.form['txt txt-apar']
-            dist = request.form['txt txt-dist']
-            caps = False
-            if("cbx cbx-capitulos"  in request.form):
-                caps = True
-            if(len(apar)>0 and len(dist)>0 and num.match(apar).group()==apar and num.match(dist).group()==dist):
-                m.generarGrafo(int(dist),int(apar),caps)           
-                return redirect(url_for('red'))
-            else:
-                if(len(apar)==0):
-                    error1 = 'Introduzca el número mínimo de apariciones para que aparezca un personaje en la red'
-                elif(num.match(apar) == None or num.match(apar).group()!=apar):
-                    error1 = 'Introduzca unicamente dígitos del 0 al 9'
-                if(len(dist)==0):
-                    error2 = 'Introduzca la distancia máxima para que se considere que hay relación entre dos personajes'
-                elif(num.match(dist) == None or num.match(dist).group()!=dist):
-                    error2 = 'Introduzca unicamente dígitos del 0 al 9'
-    return render_template('params.html', error1 = error1, error2 = error2, pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)})
+        apar = request.form['txt txt-apar']
+        dist = request.form['txt txt-dist']
+        caps = False
+        if("cbx cbx-capitulos"  in request.form):
+            caps = True
+        m.generarGrafo(int(dist),int(apar),caps)           
+        return redirect(url_for('red'))
+    return render_template('params.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)})
 
 @app.route('/Red/', methods=["GET", "POST"])
 def red():

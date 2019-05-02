@@ -3,6 +3,22 @@
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script type="text/javascript">
+		function sendForm(){
+			var x = document.getElementById("epub");
+			var nfiles = x.files.length;
+			if(nfiles == 1){
+				var extension = x.files[0].name.split('.').pop();
+				if(extension == "zip" || extension == "epub"){
+					document.getElementById("form").submit();
+				} else {
+					alert("Formato de archivo equivocado")
+				}
+			} else {
+				alert("Introduzca un archivo")
+			}
+		}
+	</script>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
@@ -22,11 +38,11 @@
 	</header>
 	<div id="workflow"><a href="#">CARGAR EPUB</a> > DICCIONARIO de PERSONAJES > MODIFICAR DICCIONARIO > PARÁMETROS ADICIONALES > RED > INFORME</div>
 	<div id="content">
-		<form action="" method="post" enctype=multipart/form-data>
+		<form id="form" action="" method="post" enctype=multipart/form-data>
 			<div id="txt1">Introduzca la ruta al fichero ePub</div>
-			<input type="file" name="btn btn-selepub" value="Seleccionar archivo" accept=".epub, .zip">
+			<input type="file" id="epub" name="btn btn-selepub" value="Seleccionar archivo" accept=".epub, .zip">
 			<!--input type="text" name="txt txt-fichepub" size="40" placeholder="Ruta completa al fichero epub" value="{{request.form.fichepub}}{{epub}}"-->
-			<input type="submit" name="btn btn-cargarepub" value="Cargar">
+			<input type="button" onclick="sendForm()" name="btn btn-cargarepub" value="Cargar">
 		</form>
 		<p>{{error}}</p>
 	</div>

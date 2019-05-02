@@ -3,6 +3,38 @@
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ url_for('static', filename='js/orden.js') }}" type="text/javascript"></script>
+	<script type="text/javascript">
+		function sendForm(){
+			var id = document.getElementById("idpers");
+			var nom = document.getElementById("nompers");
+			if(id.value.length == 0){
+				alert("Introduzca una ID")
+			}
+			else{
+				if(nom.value.length == 0){
+					alert("Introduzca un nombre")
+				} else {
+					var divpers = document.getElementsByClassName("IdPersonaje");
+					var incluido = false;
+		        	for(var i=0; divpers[i]; ++i){
+		        		if(divpers[i].getAttribute("idpers")==id.value){
+		        			incluido = true;
+		        			break;
+		        		}
+		        	}
+		        	if(incluido){
+		        		alert("La id introducida ya existe")
+		        	} else {
+		        		alert("Personaje introducido correctamente")
+		        		document.getElementById("form-menu").submit();
+		        	}
+	        	}
+        	}
+		}
+	</script>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
@@ -25,11 +57,10 @@
 		<div id="indice">
 			<form action="" id="form-menu" method="post">
 				<div class="txt1">Introduzca la id del nuevo personaje</div>
-				<input type="text" name="txt txt-idpers" placeholder="Nombre Personaje">
+				<input type="text" id="idpers" name="txt txt-idpers" placeholder="Nombre Personaje">
 				<div class="txt1">Introduzca el nombre del nuevo personaje</div>
-				<input type="text" name="txt txt-nombrepers" placeholder="Nombre Personaje">
-				<input type="submit" name="btn btn-newpers" value="Añadir">
-				<p>{{error}}</p>
+				<input type="text" id="nompers" name="txt txt-nombrepers" placeholder="Nombre Personaje">
+				<input type="button" onclick="sendForm()" name="btn btn-newpers" value="Añadir">
 			</form>
 			<div id="form-mov">
 				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="Volver">
@@ -51,7 +82,7 @@
 			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
-				<div class="IdPersonaje">{{ i }}</div>
+				<div class="IdPersonaje" idpers="{{ i }}">{{ i }}</div>
 				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
 					<p class="ref">{{ n }}</p>
@@ -69,8 +100,5 @@
 		</div>
 	</div>
 	<footer></footer>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="{{ url_for('static', filename='js/orden.js') }}" type="text/javascript"></script>
 </body>
 </html>

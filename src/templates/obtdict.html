@@ -3,6 +3,21 @@
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script type="text/javascript">
+		function sendForm(){
+			var x = document.getElementById("url");
+			if(x.value.length == 0){
+				alert("Introduzca una url")
+			} else {
+				if(x.value.includes("fandom")){
+					alert("Personajes que aparecen en la página introducidos")
+					document.getElementById("form").submit();
+				} else {
+					alert("Introduzca una url perteneciente a *.fandom.com/wiki/Category:Characters")
+				}
+			}
+		}
+	</script>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
@@ -27,12 +42,11 @@
 			</div>
 		</div>
 		<div id="forms">
-			<form action="" method="post" enctype=multipart/form-data>
+			<form id="form" action="" method="post" enctype=multipart/form-data>
 				<div id="txt1">Introduzca la dirección url donde se encuentren los personajes a importar</div>
-				<input type="text" name="txt txt-url" size="40" placeholder="Url perteneciente a www.fandom.com">
-				<input type="submit" name="btn btn-scrape" value="Obtener">
+				<input type="text" id="url" name="txt txt-url" size="40" placeholder="Url perteneciente a *.fandom.com/wiki/Category:Characters">
+				<input type="button" onclick="sendForm()" name="btn btn-scrape" value="Obtener">
 			</form>
-			<p>{{error}}</p>
 		</div>
 	</div>
 	<footer></footer>

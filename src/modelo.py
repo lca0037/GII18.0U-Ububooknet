@@ -10,6 +10,7 @@ import networkx as nx
 import urllib
 import json
 from bs4 import BeautifulSoup
+import zipfile
 
 """
 Clase con la que la vista interactua
@@ -174,12 +175,7 @@ class modelo:
     Método para añadir otro nombre para referirse a un personaje
     '''
     def anadirReferenciaPersonaje(self,idp,ref):
-        if(idp in self.personajes.keys()):
-            p = self.personajes[idp].getPersonaje()
-            if(ref not in p.keys()):
-                p[ref]= list()
-                return True
-        return False
+        self.personajes[idp].getPersonaje()[ref]= dict()
     
     '''
     Método que elimina una referencia a un personaje
@@ -207,12 +203,7 @@ class modelo:
     Método para modificar los id de los personajes
     '''
     def modificarIdPersonaje(self,idact,newid):
-        if(idact in self.personajes.keys()):
-            if(newid not in self.personajes.keys()):
-                self.personajes[newid] = self.personajes.pop(idact)
-                return 'Id modificada con éxito'
-            return 'La nueva Id ya existe'
-        return 'La Id actual no existe'
+        self.personajes[newid] = self.personajes.pop(idact)
     
     '''
     Método que junta las posiciones de todos los nombres de un personaje
@@ -354,6 +345,19 @@ class modelo:
     def getTexto(self):
         return self.__texto
         
+    '''
+    Método para comprobar si un archivo es un epub
+    '''
+    def esEpub(self,fich):
+        if(not zipfile.is_zipfile(fich)):
+            return False
+        x = zipfile.ZipFile(fich)
+        try:
+            x.read('META-INF/container.xml')
+        except:
+            return False
+        else:
+            return True
     '''
     Establece el epub a leer
     '''

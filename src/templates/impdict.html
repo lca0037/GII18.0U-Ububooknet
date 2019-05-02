@@ -3,6 +3,23 @@
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script type="text/javascript">
+		function sendForm(){
+			var x = document.getElementById("csv");
+			var nfiles = x.files.length;
+			if(nfiles == 1){
+				var extension = x.files[0].name.split('.').pop();
+				if(extension == "csv"){
+					alert("Fichero introducido correctamente")
+					document.getElementById("form").submit();
+				} else {
+					alert("Formato de archivo equivocado")
+				}
+			} else {
+				alert("Introduzca un archivo")
+			}
+		}
+	</script>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
@@ -28,12 +45,11 @@
 			</div>
 		</div>
 		<div id="forms">
-			<form action="" method="post" enctype=multipart/form-data>
+			<form id="form" action="" method="post" enctype=multipart/form-data>
 				<div id="txt1">Introduzca la ruta al fichero csv</div>
-				<input type="file" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
-				<input type="submit" name="btn btn-cargarcsv" value="Cargar">
+				<input type="file" id="csv" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
+				<input type="button" onclick="sendForm()" name="btn btn-cargarcsv" value="Cargar">
 			</form>
-			<p>{{error}}</p>
 		</div>
 	</div>
 	<footer></footer>

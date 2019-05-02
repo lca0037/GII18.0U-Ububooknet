@@ -3,6 +3,52 @@
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ url_for('static', filename='js/orden.js') }}" type="text/javascript"></script>
+	<script type="text/javascript">
+		function sendForm(){
+			var id = document.getElementById("idpers");
+			var ref = document.getElementById("refpers");
+			if(id.value.length == 0){
+				alert("Introduzca una ID")
+			}
+			else{
+				if(ref.value.length == 0){
+					alert("Introduzca una referencia")
+				} else {
+					var divpers = document.getElementsByClassName("Personaje");
+					var incluido = false;
+		        	for(var i=0; divpers[i]; ++i){
+		        		if(divpers[i].getAttribute("idpers")==id.value){
+		        			incluido = true;
+		        			var personaje = divpers[i];
+		        			break;
+		        		}
+		        	}
+		        	if(incluido){
+		        		var noms = personaje.getElementsByClassName("ref");
+		        		var union = id.value + ref.value;
+		        		var aux = false;
+		        		for(var i=0; noms[i]; ++i){
+			        		if(noms[i].getAttribute("idnompers")==union){
+			        			aux = true;
+			        			break;
+			        		}
+			        	}
+			        	if(aux){
+			        		alert("La referencia ya existe en el personaje")
+			        	} else {
+			        		alert("Referencia añadida correctamente")
+			        		document.getElementById("form-menu").submit();
+			        	}
+		        	} else {
+		        		alert("No existe ningún personaje con la ID introducida")
+		        	}
+	        	}
+        	}
+		}
+	</script>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
@@ -25,10 +71,10 @@
 		<div id="indice">
 			<form action="" id="form-menu" method="post">
 				<div class="txt1">Introduzca la id del personaje a añadir la referencia</div>
-				<input type="text" name="txt txt-idpers" placeholder="Nombre Personaje">
+				<input type="text" id="idpers" name="txt txt-idpers" placeholder="Nombre Personaje">
 				<div class="txt1">Introduzca la nueva referencia al personaje</div>
-				<input type="text" name="txt txt-refpers" placeholder="Referencia Personaje">
-				<input type="submit" name="btn btn-newref" value="Añadir">
+				<input type="text" id="refpers" name="txt txt-refpers" placeholder="Referencia Personaje">
+				<input type="button" onclick="sendForm()" name="btn btn-newref" value="Añadir">
 				<p>{{error}}</p>
 			</form>
 			<div id="form-mov">
@@ -50,11 +96,11 @@
 				</div>
 			</div>
 			{% for i in pers.keys() %}
-			<div class="Personaje">
+			<div class="Personaje" idpers="{{ i }}">
 				<div class="IdPersonaje">{{ i }}</div>
 				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
-					<p class="ref">{{ n }}</p>
+					<p class="ref" idnompers="{{ i }}{{ n }}">{{ n }}</p>
 				{% endfor %}
 				</div>
 				{% if pers[i].getNumApariciones()[1] %}
@@ -69,8 +115,5 @@
 		</div>
 	</div>
 	<footer></footer>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="{{ url_for('static', filename='js/orden.js') }}" type="text/javascript"></script>
 </body>
 </html>

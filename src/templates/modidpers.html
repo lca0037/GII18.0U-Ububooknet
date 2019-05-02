@@ -3,6 +3,49 @@
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ url_for('static', filename='js/orden.js') }}" type="text/javascript"></script>
+	<script type="text/javascript">
+		function sendForm(){
+			var id = document.getElementById("idpers");
+			var newid = document.getElementById("newid");
+			if(id.value.length == 0){
+				alert("Introduzca una ID")
+			}
+			else{
+				if(newid.value.length == 0){
+					alert("Introduzca la ID por la que sustituir la actual")
+				} else {
+					var divpers = document.getElementsByClassName("IdPersonaje");
+					var incluido = false;
+		        	for(var i=0; divpers[i]; ++i){
+		        		if(divpers[i].getAttribute("idpers")==id.value){
+		        			incluido = true;
+		        			break;
+		        		}
+		        	}
+		        	if(incluido){
+		        		var aux = false;
+			        	for(var i=0; divpers[i]; ++i){
+			        		if(divpers[i].getAttribute("idpers")==newid.value){
+			        			aux = true;
+			        			break;
+			        		}
+			        	}
+			        	if(aux){
+			        		alert("La nueva id introducida ya existe")
+			        	}else{
+			        		alert("Id modificada correctamente")
+			        		document.getElementById("form-menu").submit();
+			        	}
+		        	} else {
+		        		alert("La id actual introducida no se corresponde con ningun personaje")
+		        	}
+	        	}
+        	}
+		}
+	</script>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
@@ -25,11 +68,10 @@
 		<div id="indice">
 			<form action="" id="form-menu" method="post">
 				<div class="txt1">Introduzca la id actual del personaje</div>
-				<input type="text" name="txt txt-idact" placeholder="Id Actual">
+				<input type="text" id="idpers" name="txt txt-idact" placeholder="Id Actual">
 				<div class="txt1">Introduzca la nueva id</div>
-				<input type="text" name="txt txt-newid" placeholder="Nueva Id">
-				<input type="submit" name="btn btn-cambiarid" value="Cambiar">
-				<p>{{error}}</p>
+				<input type="text" id="newid" name="txt txt-newid" placeholder="Nueva Id">
+				<input type="button" onclick="sendForm()" name="btn btn-cambiarid" value="Cambiar">
 			</form>
 			<div id="form-mov">
 				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="Volver">
@@ -51,7 +93,7 @@
 			</div>
 			{% for i in pers.keys() %}
 			<div class="Personaje">
-				<div class="IdPersonaje">{{ i }}</div>
+				<div class="IdPersonaje" idpers="{{ i }}">{{ i }}</div>
 				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
 					<p class="ref">{{ n }}</p>
@@ -69,8 +111,5 @@
 		</div>
 	</div>
 	<footer></footer>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="{{ url_for('static', filename='js/orden.js') }}" type="text/javascript"></script>
 </body>
 </html>
