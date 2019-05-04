@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ _('es') }}">
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ url_for('static', filename='js/language.js') }}" type="text/javascript"></script>
 </head>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
@@ -11,27 +14,31 @@
 			<h1>Ububooknet</h1>
 		</div>
 		<div class="region"> 
-			<h2>Diccionarios Automáticos</h2>
+			<h2>{{ _('Diccionarios Automáticos') }}</h2>
 		</div>
 		<div class="menu">
 			<ul>
-				<li><a href="{{ url_for('index') }}">Inicio</a></li>
-				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
+				<li><a href="{{ url_for('index') }}">{{ _('Inicio') }}</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">{{ _('Repositorio') }}</a></li>
 			</ul>
 		</div>
+		<div class="banderas">
+			<img src="{{ url_for('static', filename='img/esp.png') }}" id="esp" onclick="idioma('es','{{ g.locale }}')">
+			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
+		</div>
 	</header>
-	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="#">DICCIONARIO de PERSONAJES</a> > MODIFICAR DICCIONARIO > PARÁMETROS ADICIONALES > RED > INFORME</div>
+	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="#">{{ _('DICCIONARIO de PERSONAJES') }}</a> > {{ _('MODIFICAR DICCIONARIO') }} > {{ _('PARÁMETROS ADICIONALES') }} > {{ _('RED') }} > {{ _('INFORME') }}</div>
 	<div id="content">
 		<div id="indice">
 			<form action="" id="form-menu" method="post">
-				<input type="submit" name="btn btn-creadict" value="Crear Diccionario">
-				<input type="submit" name="btn btn-impdict" value="Importar Diccionario">
-				<input type="submit" name="btn btn-obtdict" value="Obtener Diccionario">
-				<input type="submit" name="btn btn-vacdit" value="Vaciar Diccionario">
+				<input type="submit" name="btn btn-creadict" value="{{ _('Crear Diccionario') }}">
+				<input type="submit" name="btn btn-impdict" value="{{ _('Importar Diccionario') }}">
+				<input type="submit" name="btn btn-obtdict" value="{{ _('Obtener Diccionario') }}">
+				<input type="submit" name="btn btn-vacdit" value="{{ _('Vaciar Diccionario') }}">
 			</form>
 			<div id="form-mov">
-				<input type="submit" class="volv" name="btn btn-volver" onclick="window.location.href='{{ url_for('index') }}'" value="Volver">
-				<input type="submit" class="sig" name="btn btn-sig" onclick="window.location.href='{{ url_for('moddict') }}'" value="Siguiente">
+				<input type="submit" class="volv" name="btn btn-volver" onclick="window.location.href='{{ url_for('index') }}'" value="{{ _('Volver') }}">
+				<input type="submit" class="sig" name="btn btn-sig" onclick="window.location.href='{{ url_for('moddict') }}'" value="{{ _('Siguiente') }}">
 			</div>
 		</div>
 	</div>

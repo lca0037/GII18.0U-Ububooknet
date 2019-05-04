@@ -1,15 +1,29 @@
 # -*- coding: utf-8 -*-
 import os
-import re
-from flask import render_template, Flask, request, url_for, redirect, json, send_file, make_response
+from flask import render_template, Flask, request, url_for, redirect, json, send_file, make_response, g
 from src import modelo as mod
+from src import config as cfg
 from bs4 import BeautifulSoup
-import zipfile
+from flask_babel import Babel, gettext
+
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = os.path.dirname(os.path.realpath(__file__))+"\\ficheros"
+app.config['UPLOAD_FOLDER'] = cfg.upload_folder
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = cfg.translations_folder
+
+babel = Babel(app)
 
 m = mod.modelo.getInstance()
+
+@babel.localeselector
+def get_locale():
+    if(m.getIdioma() == None):
+        m.setIdioma(request.accept_languages.best_match(cfg.LANGUAGES.keys()))
+    return m.getIdioma()
+
+@app.before_request
+def before_request():
+    g.locale = get_locale()
 
 @app.route('/', methods=["GET","POST"])
 def index():
@@ -24,7 +38,7 @@ def index():
             m.vaciarDiccionario()
             return redirect(url_for('dictaut'))
         else: 
-            error = "La ruta indicada no contiene un fichero epub"
+            error = gettext("La ruta indicada no contiene un fichero epub")
             return render_template('index.html', error = error)
     return render_template('index.html')
 
@@ -58,13 +72,12 @@ def impdict():
 
 @app.route('/Dicts-Automaticos/Obtener-Dict/', methods=["GET","POST"])
 def obtdict():
-    error = ''
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         url = request.form['txt txt-url']
         m.scrapeWiki(url)
-    return render_template('obtdict.html', error = error)
+    return render_template('obtdict.html')
 
 @app.route('/Modificar-Diccionario/', methods=["GET", "POST"])   
 def moddict():
@@ -95,14 +108,13 @@ def moddict():
 
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    
 def newpers():
-    error = ''
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         idperso = request.form['txt txt-idpers']
         perso = request.form['txt txt-nombrepers']
         m.anadirPersonaje(idperso,perso)
-    return render_template('newpers.html', error = error, pers = m.getPersonajes())
+    return render_template('newpers.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Eliminar-Personaje/', methods=["GET", "POST"])    
 def delpers():
@@ -126,18 +138,16 @@ def joinpers():
    
 @app.route('/Modificar-Diccionario/Nueva-Referencia/', methods=["GET", "POST"])    
 def newrefpers():
-    error = ''
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
         idp = request.form['txt txt-idpers']
         ref = request.form['txt txt-refpers']
         m.anadirReferenciaPersonaje(idp,ref)
-    return render_template('newrefpers.html', error = error, pers = m.getPersonajes())
+    return render_template('newrefpers.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Eliminar-Referencia/', methods=["GET", "POST"])    
 def delrefpers():
-    error = ''
     if(not m.hayFichero()):
         return redirect(url_for('index'))
     if request.method == "POST":
@@ -153,18 +163,17 @@ def delrefpers():
                 return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))
             else:
                 m.eliminarListRefs(ajax)
-    return render_template('delrefpers.html', error = error, pers = m.getPersonajes())
+    return render_template('delrefpers.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Cambiar-Identificador/', methods=["GET", "POST"])
 def modidpers():
-    error = ''
     if(not m.hayFichero() ):
         return redirect(url_for('index'))
     if request.method == "POST":
         idact = request.form['txt txt-idact']
         newid = request.form['txt txt-newid']
         m.modificarIdPersonaje(idact,newid)
-    return render_template('modidpers.html', error = error, pers = m.getPersonajes())
+    return render_template('modidpers.html', pers = m.getPersonajes())
     
 @app.route('/Parametros/', methods=["GET", "POST"])
 def params():
@@ -246,3 +255,9 @@ def orden(html):
     cont = BeautifulSoup(html, "html.parser")
     return json.dumps(str(cont.find(id="Personajes")))
 
+@app.route('/Idioma/', methods=["GET", "POST"])
+def idioma():
+    if request.method == "POST":
+        ajax = request.get_json()
+        m.setIdioma(ajax)
+        return "true"

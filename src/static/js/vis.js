@@ -174,9 +174,9 @@ function vis(new_controls) {
 
   var f1 = gui.addFolder('Input/output'); f1.open();
   //f1.add(controls, 'Path to file (csv or json)', controls['Path to file (csv or json)']).onFinishChange(function (v) { /*handleURL(v)*/ }).title(title1_1);
-  f1.add(controls, 'Upload file (csv or json)').title(title1_2);
+  //f1.add(controls, 'Upload file (csv or json)').title(title1_2);
   f1.add(controls, 'Download figure').title(title1_3);
-  f1.add(controls, 'Post to Python').title(title1_4);
+  //f1.add(controls, 'Post to Python').title(title1_4);
   f1.add(controls, 'Zoom', 0.6, 5).onChange(function (v) { inputtedZoom(v) }).title(title1_5);
 
   var f2 = gui.addFolder('Physics'); f2.open();

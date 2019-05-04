@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ _('es') }}">
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ url_for('static', filename='js/language.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		function sendForm(){
 			var x = document.getElementById("csv");
@@ -10,13 +13,13 @@
 			if(nfiles == 1){
 				var extension = x.files[0].name.split('.').pop();
 				if(extension == "csv"){
-					alert("Fichero introducido correctamente")
+					alert("{{ _('Fichero introducido correctamente') }}")
 					document.getElementById("form").submit();
 				} else {
-					alert("Formato de archivo equivocado")
+					alert("{{ _('Formato de archivo equivocado') }}")
 				}
 			} else {
-				alert("Introduzca un archivo")
+				alert("{{ _('Introduzca un archivo') }}")
 			}
 		}
 	</script>
@@ -28,27 +31,31 @@
 			<h1>Ububooknet</h1>
 		</div>
 		<div class="region"> 
-			<h2>Importar Diccionario</h2>
+			<h2>{{ _('Importar Diccionario') }}</h2>
 		</div>
 		<div class="menu">
 			<ul>
-				<li><a href="{{ url_for('index') }}">Inicio</a></li>
-				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">Repositorio</a></li>
+				<li><a href="{{ url_for('index') }}">{{ _('Inicio') }}</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">{{ _('Repositorio') }}</a></li>
 			</ul>
 		</div>
+		<div class="banderas">
+			<img src="{{ url_for('static', filename='img/esp.png') }}" id="esp" onclick="idioma('es','{{ g.locale }}')">
+			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
+		</div>
 	</header>
-	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > IMPORTAR DICCIONARIO</div>
+	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > {{ _('IMPORTAR DICCIONARIO') }}</div>
 	<div id="content">
 		<div id="indice">
 			<div id="form-mov">
-				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('dictaut') }}'" value="Volver">
+				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('dictaut') }}'" value="{{ _('Volver') }}">
 			</div>
 		</div>
 		<div id="forms">
 			<form id="form" action="" method="post" enctype=multipart/form-data>
-				<div id="txt1">Introduzca la ruta al fichero csv</div>
-				<input type="file" id="csv" name="btn btn-selcsv" value="Seleccionar archivo" accept=".csv">
-				<input type="button" onclick="sendForm()" name="btn btn-cargarcsv" value="Cargar">
+				<div id="txt1">{{ _('Introduzca la ruta al fichero csv') }}</div>
+				<input type="file" id="csv" name="btn btn-selcsv" value="{{ _('Seleccionar archivo') }}" accept=".csv">
+				<input type="button" onclick="sendForm()" name="btn btn-cargarcsv" value="{{ _('Cargar') }}">
 			</form>
 		</div>
 	</div>

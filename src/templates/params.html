@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ _('es') }}">
 <head>
 	<title>Ububooknet</title>
 	<meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{{ url_for('static', filename='js/language.js') }}" type="text/javascript"></script>
 	<script src="{{ url_for('static', filename='js/orden.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		function sendForm(){
 			var apar = document.getElementById("apar");
 			var dist = document.getElementById("dist");
 			if(apar.value.length == 0){
-				alert("Introduzca un número mínimo de apariciones")
+				alert("{{ _('Introduzca un número mínimo de apariciones') }}")
 			}
 			else{
 				if(dist.value.length == 0){
-					alert("Introduzca una distancia entre personajes")
+					alert("{{ _('Introduzca una distancia entre personajes') }}")
 				} else {
 					if(isNaN(apar.value)){
-						alert("Introduzca un valor numérico para el número mínimo de apariciones")
+						alert("{{ _('Introduzca un valor numérico para el número mínimo de apariciones') }}")
 					}else{
 						if(isNaN(dist.value)){
-							alert("Introduzca un valor numérico para la distancia entre personajes")
+							alert("{{ _('Introduzca un valor numérico para la distancia entre personajes') }}")
 						}else{
 							document.getElementById("form-menu").submit();
 						}
@@ -38,46 +39,49 @@
 			<h1>Ububooknet</h1>
 		</div>
 		<div class="region"> 
-			<h2>Parámetros adicionales</h2>
+			<h2>{{ _('Parámetros adicionales') }}</h2>
 		</div>
 		<div class="menu">
 			<ul>
-				<li><a href="{{ url_for('index') }}">Inicio</a></li>
+				<li><a href="{{ url_for('index') }}">{{ _('Inicio') }}</a></li>
+				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">{{ _('Repositorio') }}</a></li>
 			</ul>
 		</div>
+		<div class="banderas">
+			<img src="{{ url_for('static', filename='img/esp.png') }}" id="esp" onclick="idioma('es','{{ g.locale }}')">
+			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
+		</div>
 	</header>
-	<div id="workflow"><a href="{{ url_for('index') }}">CARGAR EPUB</a> > <a href="{{ url_for('dictaut') }}">DICCIONARIO de PERSONAJES</a> > <a href="{{ url_for('moddict') }}">MODIFICAR DICCIONARIO</a> > <a href="#">PARÁMETROS ADICIONALES</a> > RED > INFORME</div>
+	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > <a href="{{ url_for('moddict') }}">{{ _('MODIFICAR DICCIONARIO') }}</a> > <a href="#">{{ _('PARÁMETROS ADICIONALES') }}</a> > {{ _('RED') }} > {{ _('INFORME') }}</div>
 	<div id="content">
 		<div id="indice">
 			<form action="" id="form-menu" method="post">
-				<div class="txt1">Introduzca el número mínimo de apariciones en el libro</div>
-				<input type="text" id="apar" name="txt txt-apar" size="40" placeholder="Número mínimo de apariciones">
-				<p>{{error1}}</p>
-				<div class="txt1">Introduzca la distancia máxima de palabras entre personajes para que cuente como relación</div>
-				<input type="text" id="dist" name="txt txt-dist" size="40" placeholder="Número de palabras máximas">
-				<p>{{error2}}</p>
-				<input type="button" onclick="sendForm()" name="btn btn-red" value="Obtener red">
+				<div class="txt1">{{ _('Introduzca el número mínimo de apariciones en el libro') }}</div>
+				<input type="text" id="apar" name="txt txt-apar" size="40" placeholder="{{ _('Número mínimo de apariciones') }}">
+				<div class="txt1">{{ _('Introduzca la distancia máxima de palabras entre personajes para que cuente como relación') }}</div>
+				<input type="text" id="dist" name="txt txt-dist" size="40" placeholder="{{ _('Número de palabras máximas') }}">
+				<input type="button" onclick="sendForm()" name="btn btn-red" value="{{ _('Obtener red') }}">
 			</form>
 			<div id="cbx">
 				<div class="txt1">
 					<input type="checkbox" name="cbx cbx-capitulos">
-					<label for="cbx cbx-capitulos">Tener en cuenta los capítulos</label>
+					<label for="cbx cbx-capitulos">{{ _('Tener en cuenta los capítulos') }}</label>
 				</div>
 			</div>
 			<div id="form-mov">
-				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="Volver">
+				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="{{ _('Volver') }}">
 			</div>
 		</div>
 		<div id="Personajes">
 			<div class="Personaje Cabecera">
 				<div class="IdPersonaje">
-					ID Personaje
+					{{ _('ID Personaje') }}
 					<div class="arrow-up" onclick="ordenar('idrev')"></div>
 					<div class="arrow-down" onclick="ordenar('id')"></div>
 				</div>
-				<div class="NomP">Referencias personaje</div>
+				<div class="NomP">{{ _('Referencias personaje') }}</div>
 				<div class="NumApar">
-					Número Apariciones
+					{{ _('Número Apariciones') }}
 					<div class="arrow-up" onclick="ordenar('aparev')"></div>
 					<div class="arrow-down" onclick="ordenar('apa')"></div>
 				</div>

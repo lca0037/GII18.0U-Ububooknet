@@ -92,6 +92,24 @@ header .menu li a{
 	text-decoration: none;
 }
 
+img#esp{
+	position: absolute;
+	top: 0px;
+	right: 2px;
+    width: 24px;
+    height: 10px;
+    cursor: pointer;
+}
+
+img#uk{
+	position: absolute;
+	top: 0px;
+	right: 28px;
+    width: 24px;
+    height: 10px;
+    cursor: pointer;
+}
+
 div#workflow{
 	width: 100%;
 	position: fixed;

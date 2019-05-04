@@ -1,0 +1,454 @@
+# Translations template for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-05-04 19:46+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: src/vista.py:38
+msgid "La ruta indicada no contiene un fichero epub"
+msgstr ""
+
+#: src/templates/delpers.html:2 src/templates/delrefpers.html:2
+#: src/templates/dictaut.html:2 src/templates/impdict.html:2
+#: src/templates/index.html:2 src/templates/informe.html:2
+#: src/templates/joinpers.html:2 src/templates/moddict.html:2
+#: src/templates/modidpers.html:2 src/templates/newpers.html:2
+#: src/templates/obtdict.html:2 src/templates/params.html:2
+#: src/templates/red.html:2
+msgid "es"
+msgstr ""
+
+#: src/templates/delpers.html:14 src/templates/moddict.html:29
+msgid "Eliminar Personaje"
+msgstr ""
+
+#: src/templates/delpers.html:18 src/templates/delrefpers.html:18
+#: src/templates/dictaut.html:18 src/templates/impdict.html:35
+#: src/templates/index.html:30 src/templates/index.html:34
+#: src/templates/informe.html:18 src/templates/joinpers.html:18
+#: src/templates/moddict.html:18 src/templates/modidpers.html:61
+#: src/templates/newpers.html:50 src/templates/obtdict.html:33
+#: src/templates/params.html:45 src/templates/red.html:21
+msgid "Inicio"
+msgstr ""
+
+#: src/templates/delpers.html:19 src/templates/delrefpers.html:19
+#: src/templates/dictaut.html:19 src/templates/impdict.html:36
+#: src/templates/index.html:35 src/templates/informe.html:19
+#: src/templates/joinpers.html:19 src/templates/moddict.html:19
+#: src/templates/modidpers.html:62 src/templates/newpers.html:51
+#: src/templates/obtdict.html:34 src/templates/params.html:46
+#: src/templates/red.html:22
+msgid "Repositorio"
+msgstr ""
+
+#: src/templates/delpers.html:23 src/templates/delrefpers.html:23
+#: src/templates/dictaut.html:23 src/templates/impdict.html:40
+#: src/templates/index.html:39 src/templates/informe.html:23
+#: src/templates/joinpers.html:23 src/templates/moddict.html:23
+#: src/templates/modidpers.html:66 src/templates/newpers.html:55
+#: src/templates/obtdict.html:38 src/templates/params.html:50
+#: src/templates/red.html:26
+msgid "CARGAR EPUB"
+msgstr ""
+
+#: src/templates/delpers.html:23 src/templates/delrefpers.html:23
+#: src/templates/dictaut.html:23 src/templates/impdict.html:40
+#: src/templates/index.html:39 src/templates/informe.html:23
+#: src/templates/joinpers.html:23 src/templates/moddict.html:23
+#: src/templates/modidpers.html:66 src/templates/newpers.html:55
+#: src/templates/obtdict.html:38 src/templates/params.html:50
+#: src/templates/red.html:26
+msgid "DICCIONARIO de PERSONAJES"
+msgstr ""
+
+#: src/templates/delpers.html:23 src/templates/delrefpers.html:23
+#: src/templates/dictaut.html:23 src/templates/index.html:39
+#: src/templates/informe.html:23 src/templates/joinpers.html:23
+#: src/templates/moddict.html:23 src/templates/modidpers.html:66
+#: src/templates/newpers.html:55 src/templates/params.html:50
+#: src/templates/red.html:26
+msgid "MODIFICAR DICCIONARIO"
+msgstr ""
+
+#: src/templates/delpers.html:23
+msgid "ELIMINAR PERSONAJE"
+msgstr ""
+
+#: src/templates/delpers.html:27
+msgid "Marque los personajes a eliminar"
+msgstr ""
+
+#: src/templates/delpers.html:28 src/templates/delrefpers.html:28
+msgid "Eliminar"
+msgstr ""
+
+#: src/templates/delpers.html:31 src/templates/delrefpers.html:31
+#: src/templates/dictaut.html:33 src/templates/impdict.html:44
+#: src/templates/informe.html:29 src/templates/joinpers.html:31
+#: src/templates/moddict.html:43 src/templates/modidpers.html:77
+#: src/templates/newpers.html:66 src/templates/obtdict.html:42
+#: src/templates/params.html:67 src/templates/red.html:57
+msgid "Volver"
+msgstr ""
+
+#: src/templates/delpers.html:37 src/templates/delrefpers.html:37
+#: src/templates/joinpers.html:38 src/templates/moddict.html:50
+#: src/templates/modidpers.html:83 src/templates/newpers.html:60
+#: src/templates/newpers.html:72 src/templates/params.html:73
+msgid "ID Personaje"
+msgstr ""
+
+#: src/templates/delpers.html:41 src/templates/delrefpers.html:41
+#: src/templates/joinpers.html:42 src/templates/moddict.html:54
+#: src/templates/modidpers.html:87 src/templates/newpers.html:76
+#: src/templates/params.html:77
+msgid "Referencias personaje"
+msgstr ""
+
+#: src/templates/delpers.html:43 src/templates/delrefpers.html:43
+#: src/templates/joinpers.html:44 src/templates/moddict.html:56
+#: src/templates/modidpers.html:89 src/templates/newpers.html:78
+#: src/templates/params.html:79
+msgid "Número Apariciones"
+msgstr ""
+
+#: src/templates/delpers.html:51
+msgid "Marque para eliminar al personaje"
+msgstr ""
+
+#: src/templates/delpers.html:91
+msgid "Los personajes seleccionados han sido eliminados con éxito"
+msgstr ""
+
+#: src/templates/delrefpers.html:14
+msgid "Eliminar Referencia De Personaje"
+msgstr ""
+
+#: src/templates/delrefpers.html:23
+msgid "ELIMINAR REFERENCIA PERSONAJE"
+msgstr ""
+
+#: src/templates/delrefpers.html:27
+msgid "Marque las referencias de personajes a eliminar"
+msgstr ""
+
+#: src/templates/delrefpers.html:54
+msgid "Marque para eliminar la referencia"
+msgstr ""
+
+#: src/templates/delrefpers.html:110
+msgid "Las referencias seleccionadas han sido eliminados con éxito"
+msgstr ""
+
+#: src/templates/dictaut.html:14
+msgid "Diccionarios Automáticos"
+msgstr ""
+
+#: src/templates/dictaut.html:23 src/templates/index.html:39
+#: src/templates/informe.html:23 src/templates/moddict.html:23
+#: src/templates/params.html:50 src/templates/red.html:26
+msgid "PARÁMETROS ADICIONALES"
+msgstr ""
+
+#: src/templates/dictaut.html:23 src/templates/index.html:39
+#: src/templates/informe.html:23 src/templates/moddict.html:23
+#: src/templates/params.html:50 src/templates/red.html:26
+msgid "RED"
+msgstr ""
+
+#: src/templates/dictaut.html:23 src/templates/index.html:39
+#: src/templates/informe.html:23 src/templates/moddict.html:23
+#: src/templates/params.html:50 src/templates/red.html:26
+msgid "INFORME"
+msgstr ""
+
+#: src/templates/dictaut.html:27
+msgid "Crear Diccionario"
+msgstr ""
+
+#: src/templates/dictaut.html:28 src/templates/impdict.html:31
+msgid "Importar Diccionario"
+msgstr ""
+
+#: src/templates/dictaut.html:29 src/templates/obtdict.html:29
+msgid "Obtener Diccionario"
+msgstr ""
+
+#: src/templates/dictaut.html:30
+msgid "Vaciar Diccionario"
+msgstr ""
+
+#: src/templates/dictaut.html:34 src/templates/moddict.html:44
+msgid "Siguiente"
+msgstr ""
+
+#: src/templates/impdict.html:13
+msgid "Fichero introducido correctamente"
+msgstr ""
+
+#: src/templates/impdict.html:16 src/templates/index.html:15
+msgid "Formato de archivo equivocado"
+msgstr ""
+
+#: src/templates/impdict.html:19 src/templates/index.html:18
+msgid "Introduzca un archivo"
+msgstr ""
+
+#: src/templates/impdict.html:40
+msgid "IMPORTAR DICCIONARIO"
+msgstr ""
+
+#: src/templates/impdict.html:49
+msgid "Introduzca la ruta al fichero csv"
+msgstr ""
+
+#: src/templates/impdict.html:50 src/templates/index.html:43
+msgid "Seleccionar archivo"
+msgstr ""
+
+#: src/templates/impdict.html:51 src/templates/index.html:45
+msgid "Cargar"
+msgstr ""
+
+#: src/templates/index.html:42
+msgid "Introduzca la ruta al fichero ePub"
+msgstr ""
+
+#: src/templates/informe.html:14
+msgid "Informe"
+msgstr ""
+
+#: src/templates/joinpers.html:14 src/templates/moddict.html:30
+msgid "Juntar Personajes"
+msgstr ""
+
+#: src/templates/joinpers.html:23
+msgid "JUNTAR PERSONAJES"
+msgstr ""
+
+#: src/templates/joinpers.html:27
+msgid "Marque o arrastre y suelte los personajes a juntar"
+msgstr ""
+
+#: src/templates/joinpers.html:28
+msgid "Juntar"
+msgstr ""
+
+#: src/templates/joinpers.html:52
+msgid "Marque para juntar"
+msgstr ""
+
+#: src/templates/joinpers.html:92
+msgid "Los personajes seleccionados han sido juntados con éxito"
+msgstr ""
+
+#: src/templates/moddict.html:14
+msgid "Modificar Diccionario"
+msgstr ""
+
+#: src/templates/moddict.html:28 src/templates/newpers.html:46
+msgid "Añadir Personaje"
+msgstr ""
+
+#: src/templates/moddict.html:31
+msgid "Añadir Referencia"
+msgstr ""
+
+#: src/templates/moddict.html:32
+msgid "Eliminar Referencia"
+msgstr ""
+
+#: src/templates/moddict.html:33 src/templates/modidpers.html:57
+msgid "Modificar Id Personaje"
+msgstr ""
+
+#: src/templates/moddict.html:34
+msgid "Exportar Diccionario"
+msgstr ""
+
+#: src/templates/moddict.html:39
+msgid "Obtener Posiciones"
+msgstr ""
+
+#: src/templates/moddict.html:44
+msgid "Este proceso puede llevar unos minutos"
+msgstr ""
+
+#: src/templates/moddict.html:88
+msgid ""
+"Primero se van a buscar las posiciones de los personajes, esto puede "
+"tardar unos minutos."
+msgstr ""
+
+#: src/templates/modidpers.html:14 src/templates/newpers.html:14
+msgid "Introduzca una ID"
+msgstr ""
+
+#: src/templates/modidpers.html:18
+msgid "Introduzca la ID por la que sustituir la actual"
+msgstr ""
+
+#: src/templates/modidpers.html:37
+msgid "La nueva id introducida ya existe"
+msgstr ""
+
+#: src/templates/modidpers.html:39
+msgid "Id modificada correctamente"
+msgstr ""
+
+#: src/templates/modidpers.html:43
+msgid "La id actual introducida no se corresponde con ningun personaje"
+msgstr ""
+
+#: src/templates/modidpers.html:66
+msgid "MODIFICAR ID PERSONAJE"
+msgstr ""
+
+#: src/templates/modidpers.html:70
+msgid "Introduzca la id actual del personaje"
+msgstr ""
+
+#: src/templates/modidpers.html:71
+msgid "Id Actual"
+msgstr ""
+
+#: src/templates/modidpers.html:72
+msgid "Introduzca la nueva id"
+msgstr ""
+
+#: src/templates/modidpers.html:73
+msgid "Nueva Id"
+msgstr ""
+
+#: src/templates/modidpers.html:74
+msgid "Cambiar"
+msgstr ""
+
+#: src/templates/newpers.html:18
+msgid "Introduzca un nombre"
+msgstr ""
+
+#: src/templates/newpers.html:29
+msgid "La id introducida ya existe"
+msgstr ""
+
+#: src/templates/newpers.html:31
+msgid "Personaje introducido correctamente"
+msgstr ""
+
+#: src/templates/newpers.html:55
+msgid "AÑADIR PERSONAJE"
+msgstr ""
+
+#: src/templates/newpers.html:59
+msgid "Introduzca la id del nuevo personaje"
+msgstr ""
+
+#: src/templates/newpers.html:61
+msgid "Introduzca el nombre del nuevo personaje"
+msgstr ""
+
+#: src/templates/newpers.html:62
+msgid "Nombre Personaje"
+msgstr ""
+
+#: src/templates/newpers.html:63
+msgid "Añadir"
+msgstr ""
+
+#: src/templates/obtdict.html:10
+msgid "Introduzca una url"
+msgstr ""
+
+#: src/templates/obtdict.html:13
+msgid "Personajes que aparecen en la página introducidos"
+msgstr ""
+
+#: src/templates/obtdict.html:16
+msgid "Introduzca una url perteneciente a *.fandom.com/wiki/Category:Characters"
+msgstr ""
+
+#: src/templates/obtdict.html:38
+msgid "OBTENER DICCIONARIO"
+msgstr ""
+
+#: src/templates/obtdict.html:47
+msgid "Introduzca la dirección url donde se encuentren los personajes a obtener"
+msgstr ""
+
+#: src/templates/obtdict.html:48
+msgid "Url perteneciente a *.fandom.com/wiki/Category:Characters"
+msgstr ""
+
+#: src/templates/obtdict.html:49
+msgid "Obtener"
+msgstr ""
+
+#: src/templates/params.html:14
+msgid "Introduzca un número mínimo de apariciones"
+msgstr ""
+
+#: src/templates/params.html:18
+msgid "Introduzca una distancia entre personajes"
+msgstr ""
+
+#: src/templates/params.html:21
+msgid "Introduzca un valor numérico para el número mínimo de apariciones"
+msgstr ""
+
+#: src/templates/params.html:24
+msgid "Introduzca un valor numérico para la distancia entre personajes"
+msgstr ""
+
+#: src/templates/params.html:41
+msgid "Parámetros adicionales"
+msgstr ""
+
+#: src/templates/params.html:54
+msgid "Introduzca el número mínimo de apariciones en el libro"
+msgstr ""
+
+#: src/templates/params.html:55
+msgid "Número mínimo de apariciones"
+msgstr ""
+
+#: src/templates/params.html:56
+msgid ""
+"Introduzca la distancia máxima de palabras entre personajes para que "
+"cuente como relación"
+msgstr ""
+
+#: src/templates/params.html:57
+msgid "Número de palabras máximas"
+msgstr ""
+
+#: src/templates/params.html:58
+msgid "Obtener red"
+msgstr ""
+
+#: src/templates/params.html:63
+msgid "Tener en cuenta los capítulos"
+msgstr ""
+
+#: src/templates/red.html:17
+msgid "Red"
+msgstr ""
+
+#: src/templates/red.html:60
+msgid "Ver Informe"
+msgstr ""
+
