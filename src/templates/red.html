@@ -57,6 +57,10 @@
 		</div>
 	</div>
 	<div id="content">
+		<form action="" id="form-menu" method="post">
+			<input type="submit" name="btn btn-expgml" value="{{ _('Exportar GML') }}">
+			<input type="submit" name="btn btn-expgexf" value="{{ _('Exportar GEXF') }}">
+		</form>
 		<form action="{{ url_for('params') }}" class="form form-volver" method="post">
 			<input type="submit" name="btn btn-volver" value="{{ _('Volver') }}" onclick="guardaconfig()">
 		</form>
@@ -93,7 +97,7 @@
 		$.ajax({
           type: "POST",
           contentType: "application/json;charset=utf-8",
-          url: "/Red/",
+          url: "/Guardar-Config/",
           traditional: "true",
           data: JSON.stringify({config}),
           dataType: "json"

@@ -103,7 +103,7 @@ def moddict():
         elif("btn btn-expdict" in request.form):
             filename = app.config['UPLOAD_FOLDER']+"\\DiccionarioPersonajes.csv"
             m.exportDict(filename)
-            return send_file(filename, mimetype='text/csv', attachment_filename="DiccionarioPersonajes.csv", as_attachment=True)
+            return send_file(filename, mimetype='text/csv', attachment_filename=gettext("DiccionarioPersonajes.csv"), as_attachment=True)
     return render_template('moddict.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    
@@ -195,10 +195,14 @@ def red():
         return redirect(url_for('index'))
     jsonred = m.visualizar()
     if request.method == "POST":
-        config = request.get_json()
-        if(config != None):
-            m.setConfigVis(config['config'])
-        
+        if("btn btn-expgml" in request.form):
+            filename = app.config['UPLOAD_FOLDER']+"\\GrafoGenerado.gml"
+            m.exportGML(filename)
+            return send_file(filename, mimetype='text/gml', attachment_filename=gettext("GrafoGenerado.gml"), as_attachment=True)
+        elif("btn btn-expgexf" in request.form):
+            filename = app.config['UPLOAD_FOLDER']+"\\GrafoGenerado.gexf"
+            m.exportGEXF(filename)
+            return send_file(filename, mimetype='text/gexf', attachment_filename=gettext("GrafoGenerado.gexf"), as_attachment=True)
     return render_template('red.html', jsonred = jsonred, config = m.getConfigVis())
 
 @app.route('/Informe/', methods=["GET", "POST"])
@@ -261,3 +265,9 @@ def idioma():
         ajax = request.get_json()
         m.setIdioma(ajax)
         return "true"
+    
+@app.route('/Guardar-Config/', methods=["GET", "POST"])
+def guardarConfig():
+    if request.method == "POST":
+        config = request.get_json()
+        m.setConfigVis(config['config'])

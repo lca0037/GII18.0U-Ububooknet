@@ -390,3 +390,15 @@ class modelo:
         
     def getIdioma(self):
         return self.__idioma
+    
+    def exportGML(self,filename):
+        self.writeFile(filename,nx.generate_gml(self.__G))
+        
+    def exportGEXF(self,filename):
+        self.writeFile(filename,nx.generate_gexf(self.__G))
+        
+    def writeFile(self,filename,text):
+        file = open(filename,"w")
+        for r in text:
+            file.write(r)
+        
