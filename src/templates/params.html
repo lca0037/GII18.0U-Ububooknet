@@ -60,7 +60,6 @@
 				<input type="text" id="apar" name="txt txt-apar" size="40" placeholder="{{ _('Número mínimo de apariciones') }}">
 				<div class="txt1">{{ _('Introduzca la distancia máxima de palabras entre personajes para que cuente como relación') }}</div>
 				<input type="text" id="dist" name="txt txt-dist" size="40" placeholder="{{ _('Número de palabras máximas') }}">
-				<input type="button" onclick="sendForm()" name="btn btn-red" value="{{ _('Obtener red') }}">
 			</form>
 			<div id="cbx">
 				<div class="txt1">
@@ -69,7 +68,8 @@
 				</div>
 			</div>
 			<div id="form-mov">
-				<input type="submit" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="{{ _('Volver') }}">
+				<input type="button" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="{{ _('Volver') }}">
+				<input type="button" onclick="sendForm()" name="btn btn-red" value="{{ _('Obtener red') }}">
 			</div>
 		</div>
 		<div id="Personajes">

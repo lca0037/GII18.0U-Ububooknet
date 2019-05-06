@@ -29,12 +29,12 @@
 	</header>
 	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > <a href="{{ url_for('moddict') }}">{{ _('MODIFICAR DICCIONARIO') }}</a> > <a href="{{ url_for('params') }}">{{ _('PARÁMETROS ADICIONALES') }}</a> > <a href="{{ url_for('red') }}">{{ _('RED') }}</a> > <a href="#">{{ _('INFORME') }}</a></div>
 	<div id="content">
-		<form action="" method="post" class="form form-vis">
-			<input type="submit" name="btn btn-vis" value="Visualizar informe">
-		</form>
-		<form action="{{ url_for('red') }}" class="form form-volver" method="post">
-			<input type="submit" name="btn btn-volver" value="{{ _('Volver') }}">
-		</form>
+		<div id="indice">
+			<div id="form-mov">
+				<input type="button" name="btn btn-volver" onclick="window.location.href='{{ url_for('red') }}'" value="{{ _('Volver') }}">
+				<input type="button" name="btn btn-vis" value="Visualizar informe">
+			</div>
+		</div>
 		<footer></footer>
 	</div>
 </body>
