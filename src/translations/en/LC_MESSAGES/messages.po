@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-05-05 11:45+0200\n"
-"PO-Revision-Date: 2019-05-05 11:47+0200\n"
+"POT-Creation-Date: 2019-05-06 13:38+0200\n"
+"PO-Revision-Date: 2019-05-06 13:39+0200\n"
 "Last-Translator: \n"
 "Language: en_GB\n"
 "Language-Team: \n"
@@ -34,6 +34,10 @@ msgstr "GeneratedGraph.gml"
 #: src/vista.py:205
 msgid "GrafoGenerado.gexf"
 msgstr "GeneratedGraph.gexf"
+
+#: src/vista.py:209
+msgid "GrafoGenerado.net"
+msgstr "GeneratedGraph.net"
 
 #: src/templates/delpers.html:2 src/templates/delrefpers.html:2
 #: src/templates/dictaut.html:2 src/templates/impdict.html:2
@@ -112,10 +116,10 @@ msgstr "Delete"
 
 #: src/templates/delpers.html:35 src/templates/delrefpers.html:35
 #: src/templates/dictaut.html:40 src/templates/impdict.html:51
-#: src/templates/informe.html:36 src/templates/joinpers.html:35
+#: src/templates/informe.html:34 src/templates/joinpers.html:35
 #: src/templates/moddict.html:47 src/templates/modidpers.html:82
 #: src/templates/newpers.html:71 src/templates/obtdict.html:49
-#: src/templates/params.html:72 src/templates/red.html:65
+#: src/templates/params.html:71 src/templates/red.html:39
 msgid "Volver"
 msgstr "Return"
 
@@ -454,27 +458,31 @@ msgstr ""
 msgid "Número de palabras máximas"
 msgstr "Highest number of words"
 
-#: src/templates/params.html:63
-msgid "Obtener red"
-msgstr "Obtain net"
-
-#: src/templates/params.html:68
+#: src/templates/params.html:67
 msgid "Tener en cuenta los capítulos"
 msgstr "Have chapters in mind"
+
+#: src/templates/params.html:72
+msgid "Obtener red"
+msgstr "Obtain net"
 
 #: src/templates/red.html:17
 msgid "Red"
 msgstr "Net"
 
-#: src/templates/red.html:61
+#: src/templates/red.html:34
 msgid "Exportar GML"
 msgstr "Download GML"
 
-#: src/templates/red.html:62
+#: src/templates/red.html:35
 msgid "Exportar GEXF"
 msgstr "Download GEXF"
 
-#: src/templates/red.html:68
+#: src/templates/red.html:36
+msgid "Exportar NET"
+msgstr "Download NET"
+
+#: src/templates/red.html:40
 msgid "Ver Informe"
 msgstr "See Report"
 

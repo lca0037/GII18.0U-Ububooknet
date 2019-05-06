@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-05-05 11:45+0200\n"
+"POT-Creation-Date: 2019-05-06 13:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,10 @@ msgstr ""
 
 #: src/vista.py:205
 msgid "GrafoGenerado.gexf"
+msgstr ""
+
+#: src/vista.py:209
+msgid "GrafoGenerado.net"
 msgstr ""
 
 #: src/templates/delpers.html:2 src/templates/delrefpers.html:2
@@ -110,10 +114,10 @@ msgstr ""
 
 #: src/templates/delpers.html:35 src/templates/delrefpers.html:35
 #: src/templates/dictaut.html:40 src/templates/impdict.html:51
-#: src/templates/informe.html:36 src/templates/joinpers.html:35
+#: src/templates/informe.html:34 src/templates/joinpers.html:35
 #: src/templates/moddict.html:47 src/templates/modidpers.html:82
 #: src/templates/newpers.html:71 src/templates/obtdict.html:49
-#: src/templates/params.html:72 src/templates/red.html:65
+#: src/templates/params.html:71 src/templates/red.html:39
 msgid "Volver"
 msgstr ""
 
@@ -448,27 +452,31 @@ msgstr ""
 msgid "Número de palabras máximas"
 msgstr ""
 
-#: src/templates/params.html:63
-msgid "Obtener red"
+#: src/templates/params.html:67
+msgid "Tener en cuenta los capítulos"
 msgstr ""
 
-#: src/templates/params.html:68
-msgid "Tener en cuenta los capítulos"
+#: src/templates/params.html:72
+msgid "Obtener red"
 msgstr ""
 
 #: src/templates/red.html:17
 msgid "Red"
 msgstr ""
 
-#: src/templates/red.html:61
+#: src/templates/red.html:34
 msgid "Exportar GML"
 msgstr ""
 
-#: src/templates/red.html:62
+#: src/templates/red.html:35
 msgid "Exportar GEXF"
 msgstr ""
 
-#: src/templates/red.html:68
+#: src/templates/red.html:36
+msgid "Exportar NET"
+msgstr ""
+
+#: src/templates/red.html:40
 msgid "Ver Informe"
 msgstr ""
 

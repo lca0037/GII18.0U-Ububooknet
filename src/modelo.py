@@ -396,6 +396,9 @@ class modelo:
         
     def exportGEXF(self,filename):
         self.writeFile(filename,nx.generate_gexf(self.__G))
+    
+    def exportPajek(self,filename):
+        nx.write_pajek(self.__G, filename)
         
     def writeFile(self,filename,text):
         file = open(filename,"w")

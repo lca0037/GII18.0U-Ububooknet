@@ -203,6 +203,10 @@ def red():
             filename = app.config['UPLOAD_FOLDER']+"\\GrafoGenerado.gexf"
             m.exportGEXF(filename)
             return send_file(filename, mimetype='text/gexf', attachment_filename=gettext("GrafoGenerado.gexf"), as_attachment=True)
+        elif("btn btn-expnet" in request.form):
+            filename = app.config['UPLOAD_FOLDER']+"\\GrafoGenerado.net"
+            m.exportPajek(filename)
+            return send_file(filename, mimetype='text/net', attachment_filename=gettext("GrafoGenerado.net"), as_attachment=True)
     return render_template('red.html', jsonred = jsonred, config = m.getConfigVis())
 
 @app.route('/Informe/', methods=["GET", "POST"])
