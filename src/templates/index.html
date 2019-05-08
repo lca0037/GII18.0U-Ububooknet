@@ -43,15 +43,20 @@
 			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
 		</div>
 	</header>
-	<div id="workflow"><a href="#">{{ _('CARGAR EPUB') }}</a> > {{ _('DICCIONARIO de PERSONAJES') }} > {{ _('MODIFICAR DICCIONARIO') }} > {{ _('PARÁMETROS ADICIONALES') }} > {{ _('RED') }} > {{ _('INFORME') }}</div>
+	<div id="workflow">
+		<div class="txt-work">
+			<a href="#">{{ _('CARGAR EPUB') }}</a> > {{ _('DICCIONARIO de PERSONAJES') }} > {{ _('MODIFICAR DICCIONARIO') }} > {{ _('PARÁMETROS ADICIONALES') }} > {{ _('RED') }} > {{ _('INFORME') }}
+		</div>
+	</div>
 	<div id="content">
-		<form id="form" action="" method="post" enctype=multipart/form-data>
-			<div id="txt1">{{ _('Introduzca la ruta al fichero ePub') }}</div>
-			<input type="file" id="epub" name="btn btn-selepub" value="{{ _('Seleccionar archivo') }}" accept=".epub, .zip">
-			<!--input type="text" name="txt txt-fichepub" size="40" placeholder="Ruta completa al fichero epub" value="{{request.form.fichepub}}{{epub}}"-->
-			<input type="button" onclick="sendForm()" name="btn btn-cargarepub" value="{{ _('Cargar') }}">
-		</form>
-		<p>{{error}}</p>
+		<div id="form-content">
+			<form id="form" action="" method="post" enctype=multipart/form-data>
+				<div id="txt1">{{ _('Introduzca la ruta al fichero ePub') }}</div>
+				<input type="file" id="epub" name="btn btn-selepub" value="{{ _('Seleccionar archivo') }}" accept=".epub, .zip">
+				<input type="button" onclick="sendForm()" name="btn btn-cargarepub" value="{{ _('Cargar') }}">
+			</form>
+			<p>{{error}}</p>
+		</div>
 	</div>
 	<footer></footer>
 </body>

@@ -136,6 +136,10 @@ div#workflow a:hover{
 	color: #fff;
 }
 
+div#workflow .txt-work{
+	margin-left: 5px;
+}
+
 div#loading {
 	position: absolute;
 	top: calc(50% - 100px);
@@ -205,6 +209,11 @@ div#content #Personajes {
 	margin-top: 40px;
 	margin-left: 20%;
 }
+div#content #form-content {
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
 div#content #forms {
 	width: 100%;
 	margin-left: 20%;

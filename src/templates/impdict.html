@@ -44,7 +44,11 @@
 			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
 		</div>
 	</header>
-	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > {{ _('IMPORTAR DICCIONARIO') }}</div>
+	<div id="workflow">
+		<div class="txt-work">
+			<a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > {{ _('IMPORTAR DICCIONARIO') }}
+		</div>
+	</div>
 	<div id="content">
 		<div id="indice">
 			<div id="form-mov">
@@ -52,11 +56,13 @@
 			</div>
 		</div>
 		<div id="forms">
-			<form id="form" action="" method="post" enctype=multipart/form-data>
-				<div id="txt1">{{ _('Introduzca la ruta al fichero csv') }}</div>
-				<input type="file" id="csv" name="btn btn-selcsv" value="{{ _('Seleccionar archivo') }}" accept=".csv">
-				<input type="button" onclick="sendForm()" name="btn btn-cargarcsv" value="{{ _('Cargar') }}">
-			</form>
+			<div id="form-content">
+				<form id="form" action="" method="post" enctype=multipart/form-data>
+					<div id="txt1">{{ _('Introduzca la ruta al fichero csv') }}</div>
+					<input type="file" id="csv" name="btn btn-selcsv" value="{{ _('Seleccionar archivo') }}" accept=".csv">
+					<input type="button" onclick="sendForm()" name="btn btn-cargarcsv" value="{{ _('Cargar') }}">
+				</form>
+			</div>
 		</div>
 	</div>
 	<footer></footer>

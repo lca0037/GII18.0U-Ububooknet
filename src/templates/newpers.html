@@ -57,7 +57,11 @@
 			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
 		</div>
 	</header>
-	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > <a href="{{ url_for('moddict') }}">{{ _('MODIFICAR DICCIONARIO') }}</a> > {{ _('AÑADIR PERSONAJE') }}</div>
+	<div id="workflow">
+		<div class="txt-work">
+			<a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > <a href="{{ url_for('moddict') }}">{{ _('MODIFICAR DICCIONARIO') }}</a> > {{ _('AÑADIR PERSONAJE') }}
+		</div>
+	</div>
 	<div id="content">
 		<div id="indice">
 			<form action="" id="form-menu" method="post">

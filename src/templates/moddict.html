@@ -24,7 +24,11 @@
 			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
 		</div>
 	</header>
-	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > <a href="#">{{ _('MODIFICAR DICCIONARIO') }}</a> > {{ _('PARÁMETROS ADICIONALES') }} > {{ _('RED') }} > {{ _('INFORME') }}</div>
+	<div id="workflow">
+		<div class="txt-work">
+			<a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > <a href="#">{{ _('MODIFICAR DICCIONARIO') }}</a> > {{ _('PARÁMETROS ADICIONALES') }} > {{ _('RED') }} > {{ _('INFORME') }}
+		</div>
+	</div>
 	<div id="loading"></div>
 	<div id="content">
 		<div id="indice">
@@ -40,7 +44,7 @@
 			<div id="cbx">
 				<div class="txt1">
 					<input type="checkbox" id="pars-cbx" name="cbx cbx-pars">
-					<label for="pars">{{ _('Obtener Posiciones') }}</label>
+					<label for="pars-cbx">{{ _('Obtener Posiciones') }}</label>
 				</div>
 			</div>
 			<div id="form-mov">

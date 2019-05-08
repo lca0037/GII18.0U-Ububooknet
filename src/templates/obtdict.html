@@ -42,7 +42,11 @@
 			<img src="{{ url_for('static', filename='img/uk.png') }}" id="uk" onclick="idioma('en','{{ g.locale }}')">
 		</div>
 	</header>
-	<div id="workflow"><a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > {{ _('OBTENER DICCIONARIO') }}</div>
+	<div id="workflow">
+		<div class="txt-work">
+			<a href="{{ url_for('index') }}">{{ _('CARGAR EPUB') }}</a> > <a href="{{ url_for('dictaut') }}">{{ _('DICCIONARIO de PERSONAJES') }}</a> > {{ _('OBTENER DICCIONARIO') }}
+		</div>
+	</div>
 	<div id="content">
 		<div id="indice">
 			<div id="form-mov">
@@ -50,11 +54,13 @@
 			</div>
 		</div>
 		<div id="forms">
-			<form id="form" action="" method="post" enctype=multipart/form-data>
-				<div id="txt1">{{ _('Introduzca la dirección url donde se encuentren los personajes a obtener') }}</div>
-				<input type="text" id="url" name="txt txt-url" size="40" placeholder="{{ _('Url perteneciente a *.fandom.com/wiki/Category:Characters') }}">
-				<input type="button" onclick="sendForm()" name="btn btn-scrape" value="{{ _('Obtener') }}">
-			</form>
+			<div id="form-content">
+				<form id="form" action="" method="post" enctype=multipart/form-data>
+					<div id="txt1">{{ _('Introduzca la dirección url donde se encuentren los personajes a obtener') }}</div>
+					<input type="text" id="url" name="txt txt-url" size="40" placeholder="{{ _('Url perteneciente a *.fandom.com/wiki/Category:Characters') }}">
+					<input type="button" onclick="sendForm()" name="btn btn-scrape" value="{{ _('Obtener') }}">
+				</form>
+			</div>
 		</div>
 	</div>
 	<footer></footer>

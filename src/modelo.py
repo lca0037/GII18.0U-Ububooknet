@@ -300,7 +300,8 @@ class modelo:
                                                 peso+=1
                                             else:
                                                 break
-                        self.__G.add_edge(persk[i],persk[j],weight=peso)
+                        if(peso>0):
+                            self.__G.add_edge(persk[i],persk[j],weight=peso)
     
     '''
     Método para mandar a d3 la información para visualizar la red
