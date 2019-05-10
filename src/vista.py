@@ -153,16 +153,7 @@ def delrefpers():
     if request.method == "POST":
         ajax = request.get_json()
         if(ajax != None):
-            if(ajax == 'id'):
-                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
-            elif(ajax == 'idrev'):
-                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
-            elif(ajax == 'apa'):
-                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
-            elif(ajax == 'aparev'):
-                return orden(render_template('delrefpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))
-            else:
-                m.eliminarListRefs(ajax)
+            m.eliminarListRefs(ajax)
     return render_template('delrefpers.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Cambiar-Identificador/', methods=["GET", "POST"])
@@ -216,52 +207,6 @@ def informe():
     if request.method == "POST":
         print()
     return render_template('informe.html')
-
-@app.route('/Ordenar/', methods=["GET", "POST"])
-def ordenar():
-    if request.method == "POST":
-        ajax = request.get_json()
-        if(ajax != None):
-            if(ajax == 'id'):
-                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
-            elif(ajax == 'idrev'):
-                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
-            elif(ajax == 'apa'):
-                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
-            elif(ajax == 'aparev'):
-                return orden(render_template('moddict.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))
-
-@app.route('/Ordenar-Id-Cbx-Del/', methods=["GET", "POST"])
-def ordenaridcbxdel():
-    if request.method == "POST":
-        ajax = request.get_json()
-        if(ajax != None):
-            if(ajax == 'id'):
-                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
-            elif(ajax == 'idrev'):
-                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
-            elif(ajax == 'apa'):
-                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
-            elif(ajax == 'aparev'):
-                return orden(render_template('delpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))      
-
-@app.route('/Ordenar-Id-Cbx-Join/', methods=["GET", "POST"])
-def ordenaridcbxjoin():
-    if request.method == "POST":
-        ajax = request.get_json()
-        if(ajax != None):
-            if(ajax == 'id'):
-                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0])}))
-            elif(ajax == 'idrev'):
-                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[0] ,reverse=True)}))
-            elif(ajax == 'apa'):
-                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones())}))
-            elif(ajax == 'aparev'):
-                return orden(render_template('joinpers.html', pers = {k: v for k, v in sorted(m.getPersonajes().items(), key=lambda x: x[1].getNumApariciones(), reverse=True)}))      
-
-def orden(html):
-    cont = BeautifulSoup(html, "html.parser")
-    return json.dumps(str(cont.find(id="Personajes")))
 
 @app.route('/Idioma/', methods=["GET", "POST"])
 def idioma():

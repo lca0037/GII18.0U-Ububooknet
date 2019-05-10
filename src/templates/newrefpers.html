@@ -21,7 +21,7 @@
 					var divpers = document.getElementsByClassName("Personaje");
 					var incluido = false;
 		        	for(var i=0; divpers[i]; ++i){
-		        		if(divpers[i].getAttribute("idpers")==id.value){
+		        		if(divpers[i].getAttribute("idp")==id.value){
 		        			incluido = true;
 		        			var personaje = divpers[i];
 		        			break;
@@ -62,7 +62,7 @@
 		</div>
 		<div class="menu">
 			<ul>
-				<li><a href="{{ url_for('index') }}">{{ _('Inicio</a></li>
+				<li><a href="{{ url_for('index') }}">{{ _('Inicio') }}</a></li>
 				<li><a href="https://github.com/lca0037/GII18.0U-Ububooknet">{{ _('Repositorio') }}</a></li>
 			</ul>
 		</div>
@@ -90,22 +90,22 @@
 				<input type="button" name="btn btn-volver" onclick="window.location.href='{{ url_for('moddict') }}'" value="{{ _('Volver') }}">
 			</div>
 		</div>
-		<div id="Personajes">
-			<div class="Personaje Cabecera">
-				<div class="IdPersonaje">
-					{{ _('ID Personaje') }}
-					<div class="arrow-up" onclick="ordenar('idrev')"></div>
-					<div class="arrow-down" onclick="ordenar('id')"></div>
-				</div>
-				<div class="NomP">{{ _('Referencias personaje') }}</div>
-				<div class="NumApar">
-					{{ _('Número Apariciones') }}
-					<div class="arrow-up" onclick="ordenar('aparev')"></div>
-					<div class="arrow-down" onclick="ordenar('apa')"></div>
-				</div>
+		<div id="Personaje-Cabecera">
+			<div class="IdPersonaje">
+				{{ _('ID Personaje') }}
+				<div class="arrow-up" onclick="ordenar('idrev')"></div>
+				<div class="arrow-down" onclick="ordenar('id')"></div>
 			</div>
+			<div class="NomP">{{ _('Referencias personaje') }}</div>
+			<div class="NumApar">
+				{{ _('Número Apariciones') }}
+				<div class="arrow-up" onclick="ordenar('aparev')"></div>
+				<div class="arrow-down" onclick="ordenar('apa')"></div>
+			</div>
+		</div>
+		<div id="Personajes">
 			{% for i in pers.keys() %}
-			<div class="Personaje" idpers="{{ i }}">
+			<div class="Personaje" idp="{{ i }}" numapa="{{ pers[i].getNumApariciones()[0] }}">
 				<div class="IdPersonaje">{{ i }}</div>
 				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}

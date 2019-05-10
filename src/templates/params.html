@@ -76,22 +76,22 @@
 				<input type="button" onclick="sendForm()" name="btn btn-red" value="{{ _('Obtener red') }}">
 			</div>
 		</div>
-		<div id="Personajes">
-			<div class="Personaje Cabecera">
-				<div class="IdPersonaje">
-					{{ _('ID Personaje') }}
-					<div class="arrow-up" onclick="ordenar('idrev')"></div>
-					<div class="arrow-down" onclick="ordenar('id')"></div>
-				</div>
-				<div class="NomP">{{ _('Referencias personaje') }}</div>
-				<div class="NumApar">
-					{{ _('Número Apariciones') }}
-					<div class="arrow-up" onclick="ordenar('aparev')"></div>
-					<div class="arrow-down" onclick="ordenar('apa')"></div>
-				</div>
+		<div id="Personaje-Cabecera">
+			<div class="IdPersonaje">
+				{{ _('ID Personaje') }}
+				<div class="arrow-up" onclick="ordenar('idrev')"></div>
+				<div class="arrow-down" onclick="ordenar('id')"></div>
 			</div>
+			<div class="NomP">{{ _('Referencias personaje') }}</div>
+			<div class="NumApar">
+				{{ _('Número Apariciones') }}
+				<div class="arrow-up" onclick="ordenar('aparev')"></div>
+				<div class="arrow-down" onclick="ordenar('apa')"></div>
+			</div>
+		</div>
+		<div id="Personajes">
 			{% for i in pers.keys() %}
-			<div class="Personaje">
+			<div class="Personaje" idp="{{ i }}" numapa="{{ pers[i].getNumApariciones()[0] }}">
 				<div class="IdPersonaje">{{ i }}</div>
 				<div class="NomP">
 				{% for n in pers[i].getPersonaje().keys() %}
