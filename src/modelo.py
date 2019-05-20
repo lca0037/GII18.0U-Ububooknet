@@ -11,6 +11,8 @@ import urllib
 import json
 from bs4 import BeautifulSoup
 import zipfile
+from threading import Thread
+
 
 """
 Clase con la que la vista interactua
@@ -19,59 +21,49 @@ Clase con la que la vista interactua
 """
 class modelo:
     
-    __instance = None
     '''
     Constructor de la clase
     '''
     def __init__(self):
-        if modelo.__instance is not None:
-            raise Exception("An instance already exists!")
-        self.__texto = ''
+        self.__csv = lectorcsv.lectorcsv(self)
+        self.__texto = list()
         self.personajes= dict()
         self.numpers = 0
-        self.sigid = 0
-        self.__fichero = None
-        self.__csv = lectorcsv.lectorcsv(self)
-        self.__idioma = None
-        self.__configVis = {'Path to file (csv or json)': 'https://gist.githubusercontent.com/ulfaslak/6be66de1ac3288d5c1d9452570cbba5a/raw/0b9595c09b9f70a77ee05ca16d5a8b42a9130c9e/miserables.json', 'Apply heat (wiggle)': False, 'Charge strength': -50, 'Center gravity': 0.1, 'Link distance': 10, 'Link width': 5, 'Link alpha': 0.5, 'Node size': 10, 'Node stroke size': 0.5, 'Node size exponent': 0.5, 'Link width exponent': 0.5, 'Collision': False, 'Node fill': '#16a085', 'Node stroke': '#000000', 'Link stroke': '#7c7c7c', 'Label stroke': '#000000', 'Show labels': True, 'Show singleton nodes': False, 'Node size by strength': True, 'Zoom': 1.5, 'Min. link weight %': 0, 'Max. link weight %': 100}
-        if(modelo.__instance == None):
-            modelo.__instance = self
-     
-    '''
-    Método para obtener una instancia de la clase
-    '''
-    @staticmethod
-    def getInstance():
-        if modelo.__instance == None:
-            modelo()
-        return modelo.__instance
-    
+        self.__fincaps = list()
+        self.__G = None
+            
     '''
     Método que llama a un método para crear un diccionario automaticamente
     '''
     def crearDict(self):
-        creard = cd.creadict()
-        creard.crearDict(self.getTexto())
-        self.sigid = self.numpers 
+        creard = cd.creadict(self)
+        txt = ''
+        for i in self.__texto:
+            txt += i
+        d = Thread(target=creard.crearDict,args=(txt,))
+        d.start()
+        d.join()
     
     '''
     Método que llama a un método para obtener las posiciones de los personajes
     '''
     def obtenerPosPers(self):
-        l = lecturaEpub.lecturaEpub(self.__fichero)
-        posper = pp.pospersonajes()
-        cap = ''
+        self.pos = list()
+        self.fin = list()
+        posper = pp.pospersonajes(self)
         pers = self.getDictParsear()
         self.__fincaps = list() 
         posiciones = list()
-        for f in l.siguienteArchivo():
-            cap = ". " + f
-            pos,fin = posper.obtenerPos(cap, pers)
-            posiciones.append(pos)
-            self.__fincaps.append(fin)
+        txt = ''
+        for f in self.__texto:
+            txt = txt + f + "+ ---CAPITULO--- +"
+        posper.obtenerPos(txt, pers)
+        posiciones = self.pos
+        self.__fincaps = self.fin
         for i in self.personajes.keys():
             self.personajes[i].lennombres = dict()
             pers = self.personajes[i].getPersonaje()
+            self.personajes[i].resNumApariciones(self.personajes[i].getNumApariciones()[0])
             for n in pers.keys():
                 c = 1
                 apar = 0
@@ -122,7 +114,6 @@ class modelo:
     def vaciarDiccionario(self):
         self.personajes = dict()
         self.numpers = 0
-        self.sigid = 0
     
     '''
     Método para añadir un personaje al diccionario de personajes
@@ -225,7 +216,9 @@ class modelo:
             self.personajes[i].setPosicionPers(pos)
        
     def prepararRed(self):
-        self.obtenerPosPers()
+        d = Thread(target=self.obtenerPosPers)
+        d.start()
+        d.join()
         self.juntarPosiciones()
     '''
     Método para obtener una matriz de adyacencia de las relaciones entre los personajes
@@ -335,22 +328,21 @@ class modelo:
     Método para obtener el texto del epub del que se quiere obtener la red de 
     personajes
     '''
-    def obtTextoEpub(self):
-        l = lecturaEpub.lecturaEpub(self.__fichero)
-        self.__texto = ''
+    def obtTextoEpub(self, fich):
+        l = lecturaEpub.lecturaEpub(fich)
+        self.__texto = list()
+        x = 0
         for f in l.siguienteArchivo():
-            self.__texto += ". " + f
-
-    '''
-    Obtiene el texto del epub
-    '''
-    def getTexto(self):
-        return self.__texto
+#            if(x < 5 and x > 2):
+#                self.__texto.append(". " + f)
+#            x+=1
+            self.__texto.append(". " + f)
         
     '''
     Método para comprobar si un archivo es un epub
     '''
-    def esEpub(self,fich):
+    @staticmethod
+    def esEpub(fich):
         if(not zipfile.is_zipfile(fich)):
             return False
         x = zipfile.ZipFile(fich)
@@ -360,38 +352,7 @@ class modelo:
             return False
         else:
             return True
-    '''
-    Establece el epub a leer
-    '''
-    def setFichero(self, fich):
-        self.__fichero = fich
-        
-    '''
-    Devuelve si hay un fichero o no
-    '''
-    def hayFichero(self):
-        if(self.__fichero != None):
-            return True
-        return False
-    
-    '''
-    Método que devuelve la configuración de la visualización
-    '''
-    def getConfigVis(self):
-        return self.__configVis
-    
-    '''
-    Método que guarda la configuración de la visualización
-    '''
-    def setConfigVis(self,newconfig):
-        self.__configVis = newconfig
-        
-    def setIdioma(self,lang):
-        self.__idioma = lang
-        
-    def getIdioma(self):
-        return self.__idioma
-    
+
     def exportGML(self,filename):
         self.writeFile(filename,nx.generate_gml(self.__G))
         
@@ -405,4 +366,3 @@ class modelo:
         file = open(filename,"w")
         for r in text:
             file.write(r)
-        

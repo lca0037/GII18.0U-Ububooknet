@@ -14,8 +14,8 @@ from src import pospersonajes as pp
 from src import lecturaEpub as lec
 
 #print(sys.path)
-m = modelo.modelo.getInstance()
-poslex = pp.pospersonajes()
+m = modelo.modelo()
+poslex = pp.pospersonajes(m)
 
 class testUnitarios(unittest.TestCase):
     

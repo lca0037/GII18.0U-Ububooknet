@@ -20,7 +20,6 @@ class lectorcsv:
     '''
     def importDict(self, fichero):
         i = 0
-        pers = self.__modelo.getPersonajes()
         with open(fichero, newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',',skipinitialspace=True)
             for row in spamreader:

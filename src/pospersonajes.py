@@ -12,12 +12,13 @@ class pospersonajes:
     '''
     Constructor de la clase
     '''
-    def __init__(self):
+    def __init__(self, modelo):
         self.lexer = lex.lex(module=self)
         self.nombres = list()
+        self.m = modelo
     
     #Tokens del lexer
-    tokens = ("PALABRA", "ESPACIO")
+    tokens = ("PALABRA", "ESPACIO", "CAPITULO")
     #Estados del lexer
     states = (('coincidencia','exclusive'),)
     
@@ -49,8 +50,21 @@ class pospersonajes:
 #            print('Sin coincidencias:',t.value,'. Número de palabra:',self.contador)
             self.contador += 1
         
+    def t_CAPITULO(self, t):
+        r"(\-\-\-CAPITULO\-\-\-)"
+#        print("Capítulo:",t.value)
+#        print(self.resul)
+#        print(self.contador)
+        self.m.pos.append(self.resul)
+        self.m.fin.append(self.contador)
+        self.contador = 0
+        self.resul = dict()
+        for n in self.nombres:
+            self.resul[n] = list()
+            
     def t_ESPACIO(self, t):
-        r"[\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_—]+"
+        r"[\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_—]"
+#        print("Espacio: ", t.value)
         
     '''
     Función que cuando ha habido una coincidencia previa pero no definitiva 
@@ -93,7 +107,7 @@ class pospersonajes:
             clon = self.lexer.clone()
             clon.input(txt)
             for tok in iter(clon.token, None):
-                print()
+                aux = 1
        
     
     def t_error(self, t):
@@ -119,8 +133,8 @@ class pospersonajes:
             self.resul[n] = list()
         lex.input(texto)
         for tok in iter(lex.token, None):
-            print()
-        return self.resul, self.contador
+            print(tok)
+            aux = 1
                
     '''
     Función que comprueba recorre una cadena de texto y comprueba con cadenas de texto

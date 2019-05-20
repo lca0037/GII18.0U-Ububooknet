@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 import ply.lex as lex
-from src import personaje as p
-from src import modelo as m
 
 '''
 Clase que crea un diccionario de manera automática
@@ -13,9 +11,10 @@ class creadict:
     '''
     Constructor de la clase
     '''
-    def __init__(self):
+    def __init__(self, modusuario):
         self.lexer = lex.lex(module=self)
         self.aux = dict()
+        self.mod = modusuario
       
     #Tokens del lexer
     tokens = ("PERSONAJE", "ESPACIOS", "PUNTO", "CARACTER", "OTRO")
@@ -74,11 +73,10 @@ class creadict:
     personajes
     '''
     def crearDict(self, texto):
-        mod = m.modelo.getInstance()
         txt = ". " + texto
         lex.input(txt)
         for tok in iter(lex.token, None):
             if(tok.value not in self.aux.keys()):
                 self.aux[tok.value] = None
-                mod.anadirPersonaje(tok.value, tok.value)
+                self.mod.anadirPersonaje(tok.value, tok.value)
     

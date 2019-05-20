@@ -46,4 +46,3 @@ class personaje:
         
     def resNumApariciones(self,apar):
         self.__numapar -= apar
-    
