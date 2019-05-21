@@ -84,6 +84,9 @@
 		function sendForm(){
 			var id = document.getElementById("idpers");
 			var nom = document.getElementById("nompers");
+			id.value = id.value.trim()
+			nom.value = nom.value.trim()
+			var novalid = [".",",","(",")","[","]","<",">","'","\"",":",";","¿","?","¡","!","=","-","_","—"]
 			if(id.value.length == 0){
 				alert("{{ _('Introduzca una ID') }}")
 			}
@@ -102,8 +105,12 @@
 		        	if(incluido){
 		        		alert("{{ _('La id introducida ya existe') }}")
 		        	} else {
-		        		alert("{{ _('Personaje introducido correctamente') }}")
-		        		document.getElementById("form-menu").submit();
+		        		if(novalid.includes(ref.value.charAt(0))){
+		        			alert("{{ _('Por favor no introduzca ninguno de los siguientes caracteres como primer caracter:') }}" + " . , ( ) [ ] < > : ; ¿ ? ¡ ! = - _ — \' \" ")
+		        		}else{
+		        			alert("{{ _('Personaje introducido correctamente') }}")
+		        			document.getElementById("form-menu").submit();
+		        		}
 		        	}
 	        	}
         	}

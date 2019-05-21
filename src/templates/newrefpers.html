@@ -85,6 +85,9 @@
 		function sendForm(){
 			var id = document.getElementById("idpers");
 			var ref = document.getElementById("refpers");
+			id.value = id.value.trim()
+			ref.value = ref.value.trim()
+			var novalid = [".",",","(",")","[","]","<",">","'","\"",":",";","¿","?","¡","!","=","-","_","—"]
 			if(id.value.length == 0){
 				alert("{{ _('Introduzca una ID') }}")
 			}
@@ -102,20 +105,24 @@
 		        		}
 		        	}
 		        	if(incluido){
-		        		var noms = personaje.getElementsByClassName("ref");
-		        		var union = id.value + ref.value;
-		        		var aux = false;
-		        		for(var i=0; noms[i]; ++i){
-			        		if(noms[i].getAttribute("idnompers")==union){
-			        			aux = true;
-			        			break;
-			        		}
-			        	}
-			        	if(aux){
-			        		alert("{{ _('La referencia ya existe en el personaje') }}")
-			        	} else {
-			        		alert("{{ _('Referencia añadida correctamente') }}")
-			        		document.getElementById("form-menu").submit();
+		        		if(novalid.includes(ref.value.charAt(0))){
+		        			alert("{{ _('Por favor no introduzca ninguno de los siguientes caracteres como primer caracter:') }}" + " . , ( ) [ ] < > : ; ¿ ? ¡ ! = - _ — \' \" ")
+		        		} else {
+			        		var noms = personaje.getElementsByClassName("ref");
+			        		var union = id.value + ref.value;
+			        		var aux = false;
+			        		for(var i=0; noms[i]; ++i){
+				        		if(noms[i].getAttribute("idnompers")==union){
+				        			aux = true;
+				        			break;
+				        		}
+				        	}
+				        	if(aux){
+				        		alert("{{ _('La referencia ya existe en el personaje') }}")
+				        	} else {
+				        		alert("{{ _('Referencia añadida correctamente') }}")
+				        		document.getElementById("form-menu").submit();
+				        	}
 			        	}
 		        	} else {
 		        		alert("{{ _('No existe ningún personaje con la ID introducida') }}")

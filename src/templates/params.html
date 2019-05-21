@@ -90,6 +90,8 @@
 		function sendForm(){
 			var apar = document.getElementById("apar");
 			var dist = document.getElementById("dist");
+			apar.value = apar.value.trim()
+			dist.value = dist.value.trim()
 			if(apar.value.length == 0){
 				alert("{{ _('Introduzca un número mínimo de apariciones') }}")
 			}

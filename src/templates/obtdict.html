@@ -52,6 +52,7 @@
 	<script type="text/javascript">
 		function sendForm(){
 			var x = document.getElementById("url");
+			x.value = x.value.trim()
 			if(x.value.length == 0){
 				alert("{{ _('Introduzca una url') }}")
 			} else {
