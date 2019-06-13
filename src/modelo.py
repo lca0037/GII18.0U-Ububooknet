@@ -5,6 +5,7 @@ from src import pospersonajes as pp
 from src import lectorcsv
 from src import lecturaEpub
 import matplotlib.pyplot as plt
+import collections
 import numpy as np
 import networkx as nx
 import urllib
@@ -331,11 +332,7 @@ class modelo:
     def obtTextoEpub(self, fich):
         l = lecturaEpub.lecturaEpub(fich)
         self.__texto = list()
-        x = 0
         for f in l.siguienteArchivo():
-#            if(x < 5 and x > 2):
-#                self.__texto.append(". " + f)
-#            x+=1
             self.__texto.append(". " + f)
         
     '''
@@ -366,3 +363,233 @@ class modelo:
         file = open(filename,"w")
         for r in text:
             file.write(r)
+            
+    def generarInforme(self, solicitud):
+        switch = {'cbx cbx-nnod': self.nNodos, 'cbx cbx-nenl': self.nEnl, 'cbx cbx-nint': self.nInt, 'cbx cbx-gradosin': self.gSin, 'cbx cbx-gradocon': self.gCon, 'cbx cbx-distsin': self.dSin, 'cbx cbx-distcon': self.dCon, 'cbx cbx-dens': self.dens, 'cbx cbx-concomp': self.conComp, 'cbx cbx-exc': self.exc, 'cbx cbx-dia': self.diam, 'cbx cbx-rad': self.rad, 'cbx cbx-longmed': self.longMed, 'cbx cbx-locclust': self.locClust, 'cbx cbx-clust': self.clust, 'cbx cbx-trans': self.trans, 'cbx cbx-centg': self.centG, 'cbx cbx-centc': self.centC, 'cbx cbx-centi': self.centI, 'cbx cbx-ranwal': self.ranWal, 'cbx cbx-centv': self.centV,'cbx cbx-para': self.paRa, 'cbx cbx-kcliperc': self.kCliPerc, 'cbx cbx-girnew': self.girNew, 'cbx cbx-roles': self.roles}
+        valkcliqper =  solicitud['valkcliqper']
+        del solicitud['valkcliqper']
+        self.informe = dict()
+        for s in solicitud.keys():
+            if('cbx cbx-kcliperc' == s):
+                self.informe[s] = switch[s](valkcliqper)
+            else:
+                self.informe[s] = switch[s]()
+        
+    def nNodos(self):
+        return nx.number_of_nodes(self.__G)
+        
+    def nEnl(self):
+        return nx.number_of_edges(self.__G)
+        
+    def nInt(self):
+        return self.__G.size(weight='weight')
+    
+    def gSin(self):
+        return nx.degree(self.__G)
+        
+    def gCon(self):
+        return nx.degree(self.__G,weight='weight')
+        
+    def dSin(self):
+        degree_sequence = sorted([d for n, d in self.__G.degree()], reverse=True)  # degree sequence
+        # print "Degree sequence", degree_sequence
+        print(degree_sequence)
+        degreeCount = collections.Counter(degree_sequence)
+        print(degreeCount)
+        return degreeCount
+    
+    def dCon(self):
+        degree_sequence = sorted([d for n, d in self.__G.degree(weight='weight')], reverse=True)  # degree sequence
+        # print "Degree sequence", degree_sequence
+        degreeCount = collections.Counter(degree_sequence)
+        return degreeCount
+        
+    def dens(self):
+        return nx.density(self.__G)
+        
+    def conComp(self):
+        l = list()
+        for x in nx.connected_components(self.__G):
+            l.append(x)
+        return l
+        
+    def exc(self):
+        return nx.eccentricity(self.__G)
+    
+    def diam(self):
+        return nx.diameter(self.__G)
+        
+    def rad(self):
+        return nx.radius(self.__G)
+        
+    def longMed(self):
+        return nx.average_shortest_path_length(self.__G)
+        
+    def locClust(self):
+        return nx.clustering(self.__G)
+        
+    def clust(self):
+        return nx.average_clustering(self.__G)
+        
+    def trans(self):
+        return nx.transitivity(self.__G)
+        
+    def centG(self):
+        return nx.degree_centrality(self.__G)
+        
+    def centC(self):
+        return nx.closeness_centrality(self.__G)
+        
+    def centI(self):
+        return nx.betweenness_centrality(self.__G)
+        
+    def ranWal(self):
+        return nx.current_flow_betweenness_centrality(self.__G)
+        
+    def centV(self):
+        return nx.eigenvector_centrality(self.__G)
+        
+    def paRa(self):
+        return nx.pagerank(self.__G)
+        
+    def kCliPerc(self, k):
+        l = list()
+        for x in nx.algorithms.community.k_clique_communities(self.__G, int(k)):
+            l.append(x)
+        return l
+        
+    def girNew(self):
+        l = list()
+        resul,mod,npart = self.girvan_newman(self.__G.copy())
+        for c in nx.connected_components(resul):
+            l.append(c)
+        return l
+        
+    def roles(self):
+        z = self.obtenerZ(self.__G)
+        p = self.obtenerP(self.__G)
+        pesos = self.__G.degree(weight='weight')
+        hubp = list()
+        hubc = list()
+        hubk = list()
+        nhubu = list()
+        nhubp = list()
+        nhubc = list()
+        nhubk = list()
+        for t in pesos:
+            k = t[0]
+            pesoaux = list()
+            aux = t[1]*12
+            pesoaux.append(aux)
+            nodo = list()
+            nodo.append(k)
+            if z[k] >= 2.5:
+                if(p[k] < 0.32):
+                    hubp.append(k)
+                elif(p[k] < 0.75):
+                    hubc.append(k)
+                else:
+                    hubk.append(k)
+            else:
+                if(p[k] > -0.02 and p[k] < 0.02):
+                    nhubu.append(k)
+                elif(p[k] < 0.625):
+                    nhubp.append(k)
+                elif(p[k] < 0.8):
+                    nhubc.append(k)
+                else:
+                    nhubk.append(k)
+        roles = {'hubp':hubp,'hubc':hubc,'hubk':hubk,'nhubu':nhubu,'nhubp':nhubp,'nhubc':nhubc,'nhubk':nhubk}
+        return roles
+
+        
+    def obtenerZ(self, grafo):
+        zi = dict()
+        resul,mod,npart = self.girvan_newman(grafo.copy())
+        for c in nx.connected_components(resul):
+            subgrafo = grafo.subgraph(c)
+            pesos = subgrafo.degree()
+            n = subgrafo.number_of_nodes()
+            medksi = 0
+            for peso in pesos:
+                medksi = medksi + peso[1]/n
+            desvksi = 0
+            for peso in pesos:
+                desvksi = desvksi + (peso[1]-medksi)**2
+            desvksi = desvksi/n
+            desvksi = desvksi**0.5
+            if(desvksi == 0):
+                for peso in pesos:
+                    zi[peso[0]] = 0
+            else:
+                for peso in pesos:
+                    zi[peso[0]] = (peso[1]-medksi)/desvksi
+        return zi
+    
+    def obtenerP(self, grafo):
+        pi = dict()
+        pesos = grafo.degree()
+        for peso in pesos:
+            ki = peso[1]
+            piaux = 0
+            resul,mod,npart = self.girvan_newman(grafo.copy())
+            for c in nx.connected_components(resul):
+                c.add(peso[0])
+                sub = grafo.subgraph(c)
+                pesosaux = sub.degree()
+                ksi = pesosaux[peso[0]]
+                piaux = piaux + (ksi/ki)**2 
+            pi[peso[0]] = 1 - piaux
+        return pi
+    
+    def modularidad(self,grafo, particion):
+        m = nx.number_of_edges(grafo)
+        nodos = list(particion.keys())
+        tot = 0
+        for i in range(0,len(nodos)):
+            for j in range(0,len(nodos)):
+                if(particion[nodos[i]]==particion[nodos[j]]):
+                    aux = (grafo.degree[nodos[i]]*grafo.degree[nodos[j]]/(2*m))
+                    A = grafo.number_of_edges(nodos[i],nodos[j])
+                    tot += A-aux
+        return tot/(2*m)
+    
+    def girvan_newman(self,grafo):
+        inicial = grafo.copy()
+        mod = list()
+        npart = list()
+        part = dict()
+        i=0
+        for c in nx.connected_components(grafo):
+            for j in c:
+                part[j]=i
+            i+=1
+        npart.append(i)
+        ultnpar = i
+        modu = self.modularidad(inicial,part)
+        mod.append(modu)
+        mejormod = modu
+        mejor = grafo.copy()
+        while(nx.number_of_edges(grafo)>0):
+            btwn = list(nx.edge_betweenness_centrality(grafo).items())
+            mini = -1
+            for i in btwn:
+                if i[1]>mini:
+                    enlaces = i[0]
+                    mini=i[1]
+            grafo.remove_edge(*enlaces)
+            i=0
+            part = dict()
+            for c in nx.connected_components(grafo):
+                for j in c:
+                    part[j]=i
+                i+=1
+            if(i>ultnpar):
+                ultnpar = i
+                npart.append(i)
+                modu = self.modularidad(inicial,part)
+                mod.append(modu)
+                if(modu>mejormod):
+                    mejormod=modu
+                    mejor = grafo.copy()
+        return mejor,mod,npart

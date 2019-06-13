@@ -120,7 +120,10 @@
 		      url: "/Fin-Sesion",
 		      traditional: "true",
 		      data: JSON.stringify({{ g.usuario }}),
-		      dataType: "json"
+		      dataType: "json",
+		      success: function(response){
+          			location.reload();
+         		 }
 		    });
 		}
 		 
@@ -138,7 +141,7 @@
 		  }
 		 
 		  // Attach the event keypress to exclude the F5 refresh
-		  $(document).bind('keypress', function(e) {
+		  $(document).bind('keydown', function(e) {
 		    if (e.keyCode == 116){
 		      validNavigation = true;
 		    }

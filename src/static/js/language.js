@@ -9,7 +9,8 @@ function idioma(nuevo,actual){
             data: JSON.stringify(nuevo),
             dataType: "json",
             success: function(response){
-            	location.reload();
+                  validNavigation = true
+            	location.reload()
             }
           });
       }
