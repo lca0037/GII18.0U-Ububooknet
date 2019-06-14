@@ -9,18 +9,18 @@ Test unitarios sobre el código implementado
 #import sys
 #sys.path.append('../src/')
 import unittest
-from src import modelo
-from src import pospersonajes as pp
-from src import lecturaEpub as lec
+from src.Modelo import Modelo
+from src.Lexers import PosPersonajes as pp
+from src.LecturaFicheros import LecturaEpub as lec
 
 #print(sys.path)
-m = modelo.modelo()
-poslex = pp.pospersonajes(m)
+m = Modelo.Modelo()
+poslex = pp.PosPersonajes(m)
 
-class testUnitarios(unittest.TestCase):
+class TestUnitarios(unittest.TestCase):
     
     def __init__(self,*args, **kwargs):
-        super(testUnitarios, self).__init__(*args, **kwargs)
+        super(TestUnitarios, self).__init__(*args, **kwargs)
         m.obtTextoEpub(r"C:\Users\luism\Desktop\Ubu\TFG\Repositorio\GII18.0U-Ububooknet\tst\epubPruebas.epub")
         m.vaciarDiccionario()
         m.crearDict()

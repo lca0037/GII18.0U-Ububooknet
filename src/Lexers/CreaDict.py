@@ -6,7 +6,7 @@ Clase que crea un diccionario de manera automática
 
 @author: Luis Miguel Cabrejas
 '''
-class creadict:
+class CreaDict:
     
     '''
     Constructor de la clase

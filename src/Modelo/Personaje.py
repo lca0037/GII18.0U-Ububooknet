@@ -5,7 +5,7 @@ Clase que contiene información sobre cada personaje
 
 @author: luism
 """
-class personaje:
+class Personaje:
     
     '''
     Constructor de la clase

@@ -9,7 +9,7 @@ Clase para obtener el texto de los epub
 
 @author: Luis Miguel Cabrejas
 """
-class lecturaEpub:
+class LecturaEpub:
     
     '''
     Constructor de la clase

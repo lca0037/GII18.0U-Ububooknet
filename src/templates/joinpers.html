@@ -112,7 +112,7 @@
 		    		var checks = [];
 		    		checks.push($( this ).find("div.IdPersonaje input")[0].value);
 		    		checks.push(ui.draggable.find("div.IdPersonaje input")[0].value);
-		    		console.log(checks)
+		    		validNavigation = true;
 		    		$.ajax({
 			          type: "POST",
 			          contentType: "application/json;charset=utf-8",

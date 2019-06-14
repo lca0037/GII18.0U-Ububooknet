@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from src import personaje as p
-from src import creadict as cd
-from src import pospersonajes as pp
-from src import lectorcsv
-from src import lecturaEpub
+from src.Modelo import Personaje as p
+from src.Lexers import CreaDict as cd
+from src.Lexers import PosPersonajes as pp
+from src.LecturaFicheros import Lectorcsv
+from src.LecturaFicheros import LecturaEpub
 import matplotlib.pyplot as plt
 import collections
 import numpy as np
@@ -20,13 +20,13 @@ Clase con la que la vista interactua
 
 @author: Luis Miguel Cabrejas
 """
-class modelo:
+class Modelo:
     
     '''
     Constructor de la clase
     '''
     def __init__(self):
-        self.__csv = lectorcsv.lectorcsv(self)
+        self.__csv = Lectorcsv.Lectorcsv(self)
         self.__texto = list()
         self.personajes= dict()
         self.numpers = 0
@@ -37,7 +37,7 @@ class modelo:
     Método que llama a un método para crear un diccionario automaticamente
     '''
     def crearDict(self):
-        creard = cd.creadict(self)
+        creard = cd.CreaDict(self)
         txt = ''
         for i in self.__texto:
             txt += i
@@ -51,7 +51,7 @@ class modelo:
     def obtenerPosPers(self):
         self.pos = list()
         self.fin = list()
-        posper = pp.pospersonajes(self)
+        posper = pp.PosPersonajes(self)
         pers = self.getDictParsear()
         self.__fincaps = list() 
         posiciones = list()
@@ -121,7 +121,7 @@ class modelo:
     '''
     def anadirPersonaje(self, idpers, pers):
         if(idpers not in self.personajes):
-            self.personajes[idpers] = p.personaje()
+            self.personajes[idpers] = p.Personaje()
             self.personajes[idpers].getPersonaje()[pers] = dict()
             self.numpers+=1
             return 'Personaje añadido correctamente'
@@ -330,7 +330,7 @@ class modelo:
     personajes
     '''
     def obtTextoEpub(self, fich):
-        l = lecturaEpub.lecturaEpub(fich)
+        l = LecturaEpub.LecturaEpub(fich)
         self.__texto = list()
         for f in l.siguienteArchivo():
             self.__texto.append(". " + f)

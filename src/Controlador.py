@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 from flask import render_template, Flask, request, url_for, redirect, json, send_file, make_response, g, session
-from src import modelo as mod
-from src import config as cfg
-from src import tempBD
+from src.Modelo import Modelo as mod
+from src import Config as cfg
+from src.PersistenciaSesiones import TempBD
 from flask_babel import Babel, gettext
 import shutil
 
@@ -14,7 +14,7 @@ app.config['BABEL_TRANSLATION_DIRECTORIES'] = cfg.translations_folder
 app.config['SECRET_KEY'] = cfg.secretkey
 babel = Babel(app)
 
-tbd = tempBD.TempBD.getInstance()
+tbd = TempBD.TempBD.getInstance()
 
 @babel.localeselector
 def get_locale():
@@ -31,7 +31,7 @@ def index():
     error = ''
     if request.method == "POST":
         fich = request.files["btn btn-selepub"]
-        m = mod.modelo()
+        m = mod.Modelo()
         if('usuario' not in session or session['usuario']=="null"):
             session['usuario'] = tbd.addSesion(m)
             dirName = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario'])
@@ -39,7 +39,7 @@ def index():
                 os.makedirs(dirName)
         fullpath = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario']) + "\\" + fich.filename
         fich.save(fullpath)
-        if(mod.modelo.esEpub(fullpath)):
+        if(mod.Modelo.esEpub(fullpath)):
             session['fichero'] = fich.filename
             m.obtTextoEpub(fullpath)
             os.remove(fullpath)

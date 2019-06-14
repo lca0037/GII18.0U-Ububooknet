@@ -7,7 +7,7 @@ Clase para obtener las posiciones de los personajes en el texto
 @author: Luis Miguel Cabrejas
 """
 
-class pospersonajes:
+class PosPersonajes:
     
     '''
     Constructor de la clase

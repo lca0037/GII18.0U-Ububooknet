@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 import csv
-from src import personaje as p
 
 """
 Clase para importar y exportar diccionarios de personajes
 
 @author: Luis Miguel Cabrejas Arce
 """
-class lectorcsv:
+class Lectorcsv:
     
     '''
     Constructor de la clase
