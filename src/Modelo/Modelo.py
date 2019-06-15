@@ -15,17 +15,22 @@ import zipfile
 from threading import Thread
 
 
-"""
-Clase con la que la vista interactua
 
-@author: Luis Miguel Cabrejas
-"""
 class Modelo:
+    """
+    Clase que contiene la lógica de la aplicación
     
-    '''
-    Constructor de la clase
-    '''
+    Args:
+        
+    """ 
+
     def __init__(self):
+        """
+        Clase que contiene la lógica de la aplicación
+        
+        Args:
+            Constructor de la clase
+        """ 
         self.__csv = Lectorcsv.Lectorcsv(self)
         self.__texto = list()
         self.personajes= dict()
@@ -33,10 +38,13 @@ class Modelo:
         self.__fincaps = list()
         self.__G = None
             
-    '''
-    Método que llama a un método para crear un diccionario automaticamente
-    '''
     def crearDict(self):
+        """
+        Método para crear un diccionario automaticamente
+        
+        Args:
+            
+        """ 
         creard = cd.CreaDict(self)
         txt = ''
         for i in self.__texto:
@@ -45,10 +53,13 @@ class Modelo:
         d.start()
         d.join()
     
-    '''
-    Método que llama a un método para obtener las posiciones de los personajes
-    '''
     def obtenerPosPers(self):
+        """
+        Método para obtener las posiciones de los personajes
+        
+        Args:
+            
+        """ 
         self.pos = list()
         self.fin = list()
         posper = pp.PosPersonajes(self)
@@ -75,75 +86,89 @@ class Modelo:
                     c+=1
                 self.personajes[i].lennombres[n]=apar
                 self.personajes[i].sumNumApariciones(apar)
-      
-    '''
-    Función que genera una lista de nombres para obtener su posición en el texto
-    '''          
+        
     def getDictParsear(self):
+        """
+        Función que genera una lista de nombres para obtener su posición en el texto
+    
+        Args:
+            
+        Return:
+            Set con los todos los nombres de personajes
+        """
         l = list()
         for i in self.personajes.keys():
             for n in self.personajes[i].getPersonaje():
                 if(n not in l):
                     l.append(n)
         return l
-    
-    '''
-    Funcíon que devuelve el diccionario de personajes
-    '''
+
     def getPersonajes(self):
-        return self.personajes
+        """
+        Función que devuelve el diccionario de personajes
     
-    '''
-    Método que genera un histograma con los personajes
-    '''
-    def histogramaPersonajes(self):
-        x = list()
-        y = list()
-        for k in self.personajes.keys():
-            x.append(k)
-            y.append(self.personajes[k].getNumApariciones()[0])
-        tam = np.arange(self.numpers)
-        plt.title('Frecuencia personajes')
-        plt.xlabel('Nombre')
-        plt.ylabel('Apariciones')
-        plt.bar(tam,height=y)
-        plt.xticks(tam,x)
-        
-    '''
-    Método que limpia el diccionario de personajes
-    '''
+        Args:
+            
+        Return:
+            diccionario de personajes
+        """
+        return self.personajes
+
     def vaciarDiccionario(self):
+        """
+        Método que limpia el diccionario de personajes
+    
+        Args:
+            
+        """
         self.personajes = dict()
         self.numpers = 0
-    
-    '''
-    Método para añadir un personaje al diccionario de personajes
-    '''
+
     def anadirPersonaje(self, idpers, pers):
+        """
+        Método para añadir un personaje al diccionario de personajes
+    
+        Args:
+            idpers: id del nuevo personaje
+            pers: nombre del personaje
+        Return:
+            string que dice si está aadido o no
+        """
         if(idpers not in self.personajes):
             self.personajes[idpers] = p.Personaje()
             self.personajes[idpers].getPersonaje()[pers] = dict()
             self.numpers+=1
             return 'Personaje añadido correctamente'
         return 'La id de personaje ya existe'
-    '''
-    Método para eliminar personajes
-    '''
+
     def __eliminarPersonaje(self, idPersonaje):
+        """
+        Método para eliminar personajes
+    
+        Args:
+            idPersonaje: id del personaje a eliminar
+        """
         if(idPersonaje in self.personajes):
             del self.personajes[idPersonaje]
-       
-    '''
-    Método para eliminar una lista de personajes
-    '''
+
     def eliminarListPersonajes(self, personajes):
+        """
+        Método para eliminar una lista de personajes
+    
+        Args:
+            idPersonaje: id del personaje a eliminar
+        """
         for idp in personajes:
             self.__eliminarPersonaje(idp)
     
-    '''
-    Método para juntar personajes
-    '''
     def __juntarPersonajes(self, idPersonaje1, idPersonaje2):
+        """
+        Método para juntar personajes
+    
+        Args:
+            idPersonaje1: id del primer personaje a juntar
+            idPersonaje2: id del primer personaje a juntar
+        """
         if(idPersonaje1 in self.personajes and idPersonaje2 in self.personajes):
             pers1 = self.personajes[idPersonaje1].getPersonaje()
             pers2 = self.personajes[idPersonaje2].getPersonaje()
@@ -156,24 +181,35 @@ class Modelo:
                         apar1[k] = apar2[k]
                         self.personajes[idPersonaje1].sumNumApariciones(apar2[k])
             self.__eliminarPersonaje(idPersonaje2)
-    
-    '''
-    Método para juntar una lista de personajes en uno solo
-    '''
+
     def juntarListPersonajes(self,lista):
+        """
+        Método para juntar una lista de personajes
+    
+        Args:
+            lista: lista de personajes a juntar
+        """
         for i in range(1,len(lista)):
             self.__juntarPersonajes(lista[0],lista[i])
     
-    '''
-    Método para añadir otro nombre para referirse a un personaje
-    '''
     def anadirReferenciaPersonaje(self,idp,ref):
+        """
+        Método para añadir una referencia a un personaje
+    
+        Args:
+            idp: id del personaje
+            ref: nueva referencia
+        """
         self.personajes[idp].getPersonaje()[ref]= dict()
     
-    '''
-    Método que elimina una referencia a un personaje
-    '''
     def __eliminarReferenciaPersonaje(self,idp,ref):
+        """
+        Método para eliminar una referencia a un personaje
+    
+        Args:
+            idp: id del personaje
+            ref: referencia a eliminar
+        """
         if(idp in self.personajes.keys()):
             p = self.personajes[idp].getPersonaje()
             if(ref in p.keys()):
@@ -185,23 +221,33 @@ class Modelo:
                 else:
                     del self.personajes[idp]
     
-    '''
-    Método para eliminar una lista de referencias de sus respectivos personajes
-    '''
     def eliminarListRefs(self,lista):
+        """
+        Método para eliminar una lista de referencias
+    
+        Args:
+            lista: lista de referencias a eliminar
+        """
         for l in lista:
             self.__eliminarReferenciaPersonaje(l[0],l[1])
-            
-    '''
-    Método para modificar los id de los personajes
-    '''
+
     def modificarIdPersonaje(self,idact,newid):
-        self.personajes[newid] = self.personajes.pop(idact)
+        """
+        Método para modificar los id de los personajes
     
-    '''
-    Método que junta las posiciones de todos los nombres de un personaje
-    '''
+        Args:
+            idact: id a cambiar
+            newid: nueva id
+        """
+        self.personajes[newid] = self.personajes.pop(idact)
+
     def juntarPosiciones(self):
+        """
+        Método para juntar los posiciones de las referencias de un personaje
+    
+        Args:
+            
+        """
         for i in self.personajes.keys():
             pers = self.personajes[i].getPersonaje()
             pos = {}
@@ -217,20 +263,37 @@ class Modelo:
             self.personajes[i].setPosicionPers(pos)
        
     def prepararRed(self):
+        """
+        Método que obtiene las posiciones de los personajes y las junta
+    
+        Args:
+            
+        """
         d = Thread(target=self.obtenerPosPers)
         d.start()
         d.join()
         self.juntarPosiciones()
-    '''
-    Método para obtener una matriz de adyacencia de las relaciones entre los personajes
-    '''
+        
     def getMatrizAdyacencia(self):
-        return nx.adjacency_matrix(self.__G).todense()
+        """
+        Método que devuelve la matriz de adyacencia de la red
     
-    '''
-    Método para generar un grafo a partir de las relaciones de los personajes
-    '''
+        Args:
+            
+        Return:
+            Matriz de adyacencia
+        """
+        return nx.adjacency_matrix(self.__G).todense()
+
     def generarGrafo(self,rango,minapar,caps):
+        """
+        Método para generar un grafo a partir de las relaciones de los personajes
+    
+        Args:
+            rango: rango de palabras
+            minapar: numero minimo de apariciones
+            caps: si se tienen en cuenta los capitulos
+        """
         persk = list(self.personajes.keys())
         tam = len(persk)
         self.__G = nx.Graph()
@@ -297,49 +360,70 @@ class Modelo:
                         if(peso>0):
                             self.__G.add_edge(persk[i],persk[j],weight=peso)
     
-    '''
-    Método para mandar a d3 la información para visualizar la red
-    '''
     def visualizar(self):
+        """
+        Método para mandar a d3 la información para visualizar la red
+    
+        Args:
+            
+        """
         return json.dumps(nx.json_graph.node_link_data(self.__G))
-        
-    '''
-    Método para obtener un diccionario de personajes haciendo web scraping
-    '''
+
     def scrapeWiki(self,url):
+        """
+        Método para obtener un diccionario de personajes haciendo web scraping
+    
+        Args:
+            url: url donde hacer web scraping
+        """
         web = urllib.request.urlopen(url)
         html = BeautifulSoup(web.read(), "html.parser")
         for pers in html.find_all("a", {"class": "category-page__member-link"}):
             pn = pers.get('title')
             self.anadirPersonaje(pn,pn)
-        
-    '''
-    Método para importar un diccionario de personajes desde un fichero csv
-    '''
+
     def importDict(self, fichero):
+        """
+        Método para importar un diccionario de personajes desde un fichero csv
+    
+        Args:
+            fichero: ruta al fichero
+        """
         self.__csv.importDict(fichero)
     
-    '''
-    Método para exportar el diccionario de personajes a un fichero csv
-    '''
     def exportDict(self, fichero):
+        """
+        Método para exportar el diccionario de personajes a un fichero csv
+    
+        Args:
+            fichero: ruta del nuevo fichero
+        """
         self.__csv.exportDict(fichero)
          
     '''
-    Método para obtener el texto del epub del que se quiere obtener la red de 
-    personajes
+    
     '''
     def obtTextoEpub(self, fich):
+        """
+        Método para obtener el texto del epub del que se quiere obtener la red de 
+        personajes
+        
+        Args:
+            fich: ruta al archivo epub
+        """
         l = LecturaEpub.LecturaEpub(fich)
         self.__texto = list()
         for f in l.siguienteArchivo():
             self.__texto.append(". " + f)
-        
-    '''
-    Método para comprobar si un archivo es un epub
-    '''
+
     @staticmethod
     def esEpub(fich):
+        """
+        Método para comprobar si un archivo es un epub
+        
+        Args:
+            fich: ruta al archivo epub
+        """
         if(not zipfile.is_zipfile(fich)):
             return False
         x = zipfile.ZipFile(fich)
@@ -351,20 +435,51 @@ class Modelo:
             return True
 
     def exportGML(self,filename):
+        """
+        Método exportar la red a formato GML
+        
+        Args:
+            filename: ruta del nuevo fichero
+        """
         self.writeFile(filename,nx.generate_gml(self.__G))
         
     def exportGEXF(self,filename):
+        """
+        Método exportar la red a formato GEXF
+        
+        Args:
+            filename: ruta del nuevo fichero
+        """
         self.writeFile(filename,nx.generate_gexf(self.__G))
     
     def exportPajek(self,filename):
+        """
+        Método exportar la red a formato GML
+        
+        Args:
+            filename: ruta del nuevo fichero
+        """
         nx.write_pajek(self.__G, filename)
         
     def writeFile(self,filename,text):
+        """
+        Método escribir un fichero
+        
+        Args:
+            filename: ruta del nuevo fichero
+            text: texto para generar el archivo
+        """
         file = open(filename,"w")
         for r in text:
             file.write(r)
             
     def generarInforme(self, solicitud):
+        """
+        Método que maneja las solicitudes de informes
+        
+        Args:
+            solicitud: lista con las metricas
+        """
         switch = {'cbx cbx-nnod': self.nNodos, 'cbx cbx-nenl': self.nEnl, 'cbx cbx-nint': self.nInt, 'cbx cbx-gradosin': self.gSin, 'cbx cbx-gradocon': self.gCon, 'cbx cbx-distsin': self.dSin, 'cbx cbx-distcon': self.dCon, 'cbx cbx-dens': self.dens, 'cbx cbx-concomp': self.conComp, 'cbx cbx-exc': self.exc, 'cbx cbx-dia': self.diam, 'cbx cbx-rad': self.rad, 'cbx cbx-longmed': self.longMed, 'cbx cbx-locclust': self.locClust, 'cbx cbx-clust': self.clust, 'cbx cbx-trans': self.trans, 'cbx cbx-centg': self.centG, 'cbx cbx-centc': self.centC, 'cbx cbx-centi': self.centI, 'cbx cbx-ranwal': self.ranWal, 'cbx cbx-centv': self.centV,'cbx cbx-para': self.paRa, 'cbx cbx-kcliperc': self.kCliPerc, 'cbx cbx-girnew': self.girNew, 'cbx cbx-roles': self.roles}
         valkcliqper =  solicitud['valkcliqper']
         del solicitud['valkcliqper']
@@ -376,21 +491,69 @@ class Modelo:
                 self.informe[s] = switch[s]()
         
     def nNodos(self):
+        """
+        Método que devuelve el numero de nodos
+        
+        Args:
+            
+        Return:
+            Numero de nodos
+        """
         return nx.number_of_nodes(self.__G)
         
     def nEnl(self):
+        """
+        Método que devuelve el numero de enlaces
+        
+        Args:
+            
+        Return:
+            Numero de enlaces
+        """
         return nx.number_of_edges(self.__G)
         
     def nInt(self):
+        """
+        Método que devuelve el numero de interacciones
+        
+        Args:
+            
+        Return:
+            Numero de interacciones
+        """
         return self.__G.size(weight='weight')
     
     def gSin(self):
+        """
+        Método que devuelve el grado sin tener en cuenta el peso
+        
+        Args:
+            
+        Return:
+            Grado sin el peso
+        """
         return nx.degree(self.__G)
         
     def gCon(self):
+        """
+        Método que devuelve el grado teniendo en cuenta el peso
+        
+        Args:
+            
+        Return:
+            Grado con el peso
+        """
         return nx.degree(self.__G,weight='weight')
         
     def dSin(self):
+        """
+        Método que devuelve la distribución de grado sin tener en cuenta el peso
+        
+        Args:
+            
+        Return:
+            Distribucion de grado sin el peso
+        """
         degree_sequence = sorted([d for n, d in self.__G.degree()], reverse=True)  # degree sequence
         # print "Degree sequence", degree_sequence
         print(degree_sequence)
@@ -399,66 +562,209 @@ class Modelo:
         return degreeCount
     
     def dCon(self):
-        degree_sequence = sorted([d for n, d in self.__G.degree(weight='weight')], reverse=True)  # degree sequence
-        # print "Degree sequence", degree_sequence
+        """
+        Método que devuelve la distribución de grado teniendo en cuenta el peso
+        
+        Args:
+            
+        Return:
+            Distribucion de grado con el peso
+        """
+        degree_sequence = sorted([d for n, d in self.__G.degree(weight='weight')], reverse=True)
         degreeCount = collections.Counter(degree_sequence)
         return degreeCount
         
     def dens(self):
+        """
+        Método que devuelve la densidad de la red
+        
+        Args:
+            
+        Return:
+            Densidad de la red
+        """
         return nx.density(self.__G)
         
     def conComp(self):
+        """
+        Método que devuelve todos los componentes conectados
+        
+        Args:
+            
+        Return:
+            lista de cada componente conectado
+        """
         l = list()
         for x in nx.connected_components(self.__G):
             l.append(x)
         return l
         
     def exc(self):
+        """
+        Método que devuelve la excentricidad de la red
+        
+        Args:
+            
+        Return:
+            excentricidad de la red
+        """
         return nx.eccentricity(self.__G)
     
     def diam(self):
+        """
+        Método que devuelve el diametro de la red
+        
+        Args:
+            
+        Return:
+            diametro de la red
+        """
         return nx.diameter(self.__G)
         
     def rad(self):
+        """
+        Método que devuelve el radio de la red
+        
+        Args:
+            
+        Return:
+            radio de la red
+        """
         return nx.radius(self.__G)
         
     def longMed(self):
+        """
+        Método que devuelve la distancia media de la red
+        
+        Args:
+            
+        Return:
+            distancia media de la red
+        """
         return nx.average_shortest_path_length(self.__G)
         
     def locClust(self):
+        """
+        Método que devuelve el clustering de cada nodo
+        
+        Args:
+            
+        Return:
+            clustering de cada nodo
+        """
         return nx.clustering(self.__G)
         
     def clust(self):
+        """
+        Método que devuelve el clustering global de la red
+        
+        Args:
+            
+        Return:
+            clustering global
+        """
         return nx.average_clustering(self.__G)
         
     def trans(self):
+        """
+        Método que devuelve la transitividad de la red
+        
+        Args:
+            
+        Return:
+            transitividad de la red
+        """
         return nx.transitivity(self.__G)
         
     def centG(self):
+        """
+        Método que devuelve la centralidad de grado
+        
+        Args:
+            
+        Return:
+            centralidad de grado
+        """
         return nx.degree_centrality(self.__G)
         
     def centC(self):
+        """
+        Método que devuelve la centralidad de cercania
+        
+        Args:
+            
+        Return:
+            centralidad de cercania
+        """
         return nx.closeness_centrality(self.__G)
         
     def centI(self):
+        """
+        Método que devuelve la centralidad de intermediacion
+        
+        Args:
+            
+        Return:
+            centralidad de intermediacion
+        """
         return nx.betweenness_centrality(self.__G)
         
     def ranWal(self):
+        """
+        Método que devuelve la centralidad de intermediacion random walker
+        
+        Args:
+            
+        Return:
+            centralidad de intermediacion random walker
+        """
         return nx.current_flow_betweenness_centrality(self.__G)
         
     def centV(self):
+        """
+        Método que devuelve la centralidad de valor propio
+        
+        Args:
+            
+        Return:
+            centralidad de valor propio
+        """
         return nx.eigenvector_centrality(self.__G)
         
     def paRa(self):
+        """
+        Método que devuelve la centralidad de pagerank
+        
+        Args:
+            
+        Return:
+            centralidad de pagerank
+        """
         return nx.pagerank(self.__G)
         
     def kCliPerc(self, k):
+        """
+        Método que devuelve las comunidades de k-clique
+        
+        Args:
+            k: valor k del k-clique
+        Return:
+            comunidades de k-clique
+        """
         l = list()
         for x in nx.algorithms.community.k_clique_communities(self.__G, int(k)):
             l.append(x)
         return l
         
     def girNew(self):
+        """
+        Método que devuelve las comunidades de girvan-newman
+        
+        Args:
+            
+        Return:
+            comunidades de girvan-newman
+        """
         l = list()
         resul,mod,npart = self.girvan_newman(self.__G.copy())
         for c in nx.connected_components(resul):
@@ -466,6 +772,14 @@ class Modelo:
         return l
         
     def roles(self):
+        """
+        Método para detectar roles en comunidades de girvan-newman
+        
+        Args:
+            
+        Return:
+            roles en comunidades de girvan-newman
+        """
         z = self.obtenerZ(self.__G)
         p = self.obtenerP(self.__G)
         pesos = self.__G.degree(weight='weight')
@@ -504,6 +818,14 @@ class Modelo:
 
         
     def obtenerZ(self, grafo):
+        """
+        Método para calcular el grado de la comunidad de cada nodo
+        
+        Args:
+            grafo: red de personajes
+        Return:
+            grado de la comunidad de cada nodo
+        """
         zi = dict()
         resul,mod,npart = self.girvan_newman(grafo.copy())
         for c in nx.connected_components(resul):
@@ -527,6 +849,14 @@ class Modelo:
         return zi
     
     def obtenerP(self, grafo):
+        """
+        Método para calcular el coeficiente de participacion de cada nodo
+        
+        Args:
+            grafo: red de personajes
+        Return:
+            coeficiente de participacion de cada nodo
+        """
         pi = dict()
         pesos = grafo.degree()
         for peso in pesos:
@@ -543,6 +873,15 @@ class Modelo:
         return pi
     
     def modularidad(self,grafo, particion):
+        """
+        Método para calcular la modularidad
+        
+        Args:
+            grafo: red de personajes
+            particion: particion de nodos de la red
+        Return:
+            coeficiente de participacion de cada nodo
+        """
         m = nx.number_of_edges(grafo)
         nodos = list(particion.keys())
         tot = 0
@@ -555,6 +894,16 @@ class Modelo:
         return tot/(2*m)
     
     def girvan_newman(self,grafo):
+        """
+        Método para calcular la mejor comunidad por girvan-newman
+        
+        Args:
+            grafo: red de personajes
+        Return:
+            mejor partincion
+            modularidad
+            numero de particiones
+        """
         inicial = grafo.copy()
         mod = list()
         npart = list()

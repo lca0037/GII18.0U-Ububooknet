@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
+
 import ply.lex as lex
 
-"""
-Clase para obtener las posiciones de los personajes en el texto
-
-@author: Luis Miguel Cabrejas
-"""
-
-class PosPersonajes:
+class PosPersonajes: 
+    """
+    Clase para obtener las posiciones de personajes
     
-    '''
-    Constructor de la clase
-    '''
+    Args:
+        modelo: clase modelo
+    """
+    
     def __init__(self, modelo):
         self.lexer = lex.lex(module=self)
         self.nombres = list()
@@ -22,12 +20,16 @@ class PosPersonajes:
     #Estados del lexer
     states = (('coincidencia','exclusive'),)
     
-    '''
-    Función que usa el lexer para comprobar si hay una palabra y realiza operaciones
-    en función de las coincidencias de las palabras
-    '''
     def t_PALABRA(self, t):
         r"[^\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_—]+"
+        
+        """
+        Función que usa el lexer para comprobar si hay una palabra y realiza operaciones
+        en función de las coincidencias de las palabras
+        
+        Args:
+            t: token
+        """
         self.nomscoinc = self.esSubcadena(t.value, self.nombres)
         ncoinc = len(self.nomscoinc)
         if(ncoinc > 0):
@@ -52,9 +54,13 @@ class PosPersonajes:
         
     def t_CAPITULO(self, t):
         r"(\-\-\-CAPITULO\-\-\-)"
-#        print("Capítulo:",t.value)
-#        print(self.resul)
-#        print(self.contador)
+        
+        """
+        Función para detectar un cambio de capitulo
+        
+        Args:
+            t: token
+        """
         self.m.pos.append(self.resul)
         self.m.fin.append(self.contador)
         self.contador = 0
@@ -64,14 +70,25 @@ class PosPersonajes:
             
     def t_ESPACIO(self, t):
         r"[\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_—]"
+        
+        """
+        Función que detecta los signos de puntuacion
+        
+        Args:
+            t: token
+        """
 #        print("Espacio: ", t.value)
         
-    '''
-    Función que cuando ha habido una coincidencia previa pero no definitiva 
-    comprueba las siguientes palabras
-    '''
     def t_coincidencia_PALABRA(self, t):
         r"([^\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_—]+|[\s\.,\(\)\[\]<>\'\":;¿\?¡!=\-_—])"
+          
+        """
+        Función que cuando ha habido una coincidencia previa pero no definitiva 
+        comprueba las siguientes palabras
+        
+        Args:
+            t: token
+        """
         self.cadaux += t.value
 #        print('Coinc previas:',self.nomscoinc)
         self.nomscoinc = self.esSubcadena(self.cadaux, self.nomscoinc)
@@ -117,11 +134,15 @@ class PosPersonajes:
     def t_coincidencia_error(self, t):
         print ("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
-        
-    '''
-    Función que comienza el recorrido por el texto para obtener las posiciones
-    '''
+
     def obtenerPos(self, texto, nombres):
+        """
+        Función que comienza el recorrido por el texto para obtener las posiciones
+        
+        Args:
+            texto: texto donde obtener las posiciones de nombres
+            nombres: lista de nombres donde encontrar las posiciones
+        """
         self.nombres = nombres
         self.nomscoinc = list()
         self.contador = 1
@@ -133,16 +154,21 @@ class PosPersonajes:
             self.resul[n] = list()
         lex.input(texto)
         for tok in iter(lex.token, None):
-            print(tok)
             aux = 1
-               
-    '''
-    Función que comprueba recorre una cadena de texto y comprueba con cadenas de texto
-    de una lista dada como parametro coincide, teniendo en cuenta que la coincidencia
-    debe darse de toda la primera cadena y teniendo los caracteres en la misma 
-    posición que las cadenas obtenidas de la lista
-    '''
+
     def esSubcadena(self,st,lista):
+        """
+        Función que comprueba recorre una cadena de texto y comprueba con cadenas de texto
+        de una lista dada como parametro coincide, teniendo en cuenta que la coincidencia
+        debe darse de toda la primera cadena y teniendo los caracteres en la misma 
+        posición que las cadenas obtenidas de la lista
+        
+        Args:
+            st: texto a comprobar si es subcadena
+            nombres: lista de cadenas donde comprobar
+        Return:
+            lista de cadenas de las que st es subcadena
+        """
         l = list()
         aux = True
         for pal in lista:

@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Test unitarios sobre el código implementado
-
-@author: Luis Miguel Cabrejas Arce
-"""
-
 
 #import sys
 #sys.path.append('../src/')
@@ -18,6 +12,10 @@ m = Modelo.Modelo()
 poslex = pp.PosPersonajes(m)
 
 class TestUnitarios(unittest.TestCase):
+    '''
+    Clase para realizar test unitarios
+    DESACTUALIZADA
+    '''
     
     def __init__(self,*args, **kwargs):
         super(TestUnitarios, self).__init__(*args, **kwargs)

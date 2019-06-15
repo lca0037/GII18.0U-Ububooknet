@@ -4,16 +4,14 @@ from bs4 import BeautifulSoup
 import zipfile
 import re
 
-"""
-Clase para obtener el texto de los epub
-
-@author: Luis Miguel Cabrejas
-"""
 class LecturaEpub:
+    """
+    Clase para obtener el texto de los epubs
     
-    '''
-    Constructor de la clase
-    '''
+    Args:
+        fichero: ruta al fichero epub
+    """
+    
     def __init__(self,fichero):
         self.fich = fichero
         self.epub = zipfile.ZipFile(self.fich)
@@ -21,10 +19,16 @@ class LecturaEpub:
 #        print(self.epub.namelist())
     
     '''
-    Obtiene el orden de lectura en el que se deben leer los ficheros de 
-    un archivo epub
+    
     '''
     def __obtenerOrdenLectura(self):
+        """
+        Obtiene el orden de lectura en el que se deben leer los ficheros de 
+        un archivo epub
+        
+        Args:
+            
+        """
         container = self.epub.read('META-INF/container.xml')
         conta = BeautifulSoup(container, "xml")
         for link in conta.find_all('rootfile'):
@@ -48,16 +52,21 @@ class LecturaEpub:
             for idr2 in conte.find_all(id=idr, limit = 1):
                 self.__orden.append(d + idr2.get('href'))
     
-    '''
-    Iterador que devuelve el texto de cada fichero a leer del epub
-    '''
     def siguienteArchivo(self):
+        """
+        Iterador que devuelve el texto de cada fichero a leer del epub
+        
+        Args:
+            
+        Yield:
+            texto de cada capitulo
+        """
         self.__obtenerOrdenLectura()
         for a in self.__orden:
             txt = ''
-            seccion = self.epub.read(a)
-            sect = BeautifulSoup(seccion, "xml")
-            for s in sect.find_all('p'):
-                txt = txt + s.get_text()+ ". "
-            yield txt
-
+            if(a in self.epub.namelist()):
+                seccion = self.epub.read(a)
+                sect = BeautifulSoup(seccion, "xml")
+                for s in sect.find_all('p'):
+                    txt = txt + s.get_text()+ ". "
+                yield txt
