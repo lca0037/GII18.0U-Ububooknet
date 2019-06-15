@@ -32,12 +32,12 @@ def index():
     if request.method == "POST":
         fich = request.files["btn btn-selepub"]
         m = mod.Modelo()
-        if('usuario' not in session or session['usuario']=="null"):
+        if('usuario' not in session or session['usuario'] not in tbd.getSesiones().keys()):
             session['usuario'] = tbd.addSesion(m)
-            dirName = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario'])
+            dirName = os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario']))
             if(not os.path.exists(dirName)):
                 os.makedirs(dirName)
-        fullpath = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario']) + "\\" + fich.filename
+        fullpath = os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario']), fich.filename)
         fich.save(fullpath)
         if(mod.Modelo.esEpub(fullpath)):
             session['fichero'] = fich.filename
@@ -55,7 +55,7 @@ def index():
 @app.route('/Dicts-Automaticos/', methods=["GET", "POST"])
 def dictaut():
     msg = ''
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     if request.method == "POST":
@@ -74,12 +74,12 @@ def dictaut():
 
 @app.route('/Dicts-Automaticos/Importar-Dict/', methods=["GET","POST"])
 def impdict():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     if request.method == "POST":
         fich = request.files["btn btn-selcsv"]
-        fullpath = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario']) + "\\" + fich.filename
+        fullpath = os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario']), fich.filename)
         fich.save(fullpath)
         m = tbd.getObject(session['usuario'])
         m.importDict(fullpath)
@@ -87,7 +87,7 @@ def impdict():
 
 @app.route('/Dicts-Automaticos/Obtener-Dict/', methods=["GET","POST"])
 def obtdict():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     if request.method == "POST":
@@ -98,7 +98,7 @@ def obtdict():
 
 @app.route('/Modificar-Diccionario/', methods=["GET", "POST"])   
 def moddict():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -120,14 +120,14 @@ def moddict():
         elif("btn btn-modid" in request.form):
             return redirect(url_for('modidpers'))
         elif("btn btn-expdict" in request.form):
-            filename = app.config['UPLOAD_FOLDER']+ "\\" + str(session['usuario']) + "\\" + session['fichero'] + ".csv"
+            filename = os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario']), session['fichero'] + ".csv")
             m.exportDict(filename)
             return send_file(filename, mimetype='text/csv', attachment_filename=session['fichero'] + ".csv", as_attachment=True)
     return render_template('moddict.html', pers = m.getPersonajes())
 
 @app.route('/Modificar-Diccionario/Anadir-Personaje/', methods=["GET", "POST"])    
 def newpers():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -139,7 +139,7 @@ def newpers():
 
 @app.route('/Modificar-Diccionario/Eliminar-Personaje/', methods=["GET", "POST"])    
 def delpers():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -151,7 +151,7 @@ def delpers():
 
 @app.route('/Modificar-Diccionario/Juntar-Personajes/', methods=["GET", "POST"])    
 def joinpers():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -163,7 +163,7 @@ def joinpers():
    
 @app.route('/Modificar-Diccionario/Nueva-Referencia/', methods=["GET", "POST"])    
 def newrefpers():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -175,7 +175,7 @@ def newrefpers():
 
 @app.route('/Modificar-Diccionario/Eliminar-Referencia/', methods=["GET", "POST"])    
 def delrefpers():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -199,7 +199,7 @@ def modidpers():
     
 @app.route('/Parametros/', methods=["GET", "POST"])
 def params():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -215,29 +215,29 @@ def params():
 
 @app.route('/Red/', methods=["GET", "POST"])
 def red():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
     jsonred = m.visualizar()
     if request.method == "POST":
         if("btn btn-expgml" in request.form):
-            filename = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario']) + "\\" + session['fichero'] + ".gml"
+            filename = os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario']), session['fichero'] + ".gml")
             m.exportGML(filename)
             return send_file(filename, mimetype='text/gml', attachment_filename=session['fichero'] + ".gml", as_attachment=True)
         elif("btn btn-expgexf" in request.form):
-            filename = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario']) + "\\" + session['fichero'] + ".gexf"
+            filename = os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario']), session['fichero'] + ".gexf")
             m.exportGEXF(filename)
             return send_file(filename, mimetype='text/gexf', attachment_filename=session['fichero'] + ".gexf", as_attachment=True)
         elif("btn btn-expnet" in request.form):
-            filename = app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario']) + "\\" + session['fichero'] + ".net"
+            filename = os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario']), session['fichero'] + ".net")
             m.exportPajek(filename)
             return send_file(filename, mimetype='text/net', attachment_filename=session['fichero'] + ".net", as_attachment=True)
     return render_template('red.html', jsonred = jsonred, config = session['configVis'])
 
 @app.route('/Informe/', methods=["GET", "POST"])
 def informe():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -251,7 +251,7 @@ def informe():
 
 @app.route('/Informe/Visualizar/', methods=["GET", "POST"])
 def visinforme():
-    if('fichero' not in session or session['fichero']=="null"):
+    if('fichero' not in session or session['usuario'] not in tbd.getSesiones().keys()):
         return redirect(url_for('index'))
     g.usuario = session['usuario']
     m = tbd.getObject(session['usuario'])
@@ -276,7 +276,7 @@ def finSesion():
     if request.method == "POST":
         ajax = request.get_json()
         tbd.delSesion(int(ajax))
-        shutil.rmtree(app.config['UPLOAD_FOLDER'] + "\\" + str(session['usuario']))
+        shutil.rmtree(os.path.join(app.config['UPLOAD_FOLDER'], str(session['usuario'])))
         session['fichero'] = "null"
         session['usuario'] = "null"
         return "true"
