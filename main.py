@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#from src import personaje
 from tst import TestUnitarios
 from src import Controlador
 import unittest
