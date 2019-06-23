@@ -30,40 +30,46 @@ class TestUnitarios(unittest.TestCase):
     '''
     
     def test_01_LecturaEpub(self):
-        res = {0:['Pedro Pérez'], 1:['Josema'], 2:['Pedro'], 3:['Pedro Rodríguez'], 4:['Ana']}
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Josema':['Josema'], 'Pedro':['Pedro'], 'Pedro Rodríguez':['Pedro Rodríguez'],'Pérez':['Pérez'] ,'Ana':['Ana']}
         self.comprobarPersonajes(res)
 
     def test_02_AnadirPersonaje(self):
-        m.anadirPersonaje('Andrea')
-        res = {0:['Pedro Pérez'], 1:['Josema'], 2:['Pedro'], 3:['Pedro Rodríguez'], 4:['Ana'], 5:['Andrea']}
+        m.anadirPersonaje('Andrea','Andrea')
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Josema':['Josema'], 'Pedro':['Pedro'], 'Pedro Rodríguez':['Pedro Rodríguez'],'Pérez':['Pérez'] ,'Ana':['Ana'], 'Andrea':['Andrea']}
+        self.comprobarPersonajes(res)
+        m.anadirPersonaje('Andres','Andre')
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Josema':['Josema'], 'Pedro':['Pedro'], 'Pedro Rodríguez':['Pedro Rodríguez'],'Pérez':['Pérez'] ,'Ana':['Ana'], 'Andrea':['Andrea'], 'Andres':['Andre']}
         self.comprobarPersonajes(res)
 
     def test_03_EliminarPersonaje(self):
-        m.eliminarPersonaje(1)
-        res = {0:['Pedro Pérez'], 2:['Pedro'], 3:['Pedro Rodríguez'], 4:['Ana'], 5:['Andrea']}
+        m.eliminarListPersonajes(['Josema', 'Andres'])
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Pedro':['Pedro'], 'Pedro Rodríguez':['Pedro Rodríguez'],'Pérez':['Pérez'] ,'Ana':['Ana'], 'Andrea':['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_04_JuntarPersonajes(self):
-        m.juntarPersonajes(3,2)
-        res = {0:['Pedro Pérez'], 3:['Pedro Rodríguez', 'Pedro'], 4:['Ana'], 5:['Andrea']}
+        m.juntarListPersonajes(['Pedro Rodríguez','Pedro'])
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Pedro Rodríguez':['Pedro Rodríguez', 'Pedro'],'Pérez':['Pérez'] ,'Ana':['Ana'], 'Andrea':['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_05_anadirReferenciaAPersonaje(self):
-        m.anadirReferenciaPersonaje(0,'peperez')
-        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 4:['Ana'], 5:['Andrea']}
+        m.anadirReferenciaPersonaje('Pedro Pérez','peperez')
+        res = {'Pedro Pérez':['Pedro Pérez','peperez'], 'Pedro Rodríguez':['Pedro Rodríguez', 'Pedro'],'Pérez':['Pérez'] ,'Ana':['Ana'], 'Andrea':['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_06_eliminarReferenciaAPersonaje(self):
-        m.eliminarReferenciaPersonaje(4,'Ana')
-        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 5:['Andrea']}
+        m.eliminarListRefs([['Ana','Ana']])
+        res = {'Pedro Pérez':['Pedro Pérez','peperez'], 'Pedro Rodríguez':['Pedro Rodríguez', 'Pedro'],'Pérez':['Pérez'], 'Andrea':['Andrea']}
+        self.comprobarPersonajes(res)
+        m.eliminarListRefs([['Pedro Pérez','peperez']])
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Pedro Rodríguez':['Pedro Rodríguez', 'Pedro'],'Pérez':['Pérez'], 'Andrea':['Andrea']}
         self.comprobarPersonajes(res)
 
     def test_07_AnadirJuntarPersonajes(self):
-        m.anadirPersonaje('Andrea')
-        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 5:['Andrea'], 6:['Andrea']}
+        m.anadirPersonaje('María','María')
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Pedro Rodríguez':['Pedro Rodríguez', 'Pedro'],'Pérez':['Pérez'], 'Andrea':['Andrea'], 'María':['María']}
         self.comprobarPersonajes(res)
-        m.juntarPersonajes(5,6)
-        res = {0:['Pedro Pérez','peperez'], 3:['Pedro Rodríguez', 'Pedro'], 5:['Andrea']}
+        m.juntarListPersonajes(['Andrea','María'])
+        res = {'Pedro Pérez':['Pedro Pérez'], 'Pedro Rodríguez':['Pedro Rodríguez', 'Pedro'],'Pérez':['Pérez'], 'Andrea':['Andrea', 'María']}
         self.comprobarPersonajes(res)
 
     def comprobarPersonajes(self, res):
@@ -87,16 +93,17 @@ class TestUnitarios(unittest.TestCase):
         texto += ' poder hacer pruebas Pedro esto sigue siendo relleno Pedro '
         texto += 'Rodríguez, Pedro, texto de relleno. María se fue a poner más '
         texto += 'texto de relleno. Pedro Pérez esto como no sigue siendo texto'
-        texto += ' de pruebas Ana.'
+        texto += ' de pruebas Ana.. '
         txt.append(texto)
-        l = lec.lecturaEpub('tst/epubPruebas.epub')
+        l = lec.LecturaEpub('tst/epubPruebas.epub')
         it = l.siguienteArchivo()
         for i in txt:
-            self.assertEqual(i,next(it))
+            x = next(it)
+            self.assertEqual(i,x)
 
     def test_09_getDictParsear(self):
-        m.anadirPersonaje('Pedro')
-        res = ['Pedro Pérez', 'peperez', 'Pedro Rodríguez', 'Pedro', 'Andrea']
+        m.anadirPersonaje('Pedro','Pedro')
+        res = ['Pedro Pérez', 'Pedro Rodríguez', 'Pedro', 'Pérez', 'Andrea', 'María']
         obt = m.getDictParsear()
         self.assertEqual(len(res),len(obt))
         for i in range(len(res)):
@@ -105,10 +112,10 @@ class TestUnitarios(unittest.TestCase):
     def test_10_posPalabrasDict(self):
         m.vaciarDiccionario()
         m.crearDict()
-        m.anadirPersonaje('María')
-        m.anadirPersonaje('relleno')
+        m.anadirPersonaje('María','María')
+        m.anadirPersonaje('relleno','relleno')
         m.obtenerPosPers()
-        res = {'Pedro Pérez': [23, 54], 'Josema': [24], 'Pedro': [35, 41], 'Pedro Rodríguez': [40], 'Ana': [63], 'María': [45], 'relleno': [22, 30, 39, 44, 53]}
+        res = {'Pedro Pérez': {1:[], 2:[23, 54]}, 'Josema': {1:[], 2:[24]}, 'Pedro': {1:[], 2:[35, 41]}, 'Pedro Rodríguez': {1:[], 2:[40]}, 'Ana': {1:[], 2:[63]}, 'María': {1:[], 2:[45]}, 'relleno': {1:[], 2:[22, 30, 39, 44, 53]}, 'Pérez': {1:[], 2:[]}}
         x = m.getPersonajes()
         for i in x.keys():
             pers = x[i].getPersonaje()
@@ -125,17 +132,31 @@ class TestUnitarios(unittest.TestCase):
         self.assertEqual(res3,poslex.esSubcadena("li",l))
         
     def test_12_juntarListas(self):
-        m.juntarPersonajes(0,2)
+        m.juntarListPersonajes(['Pedro Pérez','Pedro'])
         m.juntarPosiciones()
-        res = {0: [23, 35, 41, 54], 1: [24], 3: [40], 4: [63], 5: [45], 6: [22, 30, 39, 44, 53]}
+        res = {'Pedro Pérez': {1:[], 2:[23, 35, 41, 54]}, 'Josema': {1:[], 2:[24]}, 'Pedro Rodríguez': {1:[], 2:[40]}, 'Ana': {1:[], 2:[63]}, 'María': {1:[], 2:[45]}, 'relleno': {1:[], 2:[22, 30, 39, 44, 53]}, 'Pérez':{1:[], 2:[]}}
         x = m.getPersonajes()
         for i in x.keys():
             self.assertEqual(res[i],x[i].getPosicionPers())
             
     def test_13_matrizAdyacencia(self):
-        res = [[0,1,2,0,1,6],[1,0,0,0,0,1],[2,0,0,0,1,2],[0,0,0,0,0,0],[1,0,1,0,0,1],[6,1,2,0,1,0]]
-        obt = m.getMatrizAdyacencia(5).tolist()
+        #La matriz de adyacencia no contiene al personaje Ana porque no tiene enlaces con ningun otro personaje
+        res = [[0,1,2,1,6],[1,0,0,0,1],[2,0,0,1,2],[1,0,1,0,1],[6,1,2,1,0]]
+        m.generarGrafo(5,1,True)
+        obt = m.getMatrizAdyacencia().tolist()
         self.assertEqual(res,obt)
-            
+        
+    def test_14_importarExportarCSV(self):
+        m.vaciarDiccionario()
+        m.importDict('tst/PruebasImpExp.csv')
+        res = {'Pedro Ro':['Pedro Ro', 'Pedro', 'Pedro Rodríguez', 'Pedro R'], 'María':['María'], 'Jose':['Jose', 'Josema'], 'Pedrope':['Pedrope', 'Pedro Pérez'],'Ana':['Ana']}
+        self.comprobarPersonajes(res)
+        m.anadirPersonaje('relleno','relleno')
+        m.exportDict('tst/dictexportado.csv')
+        m.importDict('tst/dictexportado.csv')
+        res = {'Pedro Ro':['Pedro Ro', 'Pedro', 'Pedro Rodríguez', 'Pedro R'], 'María':['María'], 'Jose':['Jose', 'Josema'], 'Pedrope':['Pedrope', 'Pedro Pérez'], 'Ana':['Ana'], 'relleno':['relleno']}
+        self.comprobarPersonajes(res)
+        
+        
 if __name__ == '__main__':
     unittest.main()
