@@ -1,5 +1,5 @@
 Flask==1.0.2
-numpy==1.15.4
+numpy==1.22.0
 Flask_Babel==0.12.2
 matplotlib==3.0.2
 networkx==2.2
